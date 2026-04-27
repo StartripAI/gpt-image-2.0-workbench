@@ -1,0 +1,8 @@
+dashboard_title: "Customer Success — Executive Overview"
+period: "Apr 2026 (month-to-date)"
+kpi_1: "Active accounts: 4,128 (+6.2%)"
+kpi_2: "Gross retention: 94.1%"
+kpi_3: "Avg time to value: 11 days"
+kpi_4: "Open critical tickets: 7"
+chart_label_1: "Weekly active accounts"
+chart_label_2: "Tickets by severity"

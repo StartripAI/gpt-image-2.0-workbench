@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: anime_city_poster
+domain: anime
+description: 双语城市旅行海报 / Bilingual editorial city travel poster mixing calligraphic skyline and premium typography.
+
+artifact:
+  type: poster
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: travel-content publishers, editorial illustrators, bilingual zh-CN / en city campaigns
+
+spec:
+  subject: >-
+    A vertical editorial travel poster celebrating the city of
+    {{city_name}} during {{season_year}}. The lower third of the poster
+    holds a stylized panoramic silhouette built from three signature
+    landmarks — {{landmark_1}}, {{landmark_2}}, and {{landmark_3}} —
+    flowing together as a single horizon line. The upper two-thirds
+    reserves negative space for a large city wordmark and bilingual
+    taglines.
+  action: >-
+    The poster sits as a still editorial print. The viewer first reads
+    the oversized city name, scans the bilingual tagline pair, then
+    follows the calligraphic curve of the skyline across the bottom.
+    No motion, no parallax, no depicted human figures.
+  scene: >-
+    Off-white textured paper background reminiscent of premium magazine
+    stock, with subtle warm cream undertones and very faint paper
+    grain. A single ink color (deep ink blue or charcoal) carries the
+    line work; one warm accent (sunrise gold or coral) marks the
+    season tag and a small stamp seal at the bottom corner.
+  composition: >-
+    Vertical 9:16 frame. Top ~10% margin. Title zone (~22%) holds the
+    city wordmark large and tight-tracked, set bilingual: a primary
+    serif rendering and a secondary sans-serif rendering stacked. Mid
+    zone (~40%) is mostly blank paper holding only the season-and-year
+    badge and the two taglines (zh-CN above, en below) integrated into
+    the negative space. Lower zone (~28%) carries the calligraphic
+    landmark curve transforming the three landmarks into a single
+    continuous skyline. Bottom margin (~6%) holds a small accent stamp.
+    Generous outer margins.
+  style: >-
+    Editorial premium travel poster aesthetic — Monocle / Kinfolk /
+    Tokyo metro poster sensibility. Mix of a calligraphic display
+    serif (for the city name) with a contemporary geometric sans
+    (for the bilingual taglines and the season badge). Hand-drawn ink
+    line for the skyline, dreamlike scale shifts where landmarks lean
+    into one another. Restrained palette: paper, ink, single warm
+    accent. No photographic elements, no neon, no 3D.
+  text_blocks:
+    - { slot: city_name,    text: '"{{city_name}}"' }
+    - { slot: season_badge, text: '"{{season_year}}"' }
+    - { slot: tagline_zh,   text: '"{{tagline_zh}}"' }
+    - { slot: tagline_en,   text: '"{{tagline_en}}"' }
+  preserve: []
+  negative:
+    - photographic skyline
+    - neon city lights
+    - 3D rendered buildings
+    - real-celebrity likeness
+    - branded corporate logos
+    - lens flare
+    - heavy gradient washes
+    - watermarks
+    - rainbow palette
+    - busy stock-photo collage
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

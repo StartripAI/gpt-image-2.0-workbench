@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo variable bundle for templates/anime/character_sheet.yml.
+# Renders a generic original "wandering navigator" archetype reference sheet.
+
+char_name: "Mira Holloway"
+archetype: "wandering star-chart navigator"
+world: "an airship-trade-route fantasy archipelago"
+key_feature_1: "asymmetric side-shaved silver hair"
+key_feature_2: "long indigo navigator coat with brass shoulder clasps"
+weapon_or_prop: "brass sextant on a leather lanyard"
+palette_swatch_caption: "Indigo · Brass · Ivory · Slate"

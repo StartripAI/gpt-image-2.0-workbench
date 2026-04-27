@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo variable bundle for templates/uiux/design_system_card.yml.
+# Renders a Button component reference card from a generic design system.
+
+system_name: "ATLAS DESIGN SYSTEM"
+component_name: "Button / Primary"
+prop_1_name: "size"
+prop_1_value: "md | lg"
+prop_2_name: "variant"
+prop_2_value: "solid | outline"
+usage_caption: "Use as the primary call-to-action; one per view."

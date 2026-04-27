@@ -1,0 +1,79 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: anime_comic_8panel
+domain: anime
+description: Eight-panel sequential manga page rendered in black-and-white seinen ink with strict character continuity.
+
+artifact:
+  type: comic_page
+  aspect: "2:3"
+  size: "1024x1536"
+  audience: indie manga artists, comic-storyboard reviewers, narrative-prototyping writers
+
+spec:
+  subject: >-
+    A black-and-white manga page starring the protagonist {{protagonist_name}},
+    described as "{{protagonist_visual}}", set in {{setting}}. The page
+    contains exactly eight sequential panels that read right-to-left,
+    top-to-bottom, telling a single short beat per panel. Beat 1
+    establishes context, beats 2–7 escalate, beat 8 lands the punch.
+  action: >-
+    Across the eight panels the action progresses as follows:
+    panel 1 — {{panel_1_action}};
+    panel 2 — {{panel_2_action}};
+    panel 3 — {{panel_3_action}};
+    panel 4 — {{panel_4_action}};
+    panel 5 — {{panel_5_action}};
+    panel 6 — {{panel_6_action}};
+    panel 7 — {{panel_7_action}};
+    panel 8 — {{panel_8_action}}.
+    The protagonist's appearance, hairstyle, and outfit silhouette
+    must remain recognizable in every panel.
+  scene: >-
+    The page lives inside the world of {{setting}}. Backgrounds appear
+    as rendered linework rather than full painted scenery, supporting
+    each panel's beat without overpowering the figures. Screen-tone
+    shading provides atmosphere; no full grey washes.
+  composition: >-
+    Vertical 2:3 page divided into a dynamic 8-panel grid. Suggested
+    layout: row 1 holds two equal panels; row 2 holds three smaller
+    panels of varied width; row 3 holds a single wide panoramic panel
+    plus a tall vertical strip; row 4 holds one final wide panel
+    delivering the punch. Gutters are 12px wide with crisp ink
+    borders. Each panel uses a distinct camera angle (close-up,
+    over-shoulder, low angle, wide establishing) to vary rhythm.
+  style: >-
+    Black-and-white seinen-style manga ink. Confident inked outlines,
+    selective hatch shading, screen-tone fills for fabric and
+    backgrounds, deep solid blacks for shadow accents. No color, no
+    soft watercolor, no painterly texture. Typography for panel
+    captions is a thin handwritten sans, restrained, English Latin
+    only.
+  text_blocks:
+    - { slot: page_title, text: '"{{protagonist_name}}"' }
+    - { slot: tagline,    text: '"{{tagline}}"' }
+  preserve:
+    - protagonist hairstyle
+    - signature accessory
+    - outfit silhouette
+    - facial proportions across panels
+  negative:
+    - color rendering
+    - full-color illustration
+    - photographic background
+    - 3D model render
+    - lens flare
+    - watermarks
+    - branded copyrighted manga IP
+    - real-celebrity likeness
+    - chibi super-deformed proportions
+    - inconsistent character design between panels
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: continuity
+license: CC-BY-4.0

@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: CC-BY-4.0
+rubric: text_fidelity
+cases:
+  - case_id: swot_acme_text
+    expected_text_blocks:
+      - "Acme Corp SWOT 2026"
+      - "Strengths"
+      - "Weaknesses"
+    prompt: |
+      Render a 4-quadrant SWOT poster titled "Acme Corp SWOT 2026".
+      Top-left quadrant labeled "Strengths"; top-right labeled "Weaknesses";
+      bottom-left labeled "Opportunities"; bottom-right labeled "Threats".
+  - case_id: missing_quote
+    expected_text_blocks:
+      - "Q3 Report"
+    prompt: |
+      Render a one-page Q3 Report cover for Acme. Use a clean serif font.
+  - case_id: smart_quotes_ok
+    expected_text_blocks:
+      - "Vision 2030"
+    prompt: |
+      Render a billboard with the headline “Vision 2030” centered in a sans serif.

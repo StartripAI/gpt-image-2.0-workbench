@@ -1,0 +1,72 @@
+id: business_data_dashboard
+domain: business
+description: Light-theme analytics dashboard mockup with KPI tiles and two illustrative charts.
+
+artifact:
+  type: dashboard
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: product managers, ops leads, analytics buyers reviewing a tool mockup
+
+spec:
+  subject: >-
+    A light-theme analytics dashboard mockup titled "{{dashboard_title}}",
+    framed for the {{period}} reporting window. The layout reads as a
+    real product screenshot: a top app-bar with the title and period
+    selector, a row of four KPI cards, and two side-by-side chart panels
+    occupying the lower two-thirds.
+  action: >-
+    The mockup must communicate "this is a working product" at a glance:
+    KPI cards present headline numbers with their labels; the two charts
+    are illustrative shapes (a smooth area chart and a simple bar chart)
+    used as visual stand-ins, never decorated with fabricated tick
+    values. Hierarchy guides the eye from title → KPI row → charts.
+  scene: >-
+    Pure light-theme product surface. Off-white canvas with a faint
+    cool-grey panel beneath the cards. No external setting, no laptop
+    bezel, no browser chrome — the rendered image IS the dashboard
+    surface.
+  composition: >-
+    16:9 frame. Top 8% reserved for the app-bar (title left, period
+    right). Below the bar, four equal KPI cards span the full width with
+    even gutters. The remaining ~62% of vertical space is split 60/40
+    between two chart panels (line/area on the left, bars on the right).
+    Cards and panels have generous internal padding and consistent
+    16-pixel rounded corners.
+  style: >-
+    Modern SaaS analytics aesthetic. Palette: paper white (#F7F8FB)
+    ground, slate text (#1F2937), a single brand-blue accent (#2F67F6)
+    for chart fills and KPI deltas, with a muted positive/negative pair
+    (forest green / soft coral) reserved for trend arrows. Soft 4-pixel
+    drop shadows under cards, rounded corners throughout, professional
+    icon glyphs, no gradients on text, no photographic textures.
+  text_blocks:
+    - { slot: title,         text: '"{{dashboard_title}}"' }
+    - { slot: period,        text: '"Period: {{period}}"' }
+    - { slot: kpi_card_1,    text: '"{{kpi_1}}"' }
+    - { slot: kpi_card_2,    text: '"{{kpi_2}}"' }
+    - { slot: kpi_card_3,    text: '"{{kpi_3}}"' }
+    - { slot: kpi_card_4,    text: '"{{kpi_4}}"' }
+    - { slot: chart_label_1, text: '"{{chart_label_1}}"' }
+    - { slot: chart_label_2, text: '"{{chart_label_2}}"' }
+  preserve: []
+  negative:
+    - watermarks
+    - signatures
+    - busy backgrounds
+    - hand-drawn style
+    - casual fonts
+    - fake numerical axis values
+    - clip-art icons
+    - skeuomorphic glass
+    - heavy 3D shadows
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

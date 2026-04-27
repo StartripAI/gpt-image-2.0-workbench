@@ -1,0 +1,68 @@
+id: business_swot_card
+domain: business
+description: Four-quadrant SWOT analysis card for executive briefings and quarterly reviews.
+
+artifact:
+  type: infographic
+  aspect: "3:2"
+  size: "1536x1024"
+  audience: C-suite executives, strategy teams, MBA case-study readers
+
+spec:
+  subject: >-
+    A polished editorial SWOT analysis card for {{company_name}} covering
+    {{quarter}} of fiscal year {{year}}. The card is conceived as a single
+    flat composition divided into four equally weighted quadrants, each
+    representing one canonical SWOT dimension (Strengths, Weaknesses,
+    Opportunities, Threats), with a slim header band running across the top
+    holding the company name and reporting period.
+  action: >-
+    The viewer's eye should travel clockwise from the top-left strengths
+    quadrant through opportunities, weaknesses, and threats, with each
+    quadrant's content presented as crisp typeset bullets rather than
+    decorative ornament. The header band acts as an anchor, fixing the
+    composition's identity before the reader scans the matrix.
+  scene: >-
+    Studio-flat, document-grade environment. No physical setting; this is a
+    rendered analytic artifact. The background is a soft warm grey paper
+    field with subtle paper grain, calibrated for print and on-screen
+    legibility. No people, no props, no perspective.
+  composition: >-
+    Strict 2x2 grid covering ~92% of the frame, with a 64-pixel gutter
+    between quadrants and a 7%-tall header band above. Each quadrant has
+    its own quiet category icon top-left, a label in small caps, and the
+    analyst body copy below. Generous internal padding inside each
+    quadrant. Color blocks are restrained and serve only to differentiate
+    the four cells.
+  style: >-
+    Editorial corporate aesthetic. Palette anchored on deep navy, slate,
+    cool fog grey, and a single muted accent (oxidized teal). Type system:
+    a humanist sans-serif for body copy, a slightly heavier display cut
+    for the header. Minimalist flat treatment; no gradients, no glow, no
+    drop shadows beyond a 1-pixel hairline rule.
+  text_blocks:
+    - { slot: header,    text: '"{{company_name}} SWOT {{year}} {{quarter}}"' }
+    - { slot: quadrant_strengths,     text: '"Strengths: {{strengths}}"' }
+    - { slot: quadrant_weaknesses,    text: '"Weaknesses: {{weaknesses}}"' }
+    - { slot: quadrant_opportunities, text: '"Opportunities: {{opportunities}}"' }
+    - { slot: quadrant_threats,       text: '"Threats: {{threats}}"' }
+  preserve: []
+  negative:
+    - watermarks
+    - signatures
+    - busy backgrounds
+    - hand-drawn style
+    - casual fonts
+    - clip-art icons
+    - stock-photo people
+    - rainbow palettes
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

@@ -1,0 +1,67 @@
+id: business_pitch_slide
+domain: business
+description: Single-slide pitch deck cover with hero tagline and three headline metrics.
+
+artifact:
+  type: poster
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: investors, partners, conference audiences viewing a deck-cover slide
+
+spec:
+  subject: >-
+    A single-slide pitch deck title page for {{company}}. The slide reads
+    as a confident company-overview hero: a left-aligned company name and
+    tagline, balanced on the right by a vertical stack or row of three
+    headline metric tiles drawn directly from the founder narrative.
+  action: >-
+    The composition presents itself instantly: title and tagline assert
+    the company; the three metric tiles immediately substantiate the
+    claim. There is no animation suggestion, no progressive reveal — the
+    image must read as a fixed printed slide that earns trust on first
+    glance.
+  scene: >-
+    A clean studio backdrop suitable for projection: deep navy field with
+    a faint geometric grid overlay (8-degree opacity, off-white), no
+    photographic elements, no fictional logos beyond the rendered
+    company wordmark.
+  composition: >-
+    16:9 frame divided ~58/42 left-to-right. Left column holds the
+    company name (set large, top-aligned to a 12% top margin) above the
+    tagline, with a thin accent rule between them. Right column holds
+    three rectangular metric tiles arranged vertically, each tile showing
+    a value above its label. Outer margins generous; safe area respected
+    for projection edge-cropping.
+  style: >-
+    Editorial pitch-deck aesthetic. Palette: deep navy (#0E1A36) ground,
+    paper-white type, a single warm accent (amber or coral) for the rule
+    and metric values. Type system reminiscent of Helvetica Now / Inter:
+    geometric sans-serif, tight tracking on the wordmark, generous
+    leading on the tagline. No 3D, no chrome, no gradient washes.
+  text_blocks:
+    - { slot: title,         text: '"{{company}}"' }
+    - { slot: tagline,       text: '"{{tagline}}"' }
+    - { slot: metric_1_tile, text: '"{{metric_1_value}} — {{metric_1_label}}"' }
+    - { slot: metric_2_tile, text: '"{{metric_2_value}} — {{metric_2_label}}"' }
+    - { slot: metric_3_tile, text: '"{{metric_3_value}} — {{metric_3_label}}"' }
+  preserve: []
+  negative:
+    - watermarks
+    - signatures
+    - busy backgrounds
+    - hand-drawn style
+    - casual fonts
+    - comic sans
+    - emoji clutter
+    - lens flare
+    - glossy 3D bevels
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

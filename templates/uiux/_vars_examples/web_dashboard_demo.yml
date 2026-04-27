@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo variable bundle for templates/uiux/web_dashboard.yml.
+# Renders a fictional B2B revenue analytics SaaS dashboard.
+
+product_name: "Northwind Analytics"
+nav_label_1: "Overview"
+nav_label_2: "Revenue"
+nav_label_3: "Cohorts"
+nav_label_4: "Pipeline"
+nav_label_5: "Settings"
+kpi_1_label: "Net New ARR"
+kpi_2_label: "Active Customers"
+kpi_3_label: "Gross Margin"
+chart_title: "Monthly recurring revenue"
+period: "Last 12 months"

@@ -1,0 +1,8 @@
+company: "Northwind Labs"
+tagline: "Forecasting infrastructure for climate-exposed supply chains."
+metric_1_label: "Enterprise customers"
+metric_1_value: "47"
+metric_2_label: "ARR run-rate"
+metric_2_value: "$12.4M"
+metric_3_label: "Net retention"
+metric_3_value: "138%"

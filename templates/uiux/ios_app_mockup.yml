@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: uiux_ios_app_mockup
+domain: uiux
+description: Hyper-realistic iPhone app screenshot mockup with native iOS chrome and a card-based content feed.
+
+artifact:
+  type: mockup
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: product designers, marketers shipping App Store screenshots, founders previewing iOS UIs
+
+spec:
+  subject: >-
+    A hyper-realistic iPhone screenshot for {{app_name}} captured as if
+    pulled directly from a current-generation iOS device. The frame contains
+    the system status bar, a primary header titled {{header_title}}, a
+    scrollable card feed in the body, and a three-tab bottom navigation
+    bar. The render reads as a single full-bleed device screen, no device
+    bezel ringing the edges.
+  action: >-
+    The interface sits in its default at-rest state — no animations, no
+    loading skeletons. The eye lands on the header, scans the two stacked
+    content cards, and registers the active tab in the bottom bar. Tap
+    targets feel native; nothing implies motion or transition.
+  scene: >-
+    Pure on-device pixel field with no surrounding desk, hand, or
+    photographic environment. The lock screen is not visible; the user is
+    already inside the app. Background is an off-white system surface
+    ({{accent_hex}} reserved for accent strokes only).
+  composition: >-
+    Vertical 9:16 frame matching iPhone Pro proportions. Top ~5% holds the
+    iOS status bar (current time left, signal/wifi/battery icons right).
+    Below that a fixed header band (~9%) contains the screen title and a
+    discreet trailing-icon button. Body (~70%) shows two rounded card
+    rows with strong corner radius (~24px) and subtle 1px hairline
+    borders. Bottom ~10% is the tab bar with three evenly distributed
+    icon-plus-label tabs. Generous 24px gutters throughout.
+  style: >-
+    Hyper-realistic iOS 18-era aesthetic. SF Pro typography, soft pastel
+    rounded cards, soft drop shadows behind elevated surfaces, single
+    accent color {{accent_hex}} reserved for the active tab, primary
+    header chevron, and small CTA chips. Material feels like brushed
+    glass over a faint paper surface; no gradients beyond a 2-step very
+    subtle wash inside cards. Pixel-perfect, no Android cues.
+  text_blocks:
+    - { slot: header_title,    text: '"{{header_title}}"' }
+    - { slot: nav_tab_1,       text: '"{{nav_tab_1}}"' }
+    - { slot: nav_tab_2,       text: '"{{nav_tab_2}}"' }
+    - { slot: nav_tab_3,       text: '"{{nav_tab_3}}"' }
+    - { slot: card_1_title,    text: '"{{card_title_1}}"' }
+    - { slot: card_1_subtitle, text: '"{{card_subtitle_1}}"' }
+    - { slot: card_2_title,    text: '"{{card_title_2}}"' }
+    - { slot: card_2_subtitle, text: '"{{card_subtitle_2}}"' }
+  preserve: []
+  negative:
+    - Android UI patterns
+    - Material Design ripples
+    - low-fi wireframe sketch
+    - hand-drawn UI
+    - device bezel ring
+    - lens flare
+    - desktop browser chrome
+    - watermarks
+    - rainbow gradients
+    - 3D extruded buttons
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

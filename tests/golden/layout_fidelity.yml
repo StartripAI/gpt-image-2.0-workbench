@@ -1,0 +1,18 @@
+# SPDX-License-Identifier: CC-BY-4.0
+rubric: layout_fidelity
+cases:
+  - case_id: swot_quadrants_pass
+    expected_grid: 4-quadrant
+    prompt: |
+      Render a 4-quadrant SWOT poster with the title at the top and one
+      quadrant per analysis area. The four-quadrant grid should be evenly
+      sized.
+  - case_id: three_column_pass
+    expected_grid: 3-column
+    prompt: |
+      Render a magazine cover with a three-column editorial layout; each
+      column contains a separate vignette.
+  - case_id: missing_layout_keyword
+    expected_grid: 4-quadrant
+    prompt: |
+      Render a SWOT-style poster for Acme with strengths and weaknesses.

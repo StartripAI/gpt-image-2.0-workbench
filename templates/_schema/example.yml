@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# A complete smoke-test template that exercises every field of the schema.
+# Used by tests/unit/test_compiler_*.py to verify load -> validate -> render.
+
+id: smoke_demo
+domain: business
+description: "A smoke-test template proving the seven-section DSL round-trips end to end."
+
+artifact:
+  type: infographic
+  aspect: "3:2"
+  size: "1536x1024"
+  audience: "engineering managers reviewing quarterly metrics"
+
+spec:
+  subject: "{{subject_label}} — a high-density quarterly metrics infographic"
+  action: "Subject elements arrange themselves into a clean reading flow."
+  scene: "A neutral studio backdrop with soft, even lighting and a faint grid baseline."
+  composition: "Single-column layout, header at top, three balanced quadrants, generous margins."
+  style: "Editorial flat-vector style, restrained palette, crisp 1px strokes, no drop shadows."
+  text_blocks:
+    - slot: header
+      text: '{{title}}'
+    - slot: subhead
+      text: '{{subhead}}'
+  preserve:
+    - "Company logo in the top-left corner"
+  negative:
+    - "no neon colors"
+    - "no photorealistic faces"
+
+quality_policy:
+  default: medium
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: ["zh-CN", "en"]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

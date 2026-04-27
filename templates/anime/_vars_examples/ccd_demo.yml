@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo variable bundle for templates/anime/ccd_candid.yml.
+# 渲染一张深夜便利店门口的 CCD 风格随手拍 / Renders a late-night convenience store CCD candid.
+
+subject_descriptor: "a young friend in a cropped puffer jacket holding a hot can of coffee, half-laughing at the camera"
+setting_native: "outside a 24-hour convenience store on a quiet residential street"
+mood: "warm, sleepy, half-tipsy after a long evening"
+time_of_day: "01:42 AM · 2026.04.27"

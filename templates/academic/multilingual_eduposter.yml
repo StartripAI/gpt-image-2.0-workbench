@@ -1,0 +1,74 @@
+id: academic_multilingual_eduposter
+domain: academic
+description: >-
+  Multilingual education infographic. Designed for Korean / Japanese / Chinese /
+  Arabic / Hindi educational posters; the image's text is in language_native_name,
+  NOT the prompt language.
+
+artifact:
+  type: poster
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: K-12 classrooms and library walls in non-English-medium schools
+
+spec:
+  subject: >-
+    A bilingual-aware classroom infographic about {{topic_native}},
+    rendered with all on-image text set in {{language_native_name}}. The
+    poster reads as a single hero illustration of the topic flanked by
+    four caption labels that walk the reader through the concept in the
+    target language.
+  action: >-
+    The illustration anchors the page; the four captions act as guided
+    notes around it, each pointing to a different facet of the topic.
+    The composition does not move; it functions as a permanent classroom
+    wall reference. Important: the prompt may be authored in English or
+    Chinese, but every rendered glyph in the final image must be set in
+    {{language_native_name}}.
+  scene: >-
+    Pastel paper-flat field, no photographic environment. Soft ivory
+    ground with very faint horizontal ruled lines suggesting a notebook,
+    no perspective, no people.
+  composition: >-
+    16:9 frame. Title set across the top 12% in {{language_native_name}}.
+    A central illustration occupies the middle 60% of the height. Four
+    caption tiles arrange around the illustration (top-right, bottom-
+    right, bottom-left, top-left), each set in {{language_native_name}}
+    with native script typography rules respected (e.g., proper kerning
+    for CJK; right-to-left flow for Arabic; Devanagari conjuncts for
+    Hindi). Generous outer margins.
+  style: >-
+    Clean modern vector illustration with flat fills and a confident
+    outline weight. Palette: pastel mint, butter yellow, dusty rose,
+    powder blue, with a single anchor charcoal for type and outlines.
+    Native-script typography is treated as first-class — never substituted
+    with romanized transliteration. Friendly but not childish; suitable
+    for grades 4-12.
+  text_blocks:
+    - { slot: title,     text: '"{{topic_native}}"' }
+    - { slot: caption_1, text: '"{{caption_1}}"' }
+    - { slot: caption_2, text: '"{{caption_2}}"' }
+    - { slot: caption_3, text: '"{{caption_3}}"' }
+    - { slot: caption_4, text: '"{{caption_4}}"' }
+  preserve: []
+  negative:
+    - watermarks
+    - signatures
+    - busy backgrounds
+    - cartoon style
+    - anime style
+    - chibi mascots
+    - romanized transliteration of native script
+    - mismatched script families
+    - photographic realism
+    - neon colors
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

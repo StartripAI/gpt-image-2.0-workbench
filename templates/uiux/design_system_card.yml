@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: uiux_design_system_card
+domain: uiux
+description: Square design-system showcase card highlighting a single component or token with prop rows.
+
+artifact:
+  type: poster
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: design system maintainers, component-library readers, documentation site browsers
+
+spec:
+  subject: >-
+    A square reference card from the {{system_name}} design system
+    showcasing the {{component_name}} component. The card frames a
+    minimal preview of the component at the top half, a two-row prop
+    table beneath, and a single-line usage caption at the bottom.
+  action: >-
+    The component sits at rest in its default state. The viewer reads
+    the system name first, identifies the component label, scans the
+    two prop rows, and finishes on the usage caption. No interaction
+    state, no hover, no overlap with sibling components.
+  scene: >-
+    Documentation-grade flat surface. No physical environment. Ground
+    is paper-white (#FFFFFF) with an optional 1px outer hairline border
+    framing the entire card. No shadow, no scene depth.
+  composition: >-
+    Square 1:1 frame. Top ~12% reserved for the system name set in
+    small-caps and the component label set as a larger heading
+    immediately below. Middle ~48% holds the rendered component preview,
+    centered with generous whitespace on all sides. Below the preview
+    sits a horizontal divider rule, then a two-row prop table where each
+    row pairs a property name (left) with its value (right) in
+    monospace. Bottom ~10% holds the usage caption left-aligned beneath
+    a second divider rule. Outer canvas padding is 64px.
+  style: >-
+    Minimal documentation aesthetic — Linear / Radix / shadcn feel.
+    Plenty of whitespace, fine 1px slate-200 dividers, restrained
+    palette (off-white field, near-black type, single muted accent for
+    active state). Type pairing: a precise sans-serif (Inter or Geist)
+    for headings and copy, a monospace cut (JetBrains Mono or Geist
+    Mono) for prop names and values. No drop shadows, no gradients, no
+    decorative ornament.
+  text_blocks:
+    - { slot: system_name,    text: '"{{system_name}}"' }
+    - { slot: component_label, text: '"{{component_name}}"' }
+    - { slot: prop_row_1,     text: '"{{prop_1_name}}: {{prop_1_value}}"' }
+    - { slot: prop_row_2,     text: '"{{prop_2_name}}: {{prop_2_value}}"' }
+    - { slot: usage_caption,  text: '"{{usage_caption}}"' }
+  preserve: []
+  negative:
+    - busy backgrounds
+    - 3D component renders
+    - glossy highlights
+    - photographic textures
+    - rainbow palettes
+    - hand-drawn sketch
+    - clip-art icons
+    - watermarks
+    - drop shadows beyond 1px
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

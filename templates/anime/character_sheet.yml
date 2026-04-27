@@ -1,0 +1,80 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: anime_character_sheet
+domain: anime
+description: Concept-art character reference sheet with three-view turnaround, expression sheet, and prop detail.
+
+artifact:
+  type: character_sheet
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: animators, illustrators, indie game studios, VTuber rig artists working from a character ref
+
+spec:
+  subject: >-
+    A clean concept-art reference sheet for an anime/manga character
+    named {{char_name}}, archetype "{{archetype}}", from the world of
+    {{world}}. The sheet contains a three-view full-body turnaround
+    (front, side, back), a row of four expression headshots, a detail
+    inset for {{weapon_or_prop}}, and a small palette swatch strip with
+    a caption.
+  action: >-
+    All figures stand at rest in neutral T-pose-adjacent stances; the
+    expression heads display four distinct emotional beats; the prop
+    sits inert in its detail box. Nothing is mid-action. The sheet
+    reads as a static reference an artist would pin to a wall.
+  scene: >-
+    Pure white reference-sheet ground (#FFFFFF). No environment, no
+    cast shadows beyond a subtle ground contact tone under each
+    figure. Faint horizontal pencil rules optionally visible at very
+    low contrast to indicate scale.
+  composition: >-
+    16:9 frame. Top row (~58% of vertical space) holds the three-view
+    turnaround with figures evenly spaced left-to-right and labeled
+    "Front", "Side", "Back" beneath. Bottom row (~32%) is split into
+    two zones: left two-thirds carries four expression headshots in a
+    horizontal strip under the header "Expressions"; right one-third
+    holds the prop detail with caption "Detail: {{weapon_or_prop}}"
+    and beneath it a thin horizontal palette swatch strip with the
+    caption {{palette_swatch_caption}}. The character name banner sits
+    across the very top in a slim header band.
+  style: >-
+    Clean concept-art reference aesthetic — confident anime/manga line
+    art with subtle cel-shading at two tonal stops, soft pencil
+    construction lines visible at very low opacity, ink-and-pencil
+    feel. Signature features {{key_feature_1}} and {{key_feature_2}}
+    must read clearly across all three views. Color palette is
+    moderate, no neon. Typography for labels is a slim industrial
+    sans-serif.
+  text_blocks:
+    - { slot: char_name_banner, text: '"{{char_name}}"' }
+    - { slot: label_front,      text: '"Front"' }
+    - { slot: label_side,       text: '"Side"' }
+    - { slot: label_back,       text: '"Back"' }
+    - { slot: header_expr,      text: '"Expressions"' }
+    - { slot: prop_caption,     text: '"Detail: {{weapon_or_prop}}"' }
+    - { slot: palette_caption,  text: '"{{palette_swatch_caption}}"' }
+  preserve:
+    - distinctive hairstyle and silhouette
+    - signature accessory or weapon
+    - costume color block proportions
+  negative:
+    - photorealistic skin
+    - busy environment background
+    - dynamic action pose
+    - lens flare
+    - watermarks
+    - real-celebrity likeness
+    - branded copyrighted IP
+    - rainbow neon palette
+    - 3D rendered look
+    - cluttered floating ornaments
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: continuity
+license: CC-BY-4.0

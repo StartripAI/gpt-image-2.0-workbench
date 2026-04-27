@@ -1,0 +1,61 @@
+image2-workbench
+Copyright 2026 image2-workbench contributors
+
+Licensed under a layered structure:
+  - Code (src/, tests/, scripts/, .github/) under Apache License 2.0 — see LICENSE
+  - Content (templates/, docs/, README*, NOTICE) under Creative Commons
+    Attribution 4.0 International — see LICENSE-CONTENT
+  - Third-party corpus records (corpus/normalized/) carry per-record license
+    metadata; see corpus/manifests/source_registry.yml
+
+================================================================================
+Third-Party Acknowledgments
+================================================================================
+
+Methodological inspiration (no source code or prompt text copied)
+----------------------------------------------------------------
+The directory layout pattern of bundling a Skill (skills/), a Python CLI
+(src/), and reference documentation (references/ in their case, docs/ in ours)
+was inspired by the public structure of:
+
+  wuyoscar/gpt_image_2_skill
+  https://github.com/wuyoscar/gpt_image_2_skill
+  Licensed CC BY 4.0
+
+NO source code, prompt text, README prose, or template content was copied from
+that repository. This project's CLI surface, command set, default values,
+template DSL, validators, and prompt language are independent reimplementations
+based on OpenAI's official documentation and the project authors' own design.
+The structural inspiration is treated as a public methodology, not as a
+derivative work.
+
+OpenAI documentation
+--------------------
+The correctness rules in this project (parameter ranges, valid sizes, quality
+tiers, moderation defaults, transparent-background limitation, input_fidelity
+deprecation, multilingual text rendering recommendations) were derived by
+reading the public OpenAI documentation:
+
+  - gpt-image-2 model page (https://developers.openai.com/api/docs/models/gpt-image-2)
+  - Image Generation Guide (https://developers.openai.com/api/docs/guides/image-generation)
+  - Image-Generation Prompting Guide (OpenAI Cookbook)
+
+We cite these sources but do not redistribute their prose. Where API parameter
+names appear in this project (e.g. size, quality, moderation, n,
+output_compression), they are factual API surface, not protected content.
+
+================================================================================
+License Layering Summary
+================================================================================
+
+| Path                                | License                              |
+|-------------------------------------|--------------------------------------|
+| src/, tests/, scripts/              | Apache-2.0                           |
+| .github/                            | Apache-2.0                           |
+| templates/, docs/, README*          | CC BY 4.0                            |
+| LICENSE, LICENSE-CONTENT, NOTICE    | Public (license texts themselves)    |
+| corpus/normalized/*.jsonl           | Per-record (see source_registry.yml) |
+| corpus/harvested/                   | Gitignored; never redistributed      |
+
+When in doubt about the license of a particular file, check for an
+SPDX-License-Identifier header at the top of the file.

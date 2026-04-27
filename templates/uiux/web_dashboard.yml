@@ -1,0 +1,79 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: uiux_web_dashboard
+domain: uiux
+description: Clean B2B SaaS analytics dashboard mockup with sidebar nav, KPI grid, and a primary chart.
+
+artifact:
+  type: mockup
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: product managers, founders, designers prototyping a SaaS analytics surface
+
+spec:
+  subject: >-
+    A pixel-perfect web dashboard mockup for {{product_name}} rendered as
+    if captured from a 16:9 desktop viewport. The composition includes a
+    left sidebar with a five-item primary navigation, a top header band,
+    a 3-column row of KPI cards, a hero chart panel below the KPIs, and
+    a small data table pinned to the bottom.
+  action: >-
+    The interface is at rest. The viewer scans top-to-bottom: brand and
+    nav anchor identity, KPI cards deliver instant proof, the chart
+    answers "trend over {{period}}", and the table grounds the numbers.
+    No tooltips, modals, or loading states.
+  scene: >-
+    Pure on-screen field. No browser chrome, no OS window controls, no
+    desktop wallpaper visible. Background is a soft off-white SaaS
+    surface (#F7F8FA) with a faint 8-pixel light grey grid optionally
+    visible behind cards.
+  composition: >-
+    Left rail (~14% width) holds the {{product_name}} wordmark up top
+    and five vertical nav rows below, each with a tiny leading icon and
+    label. The remaining content area carries a 64px-tall header strip
+    showing the chart title at left and a date-range pill ({{period}})
+    at right. Below the header, three KPI cards span the row at equal
+    width with 24px gutters. Below that, a single hero chart panel
+    occupies ~45% of vertical space; underneath, a tabular block fills
+    the remaining bottom. Outer canvas padding is 32px.
+  style: >-
+    Clean B2B SaaS aesthetic in a contemporary Linear / Vercel /
+    Tailwind UI cut. White cards on the off-white field, 1px slate-200
+    hairline borders, 12px corner radius, single restrained accent color
+    (deep indigo or emerald) used only for active nav row, KPI delta
+    arrows, and the hero chart line. Type system: Inter at 13/14/15px
+    body and 22/28px display. No drop shadows beyond a 1px hairline; no
+    glassmorphism, no gradients.
+  text_blocks:
+    - { slot: product_name, text: '"{{product_name}}"' }
+    - { slot: nav_label_1,  text: '"{{nav_label_1}}"' }
+    - { slot: nav_label_2,  text: '"{{nav_label_2}}"' }
+    - { slot: nav_label_3,  text: '"{{nav_label_3}}"' }
+    - { slot: nav_label_4,  text: '"{{nav_label_4}}"' }
+    - { slot: nav_label_5,  text: '"{{nav_label_5}}"' }
+    - { slot: kpi_1_label,  text: '"{{kpi_1_label}}"' }
+    - { slot: kpi_2_label,  text: '"{{kpi_2_label}}"' }
+    - { slot: kpi_3_label,  text: '"{{kpi_3_label}}"' }
+    - { slot: chart_title,  text: '"{{chart_title}}"' }
+    - { slot: period,       text: '"{{period}}"' }
+  preserve: []
+  negative:
+    - photographic background
+    - 3D charts
+    - rainbow palette
+    - glassmorphism blur
+    - dark-mode neon
+    - clip-art icons
+    - stock-photo people
+    - hand-drawn sketch
+    - watermarks
+    - lens flare
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

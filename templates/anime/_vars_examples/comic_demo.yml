@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo variable bundle for templates/anime/comic_8panel.yml.
+# Renders an 8-panel manga page about a programmer fighting a deadline at 3am.
+
+protagonist_name: "Hayato"
+protagonist_visual: "lanky junior programmer, messy bedhead, oversized hoodie"
+setting: "a cramped Tokyo studio apartment lit only by a single desk lamp"
+panel_1_action: "alarm clock reads 3:00; Hayato stares wide-eyed at his terminal"
+panel_2_action: "build fails with a wall of red errors; he clutches his hair"
+panel_3_action: "close-up on a single missing semicolon highlighted on screen"
+panel_4_action: "Hayato leaps up triumphantly, fist raised"
+panel_5_action: "he hits Run; the progress bar crawls; sweat beads on his brow"
+panel_6_action: "tests pass green; he collapses backward into his chair"
+panel_7_action: "wide shot — sunrise creeps through the blinds, his cat yawns"
+panel_8_action: "Hayato face-down on the desk, asleep; a deploy notification pings"
+tagline: "Ship it. Sleep later."

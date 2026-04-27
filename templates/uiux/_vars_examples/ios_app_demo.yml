@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo variable bundle for templates/uiux/ios_app_mockup.yml.
+# Renders a meditation-and-breathwork iOS app screenshot.
+
+app_name: "Stillwater"
+header_title: "Today"
+nav_tab_1: "Home"
+nav_tab_2: "Sessions"
+nav_tab_3: "Profile"
+card_title_1: "Morning Breathwork"
+card_subtitle_1: "5 min · guided · level 1"
+card_title_2: "Evening Wind-down"
+card_subtitle_2: "12 min · ambient · level 2"
+accent_hex: "#5B8DEF"

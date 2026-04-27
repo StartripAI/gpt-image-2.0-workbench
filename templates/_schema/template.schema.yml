@@ -1,0 +1,142 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Template schema reference for image2-workbench.
+#
+# Authoritative validation lives in src/image2_workbench/compiler/schema.py
+# (pydantic v2). This file is informational only — humans read it, machines
+# read the python module. If the two disagree, the python module wins.
+#
+# The DSL has seven logical sections plus meta.
+#
+#   Section 1  subject       (主体)        — what the image is OF
+#   Section 2  action        (动作)        — what subjects are DOING
+#   Section 3  scene         (场景)        — where / when / atmosphere
+#   Section 4  composition   (构图)        — framing, layout, focal hierarchy
+#   Section 5  style         (风格)        — medium, lighting, finish
+#   Section 6  text_blocks   (文字渲染)    — chunked named slots, <=80 chars each
+#   Section 7  preserve / negative (保留 / 禁止) — edit-mode preservation, NO list
+
+required:
+  - id
+  - domain
+  - artifact
+  - spec
+  - quality_policy
+  - api_mode
+  - language_targets
+  - grader_profile
+  - license
+
+properties:
+  id:
+    type: string
+    pattern: "^[a-z][a-z0-9_]+$"
+    description: snake_case template identifier, unique within the catalog.
+
+  domain:
+    type: string
+    enum: [business, academic, uiux, anime, industrial, ecommerce]
+
+  description:
+    type: string
+    optional: true
+    description: One-line zh+en summary; surfaced in `i2w template list`.
+
+  artifact:
+    required: [type, aspect, size]
+    properties:
+      type:
+        enum: [infographic, poster, mockup, character_sheet, comic_page, diagram]
+      aspect:
+        type: string
+        pattern: "^\\d+:\\d+$"
+        example: "3:2"
+      size:
+        type: string
+        pattern: "^\\d+x\\d+$"
+        constraints:
+          - max_edge: 3840
+          - both_multiple_of: 16
+          - aspect_ratio_max: 3.0
+          - total_pixels: [655360, 8294400]
+        example: "1536x1024"
+      audience:
+        type: string
+        optional: true
+
+  spec:
+    required: [subject, action, scene, composition, style]
+    properties:
+      subject:
+        type: string
+        description: Section 1 — Jinja template string, supports {{vars}}.
+      action:
+        type: string
+        description: Section 2 — Jinja template string.
+      scene:
+        type: string
+        description: Section 3 — Jinja template string.
+      composition:
+        type: string
+        description: Section 4 — Jinja template string.
+      style:
+        type: string
+        description: Section 5 — Jinja template string.
+      text_blocks:
+        type: array
+        description: Section 6 — chunked text slots (each <= 80 chars after rendering).
+        items:
+          required: [slot, text]
+          properties:
+            slot:
+              type: string
+              example: header
+            text:
+              type: string
+              max_length: 80
+      preserve:
+        type: array
+        description: Section 7a — items to preserve verbatim in edit mode.
+        items: { type: string }
+        optional: true
+      negative:
+        type: array
+        description: Section 7b — items to exclude (rendered as the NO list).
+        items: { type: string }
+        optional: true
+
+  quality_policy:
+    required: [default, exploration]
+    properties:
+      default: { enum: [low, medium, high] }
+      exploration: { enum: [low, medium, high] }
+
+  api_mode:
+    enum: [images_generate, images_edit, responses]
+
+  moderation:
+    enum: [auto, low]
+    default: auto
+    note: |
+      Do not default to 'low' — gpt-image-2 follows the OpenAI default 'auto'.
+
+  language_targets:
+    type: array
+    minItems: 1
+    items: { enum: ["zh-CN", "en"] }
+
+  grader_profile:
+    enum:
+      - text_fidelity_dense
+      - text_fidelity_sparse
+      - layout
+      - edit_locality
+      - continuity
+
+  license:
+    type: string
+    default: CC-BY-4.0
+
+forbidden:
+  - background must never be 'transparent' (gpt-image-2 only supports auto/opaque).
+  - input_fidelity is not a supported gpt-image-2 parameter; runtimes reject it.
+  - moderation must not default to 'low'.

@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo variable bundle for templates/uiux/social_cover_xhs.yml.
+# 渲染一张「周末去哪玩」生活方式教程封面 / Renders a weekend lifestyle XHS cover.
+
+topic_zh: "周末去哪玩"
+subtitle_zh: "上海宝藏小众路线｜2 天 1 夜"
+bullet_1_zh: "梧桐区咖啡馆漫游"
+bullet_2_zh: "外滩日落+夜景机位"
+bullet_3_zh: "苏州河边小酒馆"
+accent_color: "暖橘 / warm tangerine"

@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo variable bundle for templates/anime/city_poster.yml.
+# Renders a bilingual editorial Tokyo travel poster.
+
+city_name: "Tokyo"
+season_year: "Spring 2026"
+landmark_1: "Tokyo Tower"
+landmark_2: "Senso-ji's main hall"
+landmark_3: "the Rainbow Bridge"
+tagline_zh: "在霓虹与樱花之间，慢慢走"
+tagline_en: "Walk slowly, between neon and cherry blossom."

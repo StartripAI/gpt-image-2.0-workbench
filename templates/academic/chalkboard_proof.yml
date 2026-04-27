@@ -1,0 +1,71 @@
+id: academic_chalkboard_proof
+domain: academic
+description: Photorealistic university chalkboard with a four-step mathematical proof and QED line.
+
+artifact:
+  type: poster
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: math undergraduates, graduate seminar attendees, lecture-recap viewers
+
+spec:
+  subject: >-
+    A photorealistic shot of a university lecture-hall chalkboard on which
+    a careful proof of {{theorem_name}} has been written out by hand. The
+    board reads as a single coherent argument: the theorem name banner at
+    the top, four numbered proof steps stacked beneath it, and a final
+    QED line drawn with a small filled square to close the argument.
+  action: >-
+    The chalk strokes show the recent labor of teaching — slightly
+    powdery, with the occasional partial erasure ghosting where a
+    previous line was rubbed away. Nothing else is happening in the
+    room; the camera frames the board as the protagonist.
+  scene: >-
+    Late-morning lecture hall, slate-grey board mounted on a warm wood
+    rail, soft daylight raking across the surface from upper-left, gentle
+    falloff toward the corners. The very edges of the frame show a hint
+    of camera blur and tiled ceiling, but the central board is razor-
+    sharp. No people in frame.
+  composition: >-
+    16:9 board fills ~90% of the frame, centered. Theorem name occupies
+    the top 14% as a bold underlined banner. Beneath it, four step lines
+    set in a single column, comfortably spaced, with step labels (Step 1
+    through Step 4) on the left margin and the math notation flowing
+    rightward. The final line sits flush right with the QED square.
+    Margins on the board itself are generous; chalk dust collects faintly
+    along the lower rail.
+  style: >-
+    Photorealistic, museum-print quality. Palette: deep slate green-grey
+    board, off-white chalk, warm wood rail. Handwriting style is the
+    confident cursive of a working mathematician — legible but unhurried,
+    with proper math notation (Greek letters, summation, integral signs,
+    fractions rendered with a horizontal bar, not a slash). Slight
+    natural depth-of-field falloff on the frame edges.
+  text_blocks:
+    - { slot: theorem_title, text: '"{{theorem_name}}"' }
+    - { slot: step_line_1,   text: '"Step 1: {{step_1}}"' }
+    - { slot: step_line_2,   text: '"Step 2: {{step_2}}"' }
+    - { slot: step_line_3,   text: '"Step 3: {{step_3}}"' }
+    - { slot: step_line_4,   text: '"Step 4: {{step_4}}"' }
+    - { slot: qed_line,      text: '"{{final_line}}"' }
+  preserve: []
+  negative:
+    - watermarks
+    - signatures
+    - busy backgrounds
+    - cartoon style
+    - anime style
+    - neon colors
+    - cluttered desks
+    - student silhouettes
+    - whiteboard markers
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

@@ -1,0 +1,70 @@
+id: academic_scientific_diagram
+domain: academic
+description: Museum-style cross-section or labeled scientific illustration with five callouts.
+
+artifact:
+  type: diagram
+  aspect: "3:2"
+  size: "1536x1024"
+  audience: science museum visitors, secondary-school biology and earth-science classrooms
+
+spec:
+  subject: >-
+    A museum-grade scientific illustration of {{subject_topic}}, rendered
+    as a single hero specimen sitting in the center of the page with five
+    annotated callouts arrayed around it. The image evokes the
+    cabinet-of-curiosities tradition while remaining unambiguously
+    educational: every label resolves to a specific anatomical or
+    structural feature.
+  action: >-
+    Thin leader lines run from each labeled component to its named
+    feature on the specimen, terminating in small filled circles. The
+    composition does not move; it functions like a printed plate from a
+    19th-century natural-history monograph reprinted for a modern
+    classroom wall.
+  scene: >-
+    Aged cream paper substrate with subtle deckle edges and gentle foxing
+    in the corners. No frame, no people, no environment beyond the paper
+    field; the paper itself is the world.
+  composition: >-
+    Centered specimen occupying ~55% of the frame, with a small caption
+    plate beneath (showing era_or_caption) and the title set across the
+    top. Five labels distributed around the specimen, three on the right
+    and two on the left, with their leader lines kept at gentle angles
+    that never cross. Outer margins ≥6%, internal whitespace generous.
+  style: >-
+    Hand-drawn ink linework over soft watercolor washes, the kind of
+    mixed-media plate you would see in a Victorian field guide reissued
+    with a clean modern typographic layer. Palette: warm ivory paper,
+    sepia ink, muted earth-pigment washes (umber, ochre, slate, viridian).
+    Sans-serif label typography (humanist, lightweight) keeps the plate
+    contemporary; the wash and line do the period work.
+  text_blocks:
+    - { slot: title,    text: '"{{subject_topic}}"' }
+    - { slot: caption,  text: '"{{era_or_caption}}"' }
+    - { slot: label_1,  text: '"{{label_1}}"' }
+    - { slot: label_2,  text: '"{{label_2}}"' }
+    - { slot: label_3,  text: '"{{label_3}}"' }
+    - { slot: label_4,  text: '"{{label_4}}"' }
+    - { slot: label_5,  text: '"{{label_5}}"' }
+  preserve: []
+  negative:
+    - watermarks
+    - signatures
+    - busy backgrounds
+    - cartoon style
+    - anime style
+    - chibi proportions
+    - neon colors
+    - photographic realism
+    - 3D rendering
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

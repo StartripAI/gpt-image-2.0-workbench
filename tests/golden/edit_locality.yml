@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: CC-BY-4.0
+rubric: edit_locality
+cases:
+  - case_id: replace_logo_only
+    expected_change: "logo"
+    expected_preserve:
+      - background
+      - typography
+      - product photo
+    prompt: |
+      Change only the logo in the top-left corner to the new mark. Keep
+      everything else identical: preserve the background, typography, and
+      product photo without altering them.
+  - case_id: missing_locality_phrase
+    expected_change: "background"
+    expected_preserve:
+      - subject
+      - lighting
+    prompt: |
+      Update the background to a sunset gradient. Keep the subject and
+      lighting how they are.
+  - case_id: missing_preserve_item
+    expected_change: "headline"
+    expected_preserve:
+      - body copy
+      - product shot
+    prompt: |
+      Change only the headline to "Now Shipping". Leaving the rest of the
+      poster intact, especially the body copy.

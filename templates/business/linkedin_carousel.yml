@@ -1,0 +1,68 @@
+id: business_linkedin_carousel
+domain: business
+description: LinkedIn "by the numbers" carousel cover slide with bold dark-mode typography.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1152x1440"
+  audience: LinkedIn feed scrollers, B2B marketers, founder-led brand accounts
+
+spec:
+  subject: >-
+    A vertical 4:5 carousel cover for a "by the numbers" LinkedIn post.
+    The cover frames a single headline at the top, a 2x2 grid of four
+    standout statistics in the middle, and a short mission statement
+    pinned to the bottom — engineered to hook a thumb-scroller in the
+    first quarter-second.
+  action: >-
+    The cover should feel like an editorial pull-quote: oversized
+    typography commands attention, the four stat tiles deliver the
+    proof, and the mission statement closes the hook. No motion
+    suggestion; the slide reads as a static still that survives the feed.
+  scene: >-
+    Dark studio field, near-black with a subtle vignette toward the
+    edges. No photographic background. Optional faint dotted grid at
+    very low contrast for structure.
+  composition: >-
+    Generous outer margins (~6%). Top zone (≈22% height) holds the
+    headline, set massive and tight-tracked. Middle zone (≈48%) holds
+    four stat tiles in a 2x2 grid with thin divider rules between them.
+    Bottom zone (≈18%) holds the mission line, smaller and lighter in
+    weight, set above a tiny accent dot. Internal padding inside each
+    stat tile keeps numbers from kissing the rules.
+  style: >-
+    Dark-mode editorial. Palette: ink black (#0B0B0E) ground, paper-
+    white type, a single high-saturation accent (electric lime or
+    cyan) reserved for the four stat numerals. Big white sans-serif in
+    a contemporary grotesque cut (Inter / Söhne / GT America feel),
+    very tight margins, no decorative ornament, no photographic noise.
+  text_blocks:
+    - { slot: headline,    text: '"{{headline}}"' }
+    - { slot: stat_tile_1, text: '"{{stat_1}}"' }
+    - { slot: stat_tile_2, text: '"{{stat_2}}"' }
+    - { slot: stat_tile_3, text: '"{{stat_3}}"' }
+    - { slot: stat_tile_4, text: '"{{stat_4}}"' }
+    - { slot: mission,     text: '"{{mission}}"' }
+  preserve: []
+  negative:
+    - watermarks
+    - signatures
+    - busy backgrounds
+    - hand-drawn style
+    - casual fonts
+    - stock-photo overlays
+    - emoji clutter
+    - rainbow gradients
+    - 3D text
+    - drop shadows
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

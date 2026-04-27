@@ -1,0 +1,73 @@
+id: academic_journal_poster
+domain: academic
+description: Vertical 3-column conference poster with intro, methods, results, conclusion.
+
+artifact:
+  type: poster
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: academic conference attendees, peer-review browsing, lab-group walls
+
+spec:
+  subject: >-
+    A vertical 3-column academic conference poster for the paper
+    "{{paper_title}}" by {{authors}}. The poster reads as a single
+    self-contained scientific argument: a banner-style title block at
+    the top, a three-column body that walks through Introduction,
+    Methods, Results, and Conclusion, and two captioned figure panels
+    integrated into the column flow.
+  action: >-
+    The reader's gaze travels top-to-bottom within each column, then
+    left-to-right across columns, exactly as a working researcher would
+    skim a poster at a conference. Section headers act as landmarks; the
+    figure captions provide quick takeaways for the time-poor browser.
+  scene: >-
+    Flat printed-poster surface, neutral paper-white ground. No physical
+    environment, no people; the rendered image IS the poster.
+  composition: >-
+    9:16 frame. Top 12% holds the title (centered, two-line capacity)
+    above the authors line. The remaining 88% is a three-column grid
+    with a generous gutter. Column 1 holds Introduction header + summary
+    and Methods header + summary; Column 2 holds Figure 1 panel with
+    its caption, then Results header + summary; Column 3 holds Figure 2
+    panel with its caption, then Conclusion header + summary. Section
+    headers are set in a heavier display weight; body copy in a
+    comfortable reading size.
+  style: >-
+    Editorial scientific-journal aesthetic, neutral palette of paper
+    white, charcoal, and a single muted accent (denim blue) reserved for
+    section headers and figure rules. Type system pairs a serif display
+    face for headers (think a clean Source Serif / Charter) with a
+    humanist sans for body. Figures rendered as restrained, schematic
+    illustrations rather than photographs; rules and dividers are thin,
+    functional, and unobtrusive.
+  text_blocks:
+    - { slot: title,             text: '"{{paper_title}}"' }
+    - { slot: authors_line,      text: '"{{authors}}"' }
+    - { slot: intro_header,      text: '"Introduction: {{intro_summary}}"' }
+    - { slot: methods_header,    text: '"Methods: {{methods_summary}}"' }
+    - { slot: results_header,    text: '"Results: {{results_summary}}"' }
+    - { slot: conclusion_header, text: '"Conclusion: {{conclusion_summary}}"' }
+    - { slot: figure_caption_1,  text: '"Fig 1. {{figure_caption_1}}"' }
+    - { slot: figure_caption_2,  text: '"Fig 2. {{figure_caption_2}}"' }
+  preserve: []
+  negative:
+    - watermarks
+    - signatures
+    - busy backgrounds
+    - cartoon style
+    - anime style
+    - clip-art icons
+    - rainbow palettes
+    - decorative borders
+    - stock-photo people
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

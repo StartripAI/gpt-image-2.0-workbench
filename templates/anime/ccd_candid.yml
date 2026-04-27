@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: anime_ccd_candid
+domain: anime
+description: 复古 CCD 相机风格自拍 / Vintage CCD camera-style candid (a non-photoreal staged "authenticity").
+
+artifact:
+  type: photo
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: 小红书 / Instagram users posting Y2K-flavored "CCD" candid trend content
+
+spec:
+  subject: >-
+    A vertical mobile-phone-format candid snapshot of a subject described
+    as "{{subject_descriptor}}", staged to look as if captured on an
+    early-2000s consumer CCD compact camera. The frame catches the
+    subject mid-moment, off-center, slightly cropped at the edge as if
+    the photographer didn't quite line up the shot.
+  action: >-
+    The subject is doing something ordinary and unposed — laughing
+    mid-sentence, glancing sideways, blinking, brushing hair away —
+    captured the instant a casual phone-pic might land. No fashion
+    pose, no eye-contact runway gaze, no studio choreography.
+  scene: >-
+    The setting is "{{setting_native}}" at {{time_of_day}}. Ambient
+    light is realistic and ordinary: dim interior, late-night street,
+    or grey afternoon room. Whatever surrounds the subject reads as
+    real life rather than a constructed set.
+  composition: >-
+    Vertical 9:16 frame, off-center subject placement, slight tilt of
+    a few degrees, edge-of-frame cropping that feels accidentally
+    composed. A subtle motion blur ghosts a hand or hair edge. The
+    horizon, if visible, is not perfectly level. Very minimal
+    overlaid element: a tiny date-stamp style timestamp burned into
+    one corner.
+  style: >-
+    Vintage CCD compact-camera aesthetic — harsh on-camera flash with
+    visible falloff darkening the corners, fine sensor / film grain,
+    a slight off-color cast (cool magenta in shadow, warm yellow in
+    highlight), modest red-eye when the flash hits a face in low
+    light, soft chromatic fringing at high-contrast edges. Mood is
+    "{{mood}}". The image must feel grainy and imperfect, not
+    AI-glossy. Definitely not editorial fashion.
+  text_blocks:
+    - { slot: timestamp_overlay, text: '"{{time_of_day}}"' }
+  preserve: []
+  negative:
+    - studio-perfect lighting
+    - professional model pose
+    - AI-glossy plastic skin
+    - heavy beauty retouching
+    - editorial fashion staging
+    - clean noise-free render
+    - perfect rule-of-thirds composition
+    - centered eye-contact gaze
+    - real-celebrity likeness
+    - branded copyrighted IP
+    - watermarks beyond the corner timestamp
+    - lens flare
+    - HDR oversaturation
+
+quality_policy:
+  default: medium
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

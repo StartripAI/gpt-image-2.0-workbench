@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: CC-BY-4.0
+rubric: continuity
+cases:
+  - case_id: anime_panels_pass
+    expected_anchors:
+      - hairstyle
+      - outfit silhouette
+      - signature accessory
+    prompt: |
+      Render a 4-panel manga sequence. Maintain the same character across
+      all panels: keep the hairstyle, outfit silhouette, and signature accessory
+      consistent throughout. Background varies between panels.
+  - case_id: missing_continuity_phrase
+    expected_anchors:
+      - hairstyle
+      - outfit silhouette
+    prompt: |
+      Render a 3-panel sequence. Each panel shows the character with their
+      hairstyle and outfit silhouette in a different setting.
+  - case_id: missing_anchor
+    expected_anchors:
+      - hairstyle
+      - outfit silhouette
+      - eye color
+    prompt: |
+      Render a 4-panel manga. Preserve the hairstyle and outfit silhouette
+      across all panels; the character should remain consistent.

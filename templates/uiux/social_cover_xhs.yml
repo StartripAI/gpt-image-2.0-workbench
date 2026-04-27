@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: uiux_social_cover_xhs
+domain: uiux
+description: 中文小红书风格教程封面 / Chinese-language Xiaohongshu cover for tutorial or lifestyle topic.
+
+artifact:
+  type: poster
+  aspect: "3:4"
+  size: "1152x1536"
+  audience: 小红书 / Xiaohongshu creators publishing lifestyle, beauty, travel, or how-to content
+
+spec:
+  subject: >-
+    一张垂直 3:4 比例的小红书封面图，主题为「{{topic_zh}}」。
+    画面顶部为大号中文标题，中段为副标题与三条要点项目，
+    画面四周散落少量胶带、便签或小贴纸装饰元素，呈现温暖
+    自然的生活方式氛围 / a vertical 3:4 Xiaohongshu cover
+    for the topic "{{topic_zh}}", with a bold Chinese headline up top,
+    a subtitle and three bullets in the mid-zone, and tape / sticker
+    accents scattered around the corners.
+  action: >-
+    封面以静态形式呈现，读者在拇指划过的瞬间被大号中文标题
+    吸引，随后顺着三条要点向下扫读，最后落点于角落的小装饰
+    元素。无动效、无渐变弹出 / the cover reads as a still
+    that hooks a thumb scroller via the oversized Chinese
+    headline, then guides the eye down through the three bullets
+    and resolves on the corner stickers.
+  scene: >-
+    柔和自然光，仿佛阳光穿过窗户洒在带有轻微纸纹的米白色
+    衬纸上。无人物，无具体地点，仅提供生活方式氛围的静物质感
+    / soft natural daylight as if filtered through a window onto an
+    off-white pastel paper field with subtle paper grain. No people,
+    no specific location, only a still-life lifestyle atmosphere.
+  composition: >-
+    垂直 3:4 画幅。顶部约 28% 为大号中文主标题，使用粗黑体或
+    思源黑体风格，左对齐，紧凑字距。中段约 14% 为副标题，
+    字号小一档，颜色稍淡。下方约 40% 依次堆叠三条要点，每条
+    前置一个手写感的小圆点或勾勾符号。底部约 12% 留白，仅有
+    一条与 {{accent_color}} 同色的细装饰条。左上、右下角各
+    放置一片仿胶带或便签，制造杂志手账的随意感 / 28% top
+    headline, 14% subtitle, 40% bullet stack, 12% bottom margin
+    with a thin {{accent_color}} accent rule, plus tape/sticker
+    accents at top-left and bottom-right corners.
+  style: >-
+    小红书生活方式封面风格 — 柔光、米白纸感、粗体中文衬黑体
+    或思源黑体的混排，少量手写感装饰，胶带、贴纸、便签等
+    纸质元素，整体色调以 {{accent_color}} 为唯一强调色，配合
+    中性米色与浅灰，不使用刺眼饱和色。摄影感极弱，更像数字
+    手账 / Xiaohongshu lifestyle cover aesthetic — soft natural
+    light, paper texture, bold Chinese sans-serif, scrapbook-style
+    tape and sticker decorations, single accent color
+    {{accent_color}} against neutral cream and light grey.
+  text_blocks:
+    - { slot: title_zh,    text: '"{{topic_zh}}"' }
+    - { slot: subtitle_zh, text: '"{{subtitle_zh}}"' }
+    - { slot: bullet_1_zh, text: '"{{bullet_1_zh}}"' }
+    - { slot: bullet_2_zh, text: '"{{bullet_2_zh}}"' }
+    - { slot: bullet_3_zh, text: '"{{bullet_3_zh}}"' }
+  preserve: []
+  negative:
+    - 英文为主的版面 / English-dominant layout
+    - 商务 PPT 风格 / corporate slide aesthetic
+    - 刺眼的霓虹色 / neon saturation
+    - 3D 立体字 / 3D extruded type
+    - 廉价网图水印 / stock-image watermarks
+    - 真人模特照片 / model photography
+    - 卡通表情符号堆砌 / emoji clutter
+    - 鸡汤式书法体 / overwrought calligraphy script
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

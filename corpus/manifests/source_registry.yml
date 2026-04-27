@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# image2-workbench source registry
+# This registry tracks every upstream source from which we ingest metadata
+# (URLs, authors, popularity signals). It does NOT redistribute upstream
+# prompt text. Per-record fields:
+#   id                — unique snake_case
+#   kind              — official | github_repo | community_post | docs_mirror
+#   url               — canonical URL
+#   license_declared  — what the source claims
+#   license_observed  — what a license file actually shows (may differ)
+#   license_status    — clear | ambiguous | metadata_only
+#   redistributable   — none | with_attribution | unrestricted
+#   use               — short description of how we use it
+#   notes             — anything worth flagging
+
+sources:
+  - id: openai-cookbook-image-prompting
+    kind: official
+    url: https://developers.openai.com/cookbook/examples/multimodal/image-gen-models-prompting-guide
+    license_declared: "OpenAI documentation (citation only)"
+    license_observed: "OpenAI documentation (citation only)"
+    license_status: metadata_only
+    redistributable: none
+    use: "Source of correctness rules — parameter ranges, valid sizes, prompting structure. We do not redistribute prose."
+    notes: "Authoritative."
+
+  - id: openai-image-generation-guide
+    kind: official
+    url: https://developers.openai.com/api/docs/guides/image-generation
+    license_declared: "OpenAI documentation (citation only)"
+    license_observed: "OpenAI documentation (citation only)"
+    license_status: metadata_only
+    redistributable: none
+    use: "API surface reference."
+    notes: "Authoritative."
+
+  - id: openai-gpt-image-2-model-page
+    kind: official
+    url: https://developers.openai.com/api/docs/models/gpt-image-2
+    license_declared: "OpenAI documentation (citation only)"
+    license_observed: "OpenAI documentation (citation only)"
+    license_status: metadata_only
+    redistributable: none
+    use: "Snapshot IDs, rate limits, capability table."
+    notes: ""
+
+  - id: wuyoscar-gpt-image-2-skill
+    kind: github_repo
+    url: https://github.com/wuyoscar/gpt_image_2_skill
+    license_declared: "CC-BY-4.0"
+    license_observed: "CC-BY-4.0"
+    license_status: clear
+    redistributable: with_attribution
+    use: "Methodological inspiration only — Skill+CLI+references layout. NO source code, prompt text, or README prose copied."
+    notes: "Tracked here for transparency. Attribution captured in NOTICE."

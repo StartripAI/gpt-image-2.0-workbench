@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+ENV/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Testing
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.cache
+coverage.xml
+*.cover
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project-specific
+out/
+fig/
+corpus/harvested/
+*.log
+.image2/
