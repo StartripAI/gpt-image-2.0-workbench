@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: isometric_city_block
+domain: isometric_illustration
+description: True-isometric city block with named buildings, tiny vehicles, and street trees, projected on a strict 30-30 grid.
+
+artifact:
+  type: infographic
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: city dashboard editors, urban-planning briefing decks, indie game-codex artists
+
+spec:
+  subject: >-
+    A single named city block, "{{block_label}}", drawn in true
+    isometric projection. The block contains two anchor buildings,
+    {{building1}} and {{building2}}, plus a handful of supporting
+    rooftops, street trees, and tiny vehicles. Streets surround the
+    block on all four sides; intersections clip neatly at the frame.
+  action: >-
+    The viewer reads the block top-down at the canonical isometric
+    angle. Vehicles sit mid-street as if paused; pedestrians, if
+    present, are simplified silhouettes no taller than 2% of the frame.
+    Nothing rotates out of grid, nothing cheats perspective; the scene
+    is a frozen analytic snapshot rather than a cinematic moment.
+  scene: >-
+    Studio-flat infographic environment. Background is a single quiet
+    paper-tone field in the {{palette_keyword}} family with a faint
+    isometric dot-grid showing through the margins. No sky, no horizon,
+    no atmospheric haze. Roads are paved in flat tonal fills with thin
+    crosswalk hatching at corners; sidewalks read one tone lighter.
+  composition: >-
+    Strict 30-degree / 30-degree isometric projection (no two-point
+    perspective). The block sits centered, occupying ~78% of the frame,
+    with breathing room on all sides for labels. The block label sits
+    top-left in a small all-caps sans plate; building labels sit beside
+    each anchor building with thin leader lines. Vertical heights stay
+    proportional — no exaggerated towers — so the block reads as a
+    plan-axonometric reference.
+  style: >-
+    Flat vector-style isometric illustration with subtle two-tone
+    shading (one base tone plus one shadow tone per surface, no
+    gradient). Palette anchored on the {{palette_keyword}} family.
+    Crisp 1-pixel outlines on building silhouettes; interior planes use
+    color blocks alone. No 3D-CG render, no perspective recession, no
+    motion blur, no photoreal materials.
+  text_blocks:
+    - { slot: block_label,     text: '"{{block_label}}"' }
+    - { slot: building1_label, text: '"{{building1}}"' }
+    - { slot: building2_label, text: '"{{building2}}"' }
+  preserve:
+    - 30-30 isometric angle
+    - flat shading
+    - building label leader lines
+  negative:
+    - two-point perspective
+    - photoreal CG render
+    - cinematic lighting
+    - lens flare
+    - motion blur
+    - architecture facade elevation
+    - real-city landmark likeness
+    - branded storefront logos
+    - gradient fills
+    - drop shadows beyond a single tonal step
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

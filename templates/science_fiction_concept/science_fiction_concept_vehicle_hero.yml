@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: science_fiction_concept_vehicle_hero
+domain: science_fiction_concept
+description: Hero side-view concept-art plate of a fictional sci-fi vehicle, mech, or spacecraft on a clean studio plate.
+artifact:
+  type: poster
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: vehicle-art portfolios, pre-production silhouette reviews, pitch-deck spreads
+
+spec:
+  subject: >-
+    A hero side-view concept rendering of a fictional {{vehicle_class}}
+    bearing the designation {{designation}} from the {{era}} era.
+    The vehicle is the only subject — no pilots, no scenery, no
+    competing props — composed as a single readable silhouette so the
+    art department can lock the form before color and detail passes.
+    No real-IP designs, no licensed franchise marks.
+  action: >-
+    The viewer reads the silhouette first, then the proportional
+    relationships of cockpit-to-engine-to-armament, then the surface
+    detail. The designation slug sits unobtrusively below the hull
+    like a hangar plate. The frame must survive being printed in a
+    callsheet at A4.
+  scene: >-
+    Clean studio concept-art plate. The vehicle floats above a soft
+    ground-shadow on a flat color field appropriate to the {{era}}
+    — neutral mid-grey for utility eras, off-white for clean-room
+    eras, charcoal for grimdark eras. No environment, no parallax,
+    no diorama dressing.
+  composition: >-
+    Wide 16:9 plate, 5% safe margins. The vehicle is rendered in
+    strict orthographic side view, occupying the central ~70% of the
+    frame, baseline aligned to a notional hangar floor at ~60%
+    height. A thin technical-callout rule may run beneath the hull;
+    the designation label sits in the lower-right corner like a
+    spec-sheet stamp. No three-quarter glamour angle, no in-flight
+    drama.
+  style: >-
+    Industrial concept-art register tuned to {{era}} — silhouette-
+    first design discipline of Ryan Church, Doug Chiang, John Park
+    and Ash Thorp. Restrained palette anchored on {{palette_keyword}},
+    matte material reads, painterly brushwork in panel transitions.
+    Not 3D-CG plastic, not photoreal, not chromed showroom render.
+  text_blocks:
+    - { slot: vehicle_designation, text: '"{{designation}}"' }
+  preserve: []
+  negative:
+    - 3D-CG plastic gloss
+    - photoreal showroom chrome
+    - real-IP spaceships
+    - real military insignia
+    - in-cockpit pilots
+    - background environments
+    - lens flare
+    - rainbow gradients
+    - watermarks
+    - HUD overlays
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

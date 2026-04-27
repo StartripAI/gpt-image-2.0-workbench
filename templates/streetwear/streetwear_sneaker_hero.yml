@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: streetwear_sneaker_hero
+domain: streetwear
+description: Single sneaker hero shot — stage-lit isolation plate for a fictional drop colorway.
+
+artifact:
+  type: poster
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: independent sneaker labels, drop marketing leads, hype-culture release reviewers
+
+spec:
+  subject: >-
+    A 1:1 hero plate of a single fictional sneaker, the
+    "{{model_name}}" in the {{colorway}} colorway, released in
+    {{drop_year}}. The shoe is the sole protagonist of the frame —
+    photographed from a clean lateral profile that flatters the
+    silhouette, with the laces tied evenly and the tongue settled.
+    No foot inside, no second shoe, no box, no model.
+  action: >-
+    The sneaker is at rest in a held lateral hero pose, weight
+    centered on the midsole, heel and toe equally lifted. The image
+    is purely still — no motion blur, no panning streak, no kicked-up
+    dust. Reflections and texture across upper, midsole, and outsole
+    must describe materials honestly: knit knit, leather leather,
+    rubber rubber.
+  scene: >-
+    A controlled studio isolation set — the shoe sits on a {{surface_type}}
+    plinth or surface against a smooth tonal cyclorama. A soft contact
+    shadow grounds the outsole. No street context, no in-use scene,
+    no second sneaker, no shoebox. The atmosphere is calm and museum-
+    grade rather than retail-loud.
+  composition: >-
+    Square 1:1 frame. Sneaker silhouette occupies the central ~62%
+    area at perfect lateral profile, sitting on the {{surface_type}}
+    surface line that runs across the lower third. Generous negative
+    space wraps the silhouette. Model name sits as a quiet small caps
+    line under the surface, with the colorway name as a smaller cross-
+    line beneath. 6% safe margins on every edge.
+  style: >-
+    Stage-lit hype-aesthetic sneaker isolation — drop-page hero plate
+    sensibility. Lighting is a single soft key from upper-front with a
+    low fill; no rim light, no theatrical chrome flare, no rainbow
+    spill. Palette anchored in the colorway itself against a single
+    neutral cyclorama. Type system: a clean grotesk in small caps.
+    Materials must read photographed, not 3D-rendered glossy plastic.
+  text_blocks:
+    - { slot: model_name, text: '"{{model_name}}"' }
+    - { slot: colorway,   text: '"{{colorway}}"' }
+  preserve:
+    - sneaker silhouette
+    - midsole and outsole geometry
+  negative:
+    - real famous sneaker brand logos
+    - copyrighted swoosh / stripe / trefoil marks
+    - real-celebrity collab references
+    - foot inside the shoe
+    - second shoe in frame
+    - shoebox in frame
+    - 3D rendered glossy plastic
+    - chrome lens flare
+    - rainbow palette
+    - HDR oversaturation
+    - watermarks
+    - clip-art icons
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

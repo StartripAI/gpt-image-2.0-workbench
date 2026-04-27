@@ -35,10 +35,12 @@ properties:
   domain:
     type: string
     enum:
+      # V1 (4)
       - business
       - academic
       - uiux
       - anime
+      # V0.3 (12)
       - ecommerce
       - industrial
       - product
@@ -51,6 +53,21 @@ properties:
       - architecture
       - interior
       - travel
+      # V0.3.5 (14)
+      - typography
+      - beauty
+      - events
+      - tattoo
+      - watercolor_illustration
+      - isometric_illustration
+      - comic_book
+      - music
+      - science_fiction_concept
+      - infographic_data
+      - kids_illustration
+      - automotive
+      - pet
+      - streetwear
 
   description:
     type: string

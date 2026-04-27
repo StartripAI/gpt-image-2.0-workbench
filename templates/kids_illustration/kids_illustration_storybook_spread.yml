@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: kids_illustration_storybook_spread
+domain: kids_illustration
+description: Two-page children's storybook spread with friendly cast, narration band, and a single dialogue line.
+artifact:
+  type: poster
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: picture-book editors, early-reader publishers, school-library buyers
+
+spec:
+  subject: >-
+    A wide two-page children's storybook spread starring
+    {{character_descriptor}} in a {{scene}}. The illustration
+    spans both pages with a gentle gutter implied at center,
+    framing a single warm story moment for an early-reader
+    audience. Friendly cast, simple shapes, primary palette,
+    large legible type — never anime, never academic, never
+    photoreal.
+  action: >-
+    The viewer's eye lands first on the lead character, follows
+    the action across the gutter, and finishes on the dialogue
+    bubble or band on the opposite page. A small page-number
+    chip anchors the lower outside edge. The narration line at
+    the foot reads as a calm storybook caption.
+  scene: >-
+    {{scene}} rendered as a friendly children's-book environment.
+    Soft daylight, clean geometric shapes, no clutter. The world
+    is reassuring and slightly oversized for the cast — chairs
+    are big, doorways are tall, props are recognizable from a
+    six-year-old's vocabulary.
+  composition: >-
+    Wide 16:9 plate emulating a two-page spread, 6% safe margins.
+    Implied vertical gutter at center; the lead character occupies
+    the left third, supporting cast or props occupy the right
+    third, sky/background fills the upper band. A narration band
+    runs along the bottom 12% with the page caption set in
+    generous large type. A single rounded dialogue band sits in
+    the upper-right area. A small page number chip lives at the
+    lower-left corner.
+  style: >-
+    Children's-book illustration register in the lineage of Eric
+    Carle, Oliver Jeffers, Beatrice Alemagna and Jon Klassen —
+    rounded shapes, primary palette with a single warm accent,
+    visible paint or paper-collage texture. Type is a friendly
+    rounded sans set large for early readers. No anime eyes, no
+    photoreal rendering, no academic diagram lines, no horror
+    or violence.
+  text_blocks:
+    - { slot: page_no_left,    text: '"{{page_no_left}}"' }
+    - { slot: narration_line,  text: '"{{narration}}"' }
+    - { slot: dialogue_line,   text: '"{{dialogue}}"' }
+  preserve: []
+  negative:
+    - anime large eyes
+    - photoreal rendering
+    - academic diagram lines
+    - horror or violence
+    - dark grimdark palette
+    - sexualized characters
+    - real cartoon-IP characters
+    - copyrighted franchise marks
+    - drop shadows
+    - lens flare
+    - watermarks
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: tattoo_minimal_design
+domain: tattoo
+description: Single isolated minimalist tattoo design on stark white substrate.
+
+artifact:
+  type: poster
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: minimalist tattoo studios, design-press editors, single-design-sheet collectors
+
+spec:
+  subject: >-
+    A single isolated minimalist tattoo design — "{{design_name}}"
+    — rendered as a self-contained drawing on a stark white
+    substrate. Motif: {{motif}}. Style cue: {{style_keyword}}. The
+    design is the only object in the frame; there is no human
+    body, no skin, no shop context, no in-progress photography.
+    A small footer caption holds the design name.
+  action: >-
+    The viewer's eye lands on the centered drawing, traces its
+    contours and counter-spaces, and only then registers the small
+    footer caption. The design must read as a finished line-art
+    plate that could be transferred to a stencil unchanged.
+  scene: >-
+    Studio-flat document setting. The substrate is a clean white
+    paper with subtle tooth, calibrated for stencil-press output.
+    No environment, no perspective, no shadow gimmicks; the page
+    is the world.
+  composition: >-
+    Square 1:1 frame. Design occupies the central ~52% area,
+    perfectly centered with generous breathing space on every
+    side. Bottom 8% safe band holds a single quiet centered
+    caption with the design name. No grid, no decorative border,
+    no other vignettes — this is a single-piece sheet.
+  style: >-
+    Minimalist tattoo aesthetic — clean uniform line weight at
+    {{line_weight}}, no shading or only the slightest dot-stipple
+    accent. Lineage: contemporary fine-line / single-needle /
+    minimal dotwork (Dr Woo school, micro-tattoo lineage) without
+    copying any real artist. Pure black ink on white. No color,
+    no gradient, no 3D, no photographic rendering, no glow.
+  text_blocks:
+    - { slot: design_name, text: '"{{design_name}}"' }
+  preserve: []
+  negative:
+    - human body
+    - photographic skin
+    - tattooing in progress
+    - real famous artist signatures
+    - real famous shop logos
+    - rainbow gradients
+    - 3D rendering
+    - neon glow
+    - photographic lighting
+    - heavy color fill
+    - watermarks
+    - lens flare
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

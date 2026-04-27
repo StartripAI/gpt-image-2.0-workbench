@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: streetwear_lookbook_drop
+domain: streetwear
+description: Drop-announcement lookbook plate — single street look with drop date and collection name.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: independent streetwear labels, drop marketing leads, hype-culture lookbook editors
+
+spec:
+  subject: >-
+    A vertical drop-announcement lookbook plate for the street label
+    behind the "{{drop_name}}" capsule, part of the
+    {{collection_keyword}} collection. The plate is built around a
+    single full-figure model wearing the drop look — anchored hood,
+    layered jacket, statement bottoms, and footwear — set in a
+    deliberately urban context. Typography sits as a hard counterweight
+    to the figure rather than as decorative ornament.
+  action: >-
+    The model holds a still drop pose — squared shoulders, weight
+    centered, hands relaxed at the hips or in jacket pockets, gaze
+    just past the camera. No walking, no jumping, no skating. The
+    intent is a quiet flex: silhouette, layering, and footwear must
+    read at a thumbnail. The viewer's eye drops from the figure to
+    the drop name, then to the date plate, then to the item credits.
+  scene: >-
+    A street-corner urban environment — a poured-concrete loading
+    bay, a graffiti-washed alley wall, a tiled subway exit — chosen
+    for tonal calm rather than visual chatter. Light is the gritty
+    overcast of a working district. No cars passing, no crowds, no
+    real-brand storefront signage in frame.
+  composition: >-
+    Vertical 4:5 frame. Figure zone (~70%) holds the model full-figure
+    from above the head to mid-shin, anchored slightly left of center.
+    Right column (~30%) holds the drop name in a heavy condensed sans
+    at the top, the drop date in a smaller cross-line beneath, and the
+    item credits paragraph at the foot of the page in a quieter weight.
+    Generous outer margins; layout reads as a printed zine plate.
+  style: >-
+    Hype-aesthetic streetwear print — drop-culture zine sensibility,
+    not editorial-runway gloss. Palette anchored in concrete grey and
+    ink with a single charged accent in {{accent_color}}. Type
+    system: a brutalist condensed sans for the drop name, a clean
+    grotesk for date and credits. Garment fabric reads as photographed
+    cloth, not rendered cloth. No teal-orange grading, no neon glow,
+    no glamour-retouched skin.
+  text_blocks:
+    - { slot: drop_name,    text: '"{{drop_name}}"' }
+    - { slot: drop_date,    text: '"{{drop_date}}"' }
+    - { slot: item_credits, text: '"{{item_credits}}"' }
+  preserve:
+    - garment silhouette
+    - footwear visibility
+  negative:
+    - real famous streetwear brand logos
+    - copyrighted house monograms
+    - real-celebrity likeness
+    - editorial-runway gloss
+    - HDR oversaturation
+    - rainbow palette
+    - cinematic teal-orange grading
+    - lens flare
+    - watermarks
+    - heavy beauty retouching
+    - clean digital plasticity
+    - clip-art icons
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

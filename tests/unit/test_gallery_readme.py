@@ -77,8 +77,8 @@ def test_section_contains_table_count_and_v1_template() -> None:
     section = _generate_section(lang="en", max_excerpt_chars=60)
     assert "<table>" in section
     assert "</table>" in section
-    assert "52 templates" in section
-    assert "16 domains" in section
+    assert "80 templates" in section
+    assert "30 domains" in section
     # At least one V1 template id from each V1 domain must appear.
     for tid in (
         "business_swot_card",
@@ -92,10 +92,10 @@ def test_section_contains_table_count_and_v1_template() -> None:
 def test_section_en_and_zh_have_different_headings() -> None:
     en_section = _generate_section(lang="en", max_excerpt_chars=60)
     zh_section = _generate_section(lang="zh-CN", max_excerpt_chars=60)
-    assert "## Atlas — 16 domains, 52 templates" in en_section
+    assert "## Atlas — 30 domains, 80 templates" in en_section
     assert "## 模板图册" in zh_section
-    assert "16 个领域" in zh_section
-    assert "52 个模板" in zh_section
+    assert "30 个领域" in zh_section
+    assert "80 个模板" in zh_section
     # Sub-table headers must localise too.
     assert "| template | size | grader |" in en_section
     assert "| 模板 | 尺寸 | 评测 |" in zh_section
@@ -130,7 +130,7 @@ def test_replace_section_swaps_content_between_markers() -> None:
     assert "old gallery body" not in updated
     assert "## intro" in updated
     assert "## footer" in updated
-    assert "## Atlas — 16 domains, 52 templates" in updated
+    assert "## Atlas — 30 domains, 80 templates" in updated
 
 
 def test_replace_section_round_trip_is_idempotent() -> None:
@@ -155,8 +155,8 @@ def test_replace_section_round_trip_after_manual_edit() -> None:
     injected = _replace_section(base, section)
     # Simulate someone typing junk between the markers.
     tampered = injected.replace(
-        "## Atlas — 16 domains, 52 templates",
-        "## Atlas — 16 domains, 52 templates\n\nMANUAL EDIT, OOPS",
+        "## Atlas — 30 domains, 80 templates",
+        "## Atlas — 30 domains, 80 templates\n\nMANUAL EDIT, OOPS",
     )
     fixed = _replace_section(tampered, section)
     assert fixed == injected

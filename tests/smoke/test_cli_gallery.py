@@ -106,8 +106,8 @@ def test_gallery_readme_out_en_writes_section(tmp_path: Path) -> None:
     )
     assert result.exit_code == 0, (result.stdout, result.stderr)
     body = target.read_text(encoding="utf-8")
-    assert "16 domains" in body
-    assert "52 templates" in body
+    assert "30 domains" in body
+    assert "80 templates" in body
     # At least one V1 template id from each V1 domain must appear.
     assert "business_swot_card" in body
     assert "academic_scientific_diagram" in body
@@ -128,7 +128,7 @@ def test_gallery_readme_out_zh_contains_chinese_chars(tmp_path: Path) -> None:
     # Localised heading and sub-table headers must be present.
     assert "模板图册" in body
     assert "| 模板 | 尺寸 | 评测 |" in body
-    assert "16 个领域" in body
+    assert "30 个领域" in body
 
 
 def test_gallery_readme_inject_replaces_section_between_markers(tmp_path: Path) -> None:
@@ -149,7 +149,7 @@ def test_gallery_readme_inject_replaces_section_between_markers(tmp_path: Path) 
     assert "old body" not in body
     assert "## Intro paragraph" in body
     assert "## Footer" in body
-    assert "## Atlas — 16 domains, 52 templates" in body
+    assert "## Atlas — 30 domains, 80 templates" in body
     # Re-injecting should be idempotent (round-trip safe).
     snapshot = body
     second = runner.invoke(

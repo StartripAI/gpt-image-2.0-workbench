@@ -67,12 +67,14 @@ def test_invalid_domain_rejected():
         TemplateSpec.model_validate(data)
 
 
-# Canonical V0.3 domain set — 4 V1 domains + 12 V0.3 expansion domains.
+# Canonical atlas domain set — 4 V1 + 12 V0.3 + 14 V0.3.5 = 30 domains.
 ALL_V03_DOMAINS = [
+    # V1 (4)
     "business",
     "academic",
     "uiux",
     "anime",
+    # V0.3 atlas (12)
     "ecommerce",
     "industrial",
     "product",
@@ -85,15 +87,32 @@ ALL_V03_DOMAINS = [
     "architecture",
     "interior",
     "travel",
+    # V0.3.5 atlas expansion (14)
+    "typography",
+    "beauty",
+    "events",
+    "tattoo",
+    "watercolor_illustration",
+    "isometric_illustration",
+    "comic_book",
+    "music",
+    "science_fiction_concept",
+    "infographic_data",
+    "kids_illustration",
+    "automotive",
+    "pet",
+    "streetwear",
 ]
+EXPECTED_DOMAIN_COUNT = 30
 
 
 def test_domain_literal_has_sixteen_values():
+    """Name kept for git-blame continuity; asserts the current atlas size."""
     from typing import get_args
 
     from image2_workbench.compiler.schema import ALLOWED_DOMAINS, Domain
 
-    assert len(get_args(Domain)) == 16
+    assert len(get_args(Domain)) == EXPECTED_DOMAIN_COUNT
     assert set(get_args(Domain)) == set(ALL_V03_DOMAINS)
     assert set(ALLOWED_DOMAINS) == set(ALL_V03_DOMAINS)
 
@@ -107,11 +126,12 @@ def test_each_v03_domain_validates(domain: str):
 
 
 def test_reference_schema_enumerates_all_sixteen_domains():
+    """Name kept for git-blame continuity; asserts the current atlas size."""
     with SCHEMA_REF_PATH.open("r", encoding="utf-8") as fh:
         raw = yaml.safe_load(fh)
     domain_enum = raw["properties"]["domain"]["enum"]
     assert set(domain_enum) == set(ALL_V03_DOMAINS)
-    assert len(domain_enum) == 16
+    assert len(domain_enum) == EXPECTED_DOMAIN_COUNT
 
 
 def test_reference_schema_includes_dashboard_and_photo_artifacts():

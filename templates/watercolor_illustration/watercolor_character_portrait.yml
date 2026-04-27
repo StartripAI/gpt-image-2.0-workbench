@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: watercolor_character_portrait
+domain: watercolor_illustration
+description: Three-quarter character portrait painted in transparent watercolor washes with visible paper grain and a small footer caption.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: indie zine illustrators, character-design painters, hand-painted editorial portrait commissions
+
+spec:
+  subject: >-
+    A three-quarter-length portrait of {{figure_descriptor}}, painted in
+    transparent watercolor. The figure is shown from mid-thigh up,
+    angled about 20 degrees off-camera, gaze drifting just past the
+    viewer's shoulder. Mood reads as {{mood}}. The figure wears
+    {{garment_keyword}} as a single defining garment cue.
+  action: >-
+    The figure stands quietly, weight on one leg, hands relaxed. There
+    is no theatrical action; the painting earns its life from the way
+    pigment behaves on wet paper — a soft loaded wash sliding down the
+    cheek, a granulating shadow pooling under the jaw, a dry-brush
+    catch at the edge of the hair. The character holds a single calm
+    pose long enough for the wash to dry.
+  scene: >-
+    A neutral studio-flat field of warm cotton-rag paper. No interior
+    set, no exterior landscape, no props. A barely-there lower-frame
+    wash of cool grey suggests "ground" without committing to a floor.
+    Paper grain remains visible behind the figure on all sides.
+  composition: >-
+    Vertical 4:5 frame. The head sits in the upper third, eyes near the
+    1/3 horizontal line; the body tapers down through the middle third
+    and dissolves into bare paper just above the bottom edge. About
+    18-22% of bare paper margin frames the figure on left and right. A
+    single small footer caption sits centered roughly 4% from the
+    bottom edge, set in a thin serif. No frame border, no decorative
+    flourishes.
+  style: >-
+    Transparent watercolor on cold-press cotton-rag paper. Soft edges
+    where wash meets wash, hard edges only where the painter chose them
+    (collar, jawline, fingertip). Palette in the {{palette}} family,
+    desaturated and atmospheric. Dry-brush hair texture, granulating
+    pigment in the shadow side of the face. Visible paper tooth
+    throughout; deliberate water-tide marks tolerated. No digital line
+    art, no airbrush gradient, no cel-shading, no 3D render.
+  text_blocks:
+    - { slot: figure_caption, text: '"{{figure_descriptor}}"' }
+  preserve:
+    - paper grain
+    - granulating shadow on face
+    - dry-brush hair edge
+    - soft watercolor edges
+  negative:
+    - cel-shaded anime line art
+    - vector flat color
+    - photographic skin
+    - airbrush digital gradient
+    - 3D model render
+    - drop shadow
+    - oversaturated neon hues
+    - real-celebrity likeness
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

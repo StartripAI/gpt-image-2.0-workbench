@@ -55,12 +55,28 @@ DOCS_ASSETS = REPO_ROOT / "docs" / "assets"
 # Domain enumeration helpers.
 # --------------------------------------------------------------------------- #
 
-EXPECTED_DOMAIN_COUNT = 16
-EXPECTED_TEMPLATE_TOTAL = 52
-EXPECTED_DOMAIN_CARD_MIN = 12
+EXPECTED_DOMAIN_COUNT = 30        # 4 V1 + 12 V0.3 + 14 V0.3.5
+EXPECTED_TEMPLATE_TOTAL = 80      # 16 V1+V0.3 (12 V0.3 × 3 + V1 4 × 4 = 52) + 14 V0.3.5 × 2 = 80
+EXPECTED_DOMAIN_CARD_MIN = 26     # 12 V0.3 + 14 V0.3.5 each ship a DOMAIN_CARD; V1 4 don't
 
-# The 12 V0.3 domains that ship with a DOMAIN_CARD.md plus a
-# showcase-<domain>.webp slot in the README.
+# Per-domain template floor varies between waves: V1 + V0.3 ship ≥ 3 templates
+# each, V0.3.5 ships exactly 2 (post-image-drop expansion).
+V03_5_DOMAINS = [
+    "typography",
+    "beauty",
+    "events",
+    "tattoo",
+    "watercolor_illustration",
+    "isometric_illustration",
+    "comic_book",
+    "music",
+    "science_fiction_concept",
+    "infographic_data",
+    "kids_illustration",
+    "automotive",
+    "pet",
+    "streetwear",
+]
 V03_DOMAINS = [
     "advertising",
     "architecture",
@@ -76,8 +92,8 @@ V03_DOMAINS = [
     "travel",
 ]
 
-# README showcase strip references these 12 domains (subset that maps to
-# user-visible cards on the GitHub first-fold).
+# README showcase strip references all 30 domains as user-visible cards on
+# the GitHub first-fold.
 SHOWCASE_DOMAINS = [
     "business",
     "academic",
@@ -85,12 +101,30 @@ SHOWCASE_DOMAINS = [
     "anime",
     "ecommerce",
     "industrial",
+    "product",
     "advertising",
+    "social_media",
     "gaming",
     "photography",
     "fashion",
-    "architecture",
     "food",
+    "architecture",
+    "interior",
+    "travel",
+    "typography",
+    "beauty",
+    "events",
+    "tattoo",
+    "watercolor_illustration",
+    "isometric_illustration",
+    "comic_book",
+    "music",
+    "science_fiction_concept",
+    "infographic_data",
+    "kids_illustration",
+    "automotive",
+    "pet",
+    "streetwear",
 ]
 
 # Same legacy override map as ``test_all_templates_load.py`` — required for
@@ -117,7 +151,7 @@ DEMO_VARS_MAP_LEGACY: dict[str, str] = {
 
 
 def _domain_dirs() -> list[Path]:
-    """All 16 domain directories — ``_schema/`` and any dotfiles excluded."""
+    """All 30 domain directories — ``_schema/`` and any dotfiles excluded."""
     return sorted(
         d
         for d in TEMPLATES_DIR.iterdir()
@@ -126,7 +160,7 @@ def _domain_dirs() -> list[Path]:
 
 
 def _all_atlas_templates() -> list[Path]:
-    """Every ``.yml`` template across all 16 domains (52 total)."""
+    """Every ``.yml`` template across all 30 domains (80 total)."""
     paths: list[Path] = []
     for domain in _domain_dirs():
         paths.extend(sorted(domain.glob("*.yml")))
@@ -167,11 +201,13 @@ def test_atlas_total_template_count_is_52() -> None:
     _domain_dirs(),
     ids=lambda p: p.name,
 )
-def test_each_domain_has_at_least_3_templates(domain_dir: Path) -> None:
+def test_each_domain_has_at_least_min_templates(domain_dir: Path) -> None:
+    """V1 + V0.3 ship ≥ 3 templates per domain; V0.3.5 ships ≥ 2."""
     yamls = sorted(domain_dir.glob("*.yml"))
-    assert len(yamls) >= 3, (
+    floor = 2 if domain_dir.name in V03_5_DOMAINS else 3
+    assert len(yamls) >= floor, (
         f"{domain_dir.name} has only {len(yamls)} templates "
-        f"(min 3): {[p.name for p in yamls]}"
+        f"(min {floor}): {[p.name for p in yamls]}"
     )
 
 

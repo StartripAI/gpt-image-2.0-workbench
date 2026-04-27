@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: automotive_dealership_poster
+domain: automotive
+description: Point-of-sale dealership poster — vehicle hero plus price, financing terms, and dealer name.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: independent dealerships, dealer-network marketing managers, automotive retail print reviewers
+
+spec:
+  subject: >-
+    A vertical point-of-sale poster for an independent dealership
+    presenting the fictional {{vehicle_class}} "{{model_name}}". The
+    vehicle hero plate sits in the upper portion of the canvas with
+    the price, financing terms, and dealer name laid out as a clean
+    typographic block beneath it — designed to read at a forecourt
+    window or a showroom A-frame from across the lot.
+  action: >-
+    The vehicle is photographed at rest in a held three-quarter
+    showroom pose, wheels straight, doors closed, no driver. The
+    viewer's eye lands on the hero shot, drops to the model name, and
+    then registers the price marker, the financing line, and finally
+    the dealer wordmark at the foot of the poster. There is no in-use
+    scene, no test drive, no salesperson.
+  scene: >-
+    Indoor showroom or controlled forecourt environment — pale polished
+    concrete floor, neutral cyclorama wall, calm overhead daylight. A
+    soft contact shadow grounds the chassis. No customers, no other
+    vehicles, no real-brand signage, no rooftop banners; the poster is
+    a flat retail print plate, not a candid showroom photograph.
+  composition: >-
+    Vertical 4:5 frame. Hero zone (~60%) at the top holds the vehicle
+    silhouette at three-quarter angle, centered horizontally, with
+    generous side margin. Model name (~8%) sits directly below the
+    hero. Price-and-financing block (~20%) holds the price in a large
+    display weight and the financing terms in a smaller cross-line.
+    Dealer footer (~6%) anchors the bottom edge in small caps. Safe
+    margins of 5% on every side.
+  style: >-
+    Honest dealer-retail aesthetic — confident, legible, never tabloid
+    loud. Palette: a single neutral paper ground, deep ink, and one
+    saturated accent tied to the dealer brand. Type system: a
+    geometric sans for the model name and price, a humanist sans for
+    the financing line, small caps for the dealer footer. No clip-art
+    starbursts, no airbrushed gradient sky, no fake chrome bevels.
+  text_blocks:
+    - { slot: model_name,    text: '"{{model_name}}"' }
+    - { slot: price_str,     text: '"{{price_str}}"' }
+    - { slot: financing_str, text: '"{{financing}}"' }
+    - { slot: dealer_name,   text: '"{{dealer_name}}"' }
+  preserve:
+    - vehicle proportions
+    - price block legibility
+  negative:
+    - real automaker logos
+    - real dealership chains
+    - real-celebrity endorsers
+    - human salespeople in frame
+    - clip-art starbursts
+    - lens flare
+    - rainbow palette
+    - watermarks
+    - HDR oversaturation
+    - 3D chrome bevels
+    - airbrushed gradient skies
+    - cluttered banner ribbons
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

@@ -1,0 +1,79 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: pet_adoption_flyer
+domain: pet
+description: Single-animal adoption flyer — companion-animal photo with name, age, key trait, and shelter contact.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: independent shelters, foster networks, community-board adoption volunteers
+
+spec:
+  subject: >-
+    A vertical adoption flyer for a single companion animal named
+    "{{pet_name}}", a {{age_breed}}. The flyer is conceived as a warm
+    community-board print plate — one calm hero photograph of the
+    animal at the top, a soft typographic stack of name, age, key
+    trait, and shelter contact filling the lower half. The animal,
+    not the layout, carries the emotional weight.
+  action: >-
+    The animal is at rest in a held, gentle pose — sitting or lying
+    relaxed, eyes turned softly toward the camera. No leaping, no
+    playing, no toys; this is a still, dignified portrait that lets a
+    foster reader read temperament rather than energy. The viewer's
+    eye lands on the animal, drops to the name, then scans the trait
+    line and the shelter contact at the foot of the page.
+  scene: >-
+    A calm interior environment with a single soft daylight source —
+    a shelter intake room, a foster living space, or a clean studio
+    set with a warm paper backdrop in {{palette_keyword}}. No cages,
+    no kennel bars, no clinical fluorescents. A blanket or a worn rug
+    grounds the animal, suggesting a lived-in home rather than a
+    sterile facility.
+  composition: >-
+    Vertical 4:5 page. Hero photo zone (~58%) at the top frames the
+    animal centered, with calm headroom and a soft vignette into the
+    backdrop. Name plate (~8%) sits below the photograph in display
+    weight. Trait stack (~22%) holds age-and-breed and the key trait
+    line in editorial sans. Footer (~8%) holds the shelter contact
+    in small caps. 5% safe margins on every side.
+  style: >-
+    Warm community-print aesthetic — handmade flyer-board sensibility,
+    not corporate adoption-portal slickness. Palette grounded in
+    {{palette_keyword}} with one warm paper ground, ink-dark text,
+    and a single muted accent. Type system: a friendly humanist sans
+    for the name and trait, a slightly heavier cut for the shelter
+    footer. Photograph reads as a quiet documentary portrait, no
+    HDR, no theatrical pet-studio lighting, no glitter overlay.
+  text_blocks:
+    - { slot: pet_name,        text: '"{{pet_name}}"' }
+    - { slot: age_breed,       text: '"{{age_breed}}"' }
+    - { slot: key_trait,       text: '"{{key_trait}}"' }
+    - { slot: shelter_contact, text: '"{{shelter}}"' }
+  preserve:
+    - animal facial expression
+    - eye contact softness
+  negative:
+    - real shelter chain logos
+    - real-celebrity pet likeness
+    - kennel bars
+    - clinical fluorescent lighting
+    - cartoon mascots
+    - clip-art paw prints
+    - rainbow palette
+    - HDR oversaturation
+    - lens flare
+    - watermarks
+    - glitter overlays
+    - aggressive saturation grading
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

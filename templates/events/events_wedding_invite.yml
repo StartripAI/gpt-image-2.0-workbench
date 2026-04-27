@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: events_wedding_invite
+domain: events
+description: Wedding invitation card — formal vertical layout with names, date, venue, and RSVP.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: wedding stationers, couples commissioning custom invites, paper-press studios
+
+spec:
+  subject: >-
+    A formal wedding invitation card for {{name_a}} and {{name_b}},
+    set for the ceremony on {{ceremony_date}} at
+    {{ceremony_venue}}. Dress code: {{dress_code}}. The card is
+    rendered as a single composed plate — no people, no
+    photographic portrait, no real venue exterior. The composition
+    is a typographic-and-ornament ensemble in the spirit of
+    fine-press stationery.
+  action: >-
+    The reader's eye lands on the couple's names first (centered,
+    largest hierarchy), reads down through the ceremony date, the
+    venue, and finally the RSVP line. The card must communicate
+    formality and warmth without nostalgia kitsch.
+  scene: >-
+    Studio-flat stationery setting. The card sits against a calm
+    paper field with a faint warm-cream tone, calibrated for offset
+    or letterpress printing. No flowers strewn around, no rings on
+    velvet, no real-world props.
+  composition: >-
+    Vertical 4:5 invitation plate. Centered axial layout. A small
+    monogram or quiet ornament sits at the top 15%; the couple's
+    names occupy the central 32% in a refined display setting; a
+    thin rule separates them from a lower stanza holding the
+    ceremony date and venue; the RSVP line sits in the bottom
+    safe band as a smaller italic. 8% safe margins on every edge.
+  style: >-
+    Fine-press stationery aesthetic — letterpress-feeling paper,
+    refined transitional serif (Caslon-family or Mrs Eaves
+    lineage) paired with a quiet small-caps sans for the metadata.
+    Palette is soft: warm cream paper, deep ink, and a single
+    muted accent (sage, dusty rose, or deep navy). Optional thin
+    illustrated ornament — a sprig, a wreath corner — drawn as
+    line art, never photographic. No glitter, no gold gradient
+    chrome, no rainbow.
+  text_blocks:
+    - { slot: couple_names,    text: '"{{name_a}} and {{name_b}}"' }
+    - { slot: ceremony_date,   text: '"{{ceremony_date}}"' }
+    - { slot: ceremony_venue,  text: '"{{ceremony_venue}}"' }
+    - { slot: rsvp_line,       text: '"Dress code: {{dress_code}}"' }
+  preserve: []
+  negative:
+    - real-celebrity likeness
+    - photographic portrait of the couple
+    - real famous venue logos
+    - real photographic floral compositions
+    - glitter texture
+    - gold chrome gradient
+    - rainbow palette
+    - lens flare
+    - 3D extrusion
+    - watermarks
+    - clip-art cherubs
+    - cartoon mascots
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

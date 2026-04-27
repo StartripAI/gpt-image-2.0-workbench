@@ -1,0 +1,82 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: comic_book_panel_page
+domain: comic_book
+description: Multi-panel American comic-book interior page with speech balloons, halftone shading, and short panel captions.
+
+artifact:
+  type: comic_page
+  aspect: "2:3"
+  size: "1024x1536"
+  audience: indie comic writers, sequential-art portfolio reviewers, fictional-IP single-issue editors
+
+spec:
+  subject: >-
+    A single interior comic-book page from the fictional series
+    "{{story_arc}}", page {{page_no}}, drawn in American comic-book
+    style. The page contains between four and six panels reading
+    left-to-right, top-to-bottom, telling a short connected beat
+    described by panel captions {{panel1}}, {{panel2}}, and {{panel3}}.
+    Characters wear original costumes with no real-franchise IP.
+  action: >-
+    Across the panels the action progresses from a setup beat to a
+    pivot beat to a payoff beat:
+    panel 1 — {{panel1}};
+    panel 2 — {{panel2}};
+    panel 3 — {{panel3}};
+    additional panels (if 4-6 grid) hold reaction shots and a final
+    silent landing panel. Speech balloons carry short, declarative
+    English dialogue; thought balloons distinguished by scalloped tails.
+  scene: >-
+    The story unfolds inside the world of "{{story_arc}}". Backgrounds
+    are rendered in flat-color blocks with halftone midtones, never
+    photoreal. Each panel earns a distinct camera angle — wide
+    establishing, over-shoulder, low hero angle, tight close-up — to
+    build pacing rhythm.
+  composition: >-
+    Vertical 2:3 page. A 4-6 panel grid; suggested layout: row 1 holds
+    one wide establishing panel; row 2 holds two equal panels; row 3
+    holds two stacked or staggered panels; row 4 holds one final
+    payoff panel. Gutters are 12-16px white channels with crisp ink
+    borders. Page-number tag "{{page_no}}" sits in a small bottom
+    corner box. Speech balloons placed to read in the same direction
+    as the panel order; tails point unambiguously to the speaker.
+  style: >-
+    American comic-book interior aesthetic — bold inked outlines with
+    brush-weighted line variation, four-color halftone shading, solid
+    black shadow accents, dense Ben-Day dots in midtones. Speech
+    balloons drawn with crisp 1-pixel borders and a clean US-comic
+    letterform set in upper-case. No manga screen-tone, no anime
+    cel-shading, no painterly watercolor, no 3D-CG, no photoreal
+    backgrounds.
+  text_blocks:
+    - { slot: page_no,         text: '"page {{page_no}}"' }
+    - { slot: panel1_caption,  text: '"{{panel1}}"' }
+    - { slot: panel2_caption,  text: '"{{panel2}}"' }
+    - { slot: panel3_caption,  text: '"{{panel3}}"' }
+  preserve:
+    - panel grid gutters
+    - speech balloon tail direction
+    - inked outline weight
+    - halftone dot pattern
+  negative:
+    - manga screen-tone
+    - anime cel-shading
+    - painterly watercolor
+    - photoreal rendering
+    - 3D-CG model render
+    - real Marvel or DC trade dress
+    - real-publisher logos
+    - real superhero likenesses
+    - branded character costume IP
+    - storyboard pencil sketch look
+    - inconsistent character design between panels
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: continuity
+license: CC-BY-4.0

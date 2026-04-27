@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: isometric_workspace_scene
+domain: isometric_illustration
+description: Isometric workspace scene — desk, studio, and side station — in true 30-30 projection with labeled accessories.
+
+artifact:
+  type: infographic
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: product onboarding decks, internal-tool explainer slides, creator-economy explainer reels
+
+spec:
+  subject: >-
+    A panoramic workspace titled "{{scene_title}}", composed of three
+    isometric stations laid out left-to-right: {{station1}},
+    {{station2}}, and {{station3}}. Each station is a small island of
+    desk, chair, monitor or tool, and a few labeled props. The stations
+    do not overlap; the eye reads from station 1 to station 3 like a
+    sentence.
+  action: >-
+    No people. The composition is a frozen workspace tour: chairs
+    pushed in, monitors glowing softly, props sized as if a worker
+    just stepped away. Cables and stationery are positioned to imply
+    function rather than realism — pencils parallel to the desk edge,
+    cups at canonical angles.
+  scene: >-
+    Studio-flat infographic environment. Background is a single quiet
+    paper-tone field with a barely-visible isometric dot-grid. No
+    architectural surroundings, no walls beyond a ground plane that
+    fades to background near the frame edges. The {{accent_color}}
+    accent appears once per station (lamp, chair seat, plant pot) for
+    visual rhythm.
+  composition: >-
+    Strict 30-degree / 30-degree isometric projection. Three stations
+    distributed across thirds of the 16:9 canvas, each occupying ~28%
+    horizontal space with ~8% gutters. Scene title sits top-center in a
+    small all-caps sans plate ~5% from the top edge. Each station
+    label sits directly below its station, centered, in a thinner
+    sans. Thin leader lines optional for one or two named accessories
+    per station.
+  style: >-
+    Flat vector-style isometric illustration with two-tone shading per
+    surface (one base, one shadow). Restrained palette anchored on the
+    {{accent_color}} accent against neutral warm greys and creams.
+    Crisp 1-pixel outlines on object silhouettes; interior planes are
+    color blocks. No 3D-CG render, no perspective recession, no
+    bokeh, no photoreal textures, no rim-light glow.
+  text_blocks:
+    - { slot: scene_title,    text: '"{{scene_title}}"' }
+    - { slot: station1_label, text: '"{{station1}}"' }
+    - { slot: station2_label, text: '"{{station2}}"' }
+    - { slot: station3_label, text: '"{{station3}}"' }
+  preserve:
+    - 30-30 isometric angle
+    - two-tone flat shading
+    - accent color rhythm across stations
+  negative:
+    - two-point perspective
+    - photoreal CG render
+    - cinematic lighting
+    - lens flare
+    - depth-of-field blur
+    - real-product brand likeness
+    - branded laptop logos
+    - gradient fills
+    - drop shadows beyond a single tonal step
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

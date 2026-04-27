@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: music_concert_poster
+domain: music
+description: Vertical tour / concert poster — headliner identity with tour name, dates, and city run.
+artifact:
+  type: poster
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: venue lobby walls, social-vertical announcements, fan-club mailers
+
+spec:
+  subject: >-
+    A vertical concert poster for {{artist_name}} on the "{{tour_name}}"
+    tour. The poster is a single composed plate where the artist's
+    visual identity is the hero — a confident illustrative motif
+    tied to the tour's mood — and the dates and cities sit as a clean
+    typographic stack underneath. This is a tour announcement, not an
+    album cover; metadata reads quickly at lobby distance.
+  action: >-
+    From across the room the viewer reads the artist name first, then
+    the tour name as the second tier, then the dates and cities as a
+    legible run of small caps. Up close, the motif rewards a longer
+    look with embedded detail. The eye should never bounce between
+    competing focal points.
+  scene: >-
+    Studio-flat poster plate suitable for both print run and digital
+    vertical feeds. The background is a flat field drawn from the
+    {{era_style}} register, with optional silkscreen-grade grain. No
+    real venue interiors, no lit-stage photography, no audience
+    crowds, no real city skylines — the poster is its own world.
+  composition: >-
+    Vertical 9:16 plate, 5% safe margins. Top ~58% carries the hero
+    motif and artist name. A horizontal rule (or implied band)
+    separates that from the tour name set in display weight at ~70%
+    height. Below it, a tight stack lists the dates and the cities,
+    set in small caps with even leading. A small credits footer
+    occupies the bottom 6%. Plenty of negative space.
+  style: >-
+    Concert-poster lineage of Jim Phillips, Hatch Show Print, and the
+    modern silkscreen revival, tuned to a {{era_style}} mood. Two-
+    or three-color palette, hand-drawn confidence in the motif,
+    quiet typographic discipline in the metadata. No gradients, no
+    rainbow glow, no AI plastic gloss. Treat the surface as printed
+    on coated stock.
+  text_blocks:
+    - { slot: artist_name, text: '"{{artist_name}}"' }
+    - { slot: tour_name,   text: '"{{tour_name}}"' }
+    - { slot: dates_str,   text: '"{{dates_str}}"' }
+    - { slot: city_str,    text: '"{{city}}"' }
+  preserve: []
+  negative:
+    - real famous band names
+    - real venue logos
+    - real city-skyline photography
+    - audience crowd photos
+    - parental advisory labels
+    - rainbow gradients
+    - drop shadows
+    - lens flare
+    - watermarks
+    - stock-photo cutouts
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

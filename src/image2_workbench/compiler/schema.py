@@ -39,10 +39,12 @@ from .validators import (
 ID_PATTERN = re.compile(r"^[a-z][a-z0-9_]+$")
 
 ALLOWED_DOMAINS = (
+    # V1 (4)
     "business",
     "academic",
     "uiux",
     "anime",
+    # V0.3 atlas (12)
     "ecommerce",
     "industrial",
     "product",
@@ -55,6 +57,23 @@ ALLOWED_DOMAINS = (
     "architecture",
     "interior",
     "travel",
+    # V0.3.5 atlas expansion (14) — broader coverage to match category breadth
+    # of established prompt-collection repos while keeping each domain
+    # conceptually distinct (see DOMAIN_CARD.md per domain).
+    "typography",
+    "beauty",
+    "events",
+    "tattoo",
+    "watercolor_illustration",
+    "isometric_illustration",
+    "comic_book",
+    "music",
+    "science_fiction_concept",
+    "infographic_data",
+    "kids_illustration",
+    "automotive",
+    "pet",
+    "streetwear",
 )
 Domain = Literal[
     "business",
@@ -73,6 +92,20 @@ Domain = Literal[
     "architecture",
     "interior",
     "travel",
+    "typography",
+    "beauty",
+    "events",
+    "tattoo",
+    "watercolor_illustration",
+    "isometric_illustration",
+    "comic_book",
+    "music",
+    "science_fiction_concept",
+    "infographic_data",
+    "kids_illustration",
+    "automotive",
+    "pet",
+    "streetwear",
 ]
 ArtifactType = Literal[
     "infographic",

@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: tattoo_flash_sheet
+domain: tattoo
+description: Traditional tattoo flash sheet — multiple design vignettes on aged paper.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: tattoo studios printing flash sheets, collectors of flash art, design-press editors
+
+spec:
+  subject: >-
+    A traditional tattoo flash sheet for the fictional studio
+    "{{studio_name}}", sheet number {{sheet_no}}, dated
+    {{year}}. The sheet holds 8 to 12 isolated tattoo design
+    vignettes — single motifs in the {{motif_keyword}} family —
+    arranged in a calm grid on aged paper. Each vignette is a
+    self-contained drawing on white space, never overlapping
+    another. No human body, no skin, no in-progress photography
+    — only the inked designs sitting on the sheet.
+  action: >-
+    The viewer reads the sheet like a menu: the eye scans across
+    the grid, settling briefly on each vignette before moving on.
+    The studio name, sheet number, and year sit as a small
+    masthead so the sheet can be cataloged.
+  scene: >-
+    Studio-flat document setting. The flash sheet is rendered as
+    if photographed flat on a calm background, with a faint warm
+    tea-stained or aged-paper texture. No environment, no hands,
+    no shop interior — just the paper.
+  composition: >-
+    Vertical 4:5 plate. A small masthead band at the top ~9%
+    holds the studio name on the left and the sheet number / year
+    on the right. Below the masthead, an irregular but balanced
+    grid (roughly 3 columns x 3-4 rows) of isolated tattoo
+    vignettes, each in its own breathing space, with no design
+    crowding another. 6% safe margins on every edge. The sheet
+    must read as a layout artifact, not a single illustration.
+  style: >-
+    Traditional tattoo flash aesthetic — bold black ink line work,
+    selective solid-fill, optional limited spot color (deep red,
+    classic green, ochre) drawn from old American traditional /
+    Japanese irezumi / dotwork lineages depending on
+    {{motif_keyword}}. Aged paper, faint foxing at the edges,
+    subtle pencil grid lines barely visible behind the ink.
+    No photographic skin, no body context, no neon glow, no 3D.
+  text_blocks:
+    - { slot: studio_name, text: '"{{studio_name}}"' }
+    - { slot: sheet_no,    text: '"Sheet {{sheet_no}}"' }
+    - { slot: year,        text: '"{{year}}"' }
+  preserve: []
+  negative:
+    - human body
+    - photographic skin
+    - tattooing in progress
+    - real famous shop logos
+    - real famous artist signatures
+    - rainbow gradients
+    - 3D rendering
+    - neon glow
+    - photographic lighting
+    - watermarks
+    - lens flare
+    - HDR oversaturation
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

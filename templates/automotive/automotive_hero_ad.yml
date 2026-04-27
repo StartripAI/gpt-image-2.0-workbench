@@ -1,0 +1,77 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: automotive_hero_ad
+domain: automotive
+description: Cinematic single-vehicle hero ad — fictional car, motorcycle, or EV on a deliberate backdrop.
+
+artifact:
+  type: poster
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: automotive brand creatives, dealer-network art directors, motorsport campaign reviewers
+
+spec:
+  subject: >-
+    A cinematic hero advertisement for the fictional {{vehicle_type}}
+    "{{model_name}}" finished in {{color_keyword}}. The vehicle is the
+    sole protagonist of the frame — a single hero unit photographed at
+    a confident three-quarter angle, occupying the dominant left two-
+    thirds of the canvas while a quiet typographic margin runs down the
+    right. No drivers, no riders, no passengers — just the machine.
+  action: >-
+    The vehicle is at rest in a held campaign pose, wheels straight,
+    body weight settled, no motion blur and no panning streak. The
+    composition is purely still — this is a hero plate, not a
+    motorsport action shot. Reflections curve across body panels to
+    describe form; the badge or grille reads cleanly without becoming
+    the focal point.
+  scene: >-
+    The setting evokes {{setting}} — a controlled backdrop that
+    flatters silhouette rather than tells a road-trip story. Sky and
+    horizon fall into a graduated tonal wash; foreground is a clean
+    surface (poured concrete, salt flat, studio cyclorama) with a soft
+    contact shadow under the chassis. No bystanders, no other vehicles,
+    no city signage, no real-world brand chrome.
+  composition: >-
+    16:9 hero canvas. Vehicle silhouette anchors the left two-thirds,
+    framed at three-quarter angle with the front wheel a third of the
+    way in from the left edge. Right third is reserved as quiet
+    negative space holding the model name in display weight stacked
+    above the tagline in a smaller editorial cut. Generous safe margins
+    (6%) protect type from edge crop in OOH placements.
+  style: >-
+    Premium automotive campaign aesthetic. Palette keyed to
+    {{color_keyword}} body paint with one cool ambient and one warm
+    rim accent — restrained, never lurid. Type system: a confident
+    geometric sans for the model name and a refined editorial serif
+    for the tagline. Lighting is cinematic but disciplined — soft key
+    from upper-left, gentle wraparound fill, no theatrical lens flare,
+    no chrome cliché, no rainbow gradient.
+  text_blocks:
+    - { slot: model_name, text: '"{{model_name}}"' }
+    - { slot: tagline,    text: '"{{tagline}}"' }
+  preserve:
+    - vehicle silhouette and proportions
+    - body panel reflection geometry
+  negative:
+    - real automaker logos
+    - real model badges
+    - real-celebrity drivers
+    - drivers or passengers visible
+    - busy roadway traffic
+    - storefront context
+    - lens flare cliché
+    - HDR oversaturation
+    - rainbow palette
+    - watermarks
+    - 3D chrome reflections cliché
+    - clip-art icons
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

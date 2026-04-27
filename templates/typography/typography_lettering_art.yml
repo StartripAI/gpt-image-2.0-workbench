@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: typography_lettering_art
+domain: typography
+description: Hand-lettered art piece — a single phrase rendered as the visual subject.
+
+artifact:
+  type: poster
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: lettering artists, gallery print buyers, calligraphy-press editors
+
+spec:
+  subject: >-
+    A square hand-lettered art piece whose subject is the phrase
+    "{{phrase_main}}". The phrase is rendered as drawn lettering —
+    every stroke is custom-built rather than typeset — and occupies
+    the bulk of the frame as the visual artwork. A small attribution
+    line "{{sub_credit}}" sits as a quiet footer. No scenery, no
+    illustration, no figures — only ink on paper.
+  action: >-
+    The composition rewards close reading: the eye traces the
+    primary letterform contours, follows their custom ligatures and
+    flourishes, then settles on the small footer credit. The piece
+    must read as a single considered drawing rather than a slogan
+    poster — the lettering IS the artwork.
+  scene: >-
+    A textured paper surface — {{paper_texture}} — fills the frame.
+    No staging, no environment; the paper is the world. Subtle
+    paper grain is preserved but never overwhelming, so the lettering
+    stays the dominant subject.
+  composition: >-
+    Square 1:1 frame. The phrase occupies roughly the central 78%
+    of the canvas, balanced as a single shape with internal rhythm
+    rather than rigid line stacking. Generous breathing space at
+    the corners. The sub-credit sits as a thin centered line in the
+    bottom 8% safe band. Lettering style: {{lettering_style}}.
+  style: >-
+    Studio lettering aesthetic in the lineage of Jessica Hische,
+    House Industries, Tobias Frere-Jones lecture posters. Ink color:
+    {{ink_color}}, sitting on the warm paper. Strokes show drawn
+    weight contrast — thicks and thins, custom terminals, considered
+    counters. No fonts pressed flat — every glyph is composed for
+    this phrase. Matte, ink-on-paper finish with no glow, no 3D, no
+    digital chrome.
+  text_blocks:
+    - { slot: phrase_main, text: '"{{phrase_main}}"' }
+    - { slot: sub_credit,  text: '"{{sub_credit}}"' }
+  preserve: []
+  negative:
+    - typeset fonts pressed flat
+    - photographic imagery
+    - human figures
+    - 3D extrusion
+    - rainbow gradients
+    - watermarks
+    - drop shadows
+    - lens flare
+    - clip-art ornaments
+    - real famous foundry names
+    - neon glow
+    - stock-photo backgrounds
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

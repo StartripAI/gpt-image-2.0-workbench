@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: typography_specimen_poster
+domain: typography
+description: Type specimen poster — display alphabet, glyph grid, and typeface metadata as the artwork.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: type-foundry curators, design-school crit panels, type-specimen collectors
+
+spec:
+  subject: >-
+    A type specimen poster for the typeface "{{typeface_name}}",
+    drawn by {{designer_credit}} at the {{weight_label}} weight.
+    The poster is a single composed plate where the type itself is
+    the subject — letterforms are rendered at display size and
+    treated as drawn artwork rather than running copy. No human
+    figures, no products, no scenery — only typography and the
+    paper it sits on.
+  action: >-
+    The viewer's eye lands first on the oversized headline glyph
+    cluster, drops to a generously letterspaced alphabet line, and
+    then scans a small glyph grid showing case, numerals, and
+    diacritics. Below that, a single sample pangram demonstrates
+    the typeface in body-size context. The reading rhythm is slow
+    and deliberate, like turning a foundry catalog page.
+  scene: >-
+    Studio-flat document setting. The poster sits against a calm
+    paper-white field with a faint warm-grey paper grain, calibrated
+    for both screen and offset reproduction. No environment, no
+    perspective, no objects — the page is the world.
+  composition: >-
+    Vertical 4:5 plate. Top ~38% holds an oversized display
+    letter-cluster bleeding to a comfortable margin. A horizontal
+    rule separates it from a banner alphabet line spanning the
+    full width. Below the alphabet, a 4-row x 9-column glyph grid
+    occupies the central band. A footer block holds the typeface
+    name, designer credit, weight, classification, and the sample
+    pangram, set quietly. 5% safe margins on every edge.
+  style: >-
+    Foundry-catalog editorial aesthetic — Klim, Commercial Type,
+    Schick Toikka style. Palette is restrained: deep ink-black on
+    paper-white with a single muted accent (oxidized teal or warm
+    ochre) on the rule and the small caps labels. No gradients,
+    no glow, no drop shadows; only the typeface itself, set with
+    confident hierarchy. Print-ready, vector-clean.
+  text_blocks:
+    - { slot: typeface_name,    text: '"{{typeface_name}}"' }
+    - { slot: designer_credit,  text: '"Drawn by {{designer_credit}}"' }
+    - { slot: weight_label,     text: '"{{weight_label}} / {{classification}}"' }
+    - { slot: sample_pangram,   text: '"{{sample_pangram}}"' }
+  preserve: []
+  negative:
+    - decorative illustration
+    - photographic imagery
+    - human figures
+    - product mockups
+    - real famous foundry logos
+    - copyrighted commercial typeface names
+    - rainbow palette
+    - drop shadows
+    - 3D extrusion
+    - watermarks
+    - clip-art ornaments
+    - lens flare
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

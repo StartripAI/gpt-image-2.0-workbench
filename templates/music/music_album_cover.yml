@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: music_album_cover
+domain: music
+description: Square album-cover artwork — single hero visual identity with artist and album metadata.
+artifact:
+  type: poster
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: streaming-platform browsers, vinyl collectors, music-press art directors
+
+spec:
+  subject: >-
+    A square album-cover artwork for the artist {{artist_name}}, titled
+    "{{album_title}}", released on the fictional label {{label}}. The cover
+    is built around a single, instantly readable visual hook tuned to a
+    {{genre_keyword}} register — one symbolic motif rendered with confident
+    graphic restraint, never a busy collage. The artist's identity is the
+    product; the date and tour copy are not.
+  action: >-
+    The viewer's eye locks immediately onto the central motif, then drifts
+    down to the artist name and album title set as a quiet typographic
+    block. The motif holds the visual energy of the record; the type is
+    the credit line, not the headline. A small label credit sits at a
+    corner like a foundry stamp.
+  scene: >-
+    Studio-flat artwork plate. The cover is its own world — no physical
+    setting beyond what the motif itself implies. The background is a
+    flat field of color drawn from the {{palette_keyword}} palette, with
+    optional soft grain or paper texture appropriate to the genre. No
+    perspective tricks, no real-room photography, no people other than
+    the symbolic motif.
+  composition: >-
+    Strict 1:1 plate with 6% safe margins on every edge. The hero motif
+    occupies a central ~62% area with generous breathing room around it.
+    Artist name sits in the lower-left or lower-center as a typographic
+    block; album title nests under it at a smaller weight. Label credit
+    is anchored bottom-right as a small mark. No bleed crops; treat the
+    plate as if it must survive both a 12-inch vinyl sleeve and a 56-pixel
+    streaming thumbnail.
+  style: >-
+    Album-art identity register tuned to {{genre_keyword}} — restrained
+    palette anchored in {{palette_keyword}}, single-motif graphic
+    confidence in the lineage of Hipgnosis, Reid Miles, Vaughan Oliver
+    and Peter Saville reissues. Type is a single editorial sans or
+    display serif used quietly. No drop shadows, no rainbow gradients,
+    no stock-photo cutouts, no AI-clip-art chaos. Treat the surface
+    like a printed sleeve, not a screen mockup.
+  text_blocks:
+    - { slot: artist_name,  text: '"{{artist_name}}"' }
+    - { slot: album_title,  text: '"{{album_title}}"' }
+    - { slot: label_credit, text: '"{{label}}"' }
+  preserve: []
+  negative:
+    - real famous band names
+    - real record-label logos
+    - real public-figure musicians
+    - photographic celebrity portraits
+    - busy collage
+    - rainbow gradients
+    - drop shadows
+    - lens flare
+    - watermarks
+    - stock-photo cutouts
+    - parental advisory labels
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

@@ -1,0 +1,73 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: infographic_data_dashboard
+domain: infographic_data
+description: Editorial dataviz dashboard explainer with four chart panels, headline, and insight callouts.
+artifact:
+  type: infographic
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: editorial newsroom infographics teams, policy briefings, executive memos
+
+spec:
+  subject: >-
+    A wide editorial dataviz dashboard explainer covering "{{headline}}"
+    over the period {{period}}. The composition is a single composed
+    plate of four chart panels (a bar, a line, a small-multiples grid,
+    and a donut) plus a headline band and an insight pull-quote.
+    This is an information-design output — readers come for the
+    insight, not for clickable interaction.
+  action: >-
+    The viewer reads the headline, scans the two KPI tiles to anchor
+    scale, then walks left-to-right across the chart row, finishing
+    on the highlighted insight callout. Every label and tick is set
+    for legibility at briefing-room projector distance.
+  scene: >-
+    Studio-flat editorial infographic plate. The background is a
+    calm off-white field with a faint grid wash. No 3D rooms, no
+    laptops, no app-frame chrome — this is a printed-style explainer,
+    not a UI screenshot.
+  composition: >-
+    Wide 16:9 plate, 4% safe margins. Top ~14% holds the headline
+    band and the period label; below it, two KPI tiles sit on the
+    left edge stacked vertically (~22% width). The remaining right
+    region is divided into a 2-column x 2-row chart grid. A single
+    insight callout rule connects one chart panel to a pull-quote
+    band along the bottom 12%. Generous internal padding; no
+    overlapping panels.
+  style: >-
+    Editorial dataviz register in the lineage of FT Visual & Data,
+    Reuters Graphics, Pew Research, and Information is Beautiful.
+    Restrained palette of one neutral plus two accent hues; charts
+    are typeset cleanly with axis labels, tick marks, and source
+    line. Type system: humanist sans for body, slightly heavier cut
+    for headline. No 3D extrusions, no glow, no photographic stock,
+    no UI-app chrome.
+  text_blocks:
+    - { slot: headline,         text: '"{{headline}}"' }
+    - { slot: kpi1_label,       text: '"{{kpi1}}"' }
+    - { slot: kpi2_label,       text: '"{{kpi2}}"' }
+    - { slot: insight_caption,  text: '"{{insight}}"' }
+  preserve: []
+  negative:
+    - 3D extruded charts
+    - rainbow palettes
+    - app-frame chrome
+    - browser window mockups
+    - glossy plastic gradients
+    - photographic stock
+    - drop shadows
+    - lens flare
+    - watermarks
+    - clip-art icons
+    - real news-brand logos
+    - real public-figure portraits
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: science_fiction_concept_keyframe
+domain: science_fiction_concept
+description: Cinematic sci-fi keyframe matte painting — alien landscape or far-future urban scene with painterly atmosphere.
+artifact:
+  type: poster
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: pre-production art departments, pitch decks, worldbuilding bibles
+
+spec:
+  subject: >-
+    A cinematic science-fiction keyframe matte painting depicting a
+    {{setting}} dominated by a {{focal_object}}. The frame is a single
+    composed concept-art plate, not a 3D-CG render and not a photograph.
+    The scale of the focal object against the surrounding environment
+    establishes the world's tone in one read. No real-world locations,
+    no recognizable IP, no on-screen UI elements.
+  action: >-
+    The viewer's eye enters along the strongest atmospheric gradient,
+    rides into the deep middle ground, then settles on the focal object
+    silhouette. A small footer label later anchors the location for the
+    art department. The frame should feel like a still pulled from a
+    longer film, not a hero poster.
+  scene: >-
+    {{setting}}, charged by an atmosphere of {{atmosphere}}. Aerial
+    perspective is doing real work — clear foreground, hazed mid-ground,
+    dissolved background. Optional aerial particulates (dust, ash, ion
+    spray) sell the scale. Single dominant key light source; ambient
+    fill is muted and color-coherent.
+  composition: >-
+    Wide 16:9 plate, 4% safe margins. The horizon sits on a deliberate
+    third — low for grandeur, high for claustrophobia. The focal object
+    is offset from center along the rule-of-thirds; negative atmospheric
+    space takes the rest. A small footer slug occupies the bottom 4%
+    holding the scene label. Aerial perspective and silhouette discipline
+    do the depth work, not lens-flare gimmicks.
+  style: >-
+    Painterly concept-art register in the lineage of Syd Mead, Ralph
+    McQuarrie, Sparth and Maciej Kuciara — visible brushwork in the
+    midtones, restrained palette anchored on {{palette_keyword}},
+    cinematic but never glossy CG-plastic. Edges suggest geometry rather
+    than render every rivet. No real-IP ships, no real-place skylines,
+    no photoreal HDR gloss.
+  text_blocks:
+    - { slot: scene_label, text: '"{{setting}} - {{focal_object}}"' }
+  preserve: []
+  negative:
+    - 3D-CG plastic gloss
+    - photoreal HDR finish
+    - real-IP spaceships
+    - real public figures
+    - real city skylines
+    - on-screen HUD overlays
+    - lens flare
+    - rainbow gradients
+    - watermarks
+    - stock-photo cutouts
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

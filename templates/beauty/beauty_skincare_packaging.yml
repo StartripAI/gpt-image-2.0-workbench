@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: beauty_skincare_packaging
+domain: beauty
+description: Single skincare unit on minimal staging — bottle / jar / dropper as design hero.
+
+artifact:
+  type: poster
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: clean-beauty brand designers, skincare press editors, packaging concept reviewers
+
+spec:
+  subject: >-
+    A single skincare unit for the fictional house "{{brand_name}}"
+    in its {{product_line}} line — a {{volume}} {{surface_type}}
+    bottle, jar or dropper rendered as the sole hero of the frame.
+    The wordmark sits cleanly on the package face; the product line
+    name is set as a small typeset label. Key ingredient
+    "{{key_ingredient}}" appears as a discreet caption on the
+    package or beneath it. No model, no hands, no skin, no
+    bathroom — just the object, framed as a still life.
+  action: >-
+    The viewer's eye lands on the brand mark, drops to the line
+    name, then registers the surface texture and the slim accent
+    color. The composition is contemplative, not promotional —
+    closer to a design-press still life than a sales ad.
+  scene: >-
+    Editorial studio still life. A soft graduated paper-stone
+    backdrop sweeps from a slightly darker top to a softly lit
+    floor. A single soft key light from upper-left casts a calm,
+    contained shadow that grounds the unit. No water droplets, no
+    splashes, no botanicals strewn around — only quiet light.
+  composition: >-
+    Square 1:1. The product unit occupies the central ~55% area on
+    a low pedestal or directly on the floor sweep. Generous
+    negative space framing the unit. Brand wordmark is naturally
+    aligned to the package face, never floated as a banner.
+    Bottom ~10% is a quiet safe band where the volume can sit as
+    typeset caption. Slim accent stripe in {{accent_color}}.
+  style: >-
+    Clean-beauty editorial finish — Aesop, Byredo, Glossier-press
+    aesthetic without copying any of them. Palette anchored on
+    {{accent_color}} with stone, bone, or warm linen neutrals.
+    Materials read as matte glass, sandblasted ceramic, or
+    soft-touch paperboard — never glossy plastic, never specular
+    chrome. Type system: a quiet humanist sans or refined
+    transitional serif. Lighting is controlled and considered.
+  text_blocks:
+    - { slot: brand_name,     text: '"{{brand_name}}"' }
+    - { slot: product_line,   text: '"{{product_line}}"' }
+    - { slot: volume,         text: '"{{volume}}"' }
+    - { slot: key_ingredient, text: '"with {{key_ingredient}}"' }
+  preserve: []
+  negative:
+    - human models or hands
+    - skin close-ups
+    - bathroom or vanity context
+    - water splashes
+    - botanical clutter
+    - real famous beauty brand logos
+    - glossy plastic specular highlights
+    - rainbow gradients
+    - lens flare
+    - neon glow
+    - watermarks
+    - 3D chrome reflections
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

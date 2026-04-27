@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: beauty_editorial_layout
+domain: beauty
+description: Magazine-style beauty editorial spread — close-up beauty shot with small product callouts.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: beauty magazine art directors, fragrance house creative leads, skincare brand editorial teams
+
+spec:
+  subject: >-
+    A beauty-magazine editorial spread for the {{edition_label}}
+    issue, leading with a single composed beauty shot — a soft
+    close-up of skin, lips, eyes, or a held bottle — and supported
+    by two small flat-lay product callouts. Look title:
+    "{{look_title}}". The page reads as a feature-spread plate, not
+    a product ad. No models with identifying faces (frame chosen
+    so that one feature dominates rather than a recognizable
+    portrait); no celebrity likeness.
+  action: >-
+    The eye is drawn to the central beauty close-up first, then
+    flicks to the small product callouts in the lower band, then
+    settles on the look title set near the upper third. The
+    composition feels like a magazine page being read in natural
+    flow, not a billboard.
+  scene: >-
+    Studio-clean editorial environment. The mood is "{{mood}}"
+    in the season "{{season}}". Backdrop is a soft tonal sweep in
+    {{palette_keyword}}, lit from a single soft window source.
+    No retail context, no bathroom, no real-store fixtures.
+  composition: >-
+    Vertical 4:5 magazine plate. Top ~58% holds the hero close-up
+    bleeding to the edges. A thin horizontal rule separates the
+    hero from a lower band that holds two small flat-lay callouts
+    (a bottle and a swatch on paper) and the look title set as a
+    serif display line above them. Edition label sits as a small
+    masthead-style line in the upper-left margin. Generous 5%
+    safe margins.
+  style: >-
+    Beauty editorial finish keyed to the {{palette_keyword}}
+    palette and the {{mood}} mood. Skin tones rendered honestly —
+    pores and fine texture preserved, no plastic smoothing. Light
+    is window-soft, contrast is gentle, color grading is tonal
+    rather than saturated. Type system: a refined transitional
+    serif for the look title, a quiet sans for the masthead.
+    No HDR, no AI-glossy plastic, no makeup mask look.
+  text_blocks:
+    - { slot: edition_label, text: '"{{edition_label}}"' }
+    - { slot: look_title,    text: '"{{look_title}}"' }
+  preserve: []
+  negative:
+    - real-celebrity likeness
+    - identifying portrait of a famous person
+    - real famous magazine mastheads
+    - real famous beauty brand logos
+    - HDR oversaturation
+    - plastic skin smoothing
+    - heavy makeup mask
+    - rainbow palette
+    - lens flare halos
+    - watermarks
+    - stock-photo staging
+    - retail-shelf clutter
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

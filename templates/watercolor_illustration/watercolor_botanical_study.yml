@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: watercolor_botanical_study
+domain: watercolor_illustration
+description: Single-specimen botanical watercolor study with latin caption, in transparent washes on visibly textured paper.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: nature-journal hobbyists, herbarium illustrators, slow-press editorial readers
+
+spec:
+  subject: >-
+    A single botanical specimen of {{common_name}} (Latin name
+    {{latin_name}}) rendered as a {{season}} watercolor study. One stem
+    with a few leaves, at least one fully open flower head, and one
+    closed bud, presented as if pinned mid-page on a herbarium sheet for
+    careful observation rather than decorative arrangement.
+  action: >-
+    The painter has worked petal-by-petal in transparent washes, letting
+    pigment bloom and granulate where wet meets wet, then returned with
+    a near-dry brush to articulate veins, stem fibres, and the faint
+    shadow under the lowest leaf. The plant sits still; the only
+    "movement" is the migration of pigment through damp paper.
+  scene: >-
+    Studio-flat herbarium sheet. No outdoor setting. The background is
+    warm ivory cotton-rag paper with visible grain, a faint cold-press
+    tooth, and one or two pale, deliberate water-tide marks left from
+    the painter's brush rinse. No vase, no soil, no surrounding props.
+  composition: >-
+    The specimen runs vertically, occupying roughly the central 60% of
+    the frame; its tallest leaf reaches about 8% from the top and the
+    lowest stem cut sits about 18% from the bottom. The latin name is
+    set in small italic serif type 6% from the bottom edge, centered;
+    the common-name caption runs above it as a thinner secondary line.
+    Generous margins of bare paper on all four sides preserve the
+    breathing room expected of a botanical plate.
+  style: >-
+    Transparent watercolor on cotton-rag paper. Wet-into-wet petals with
+    visible pigment blooms, dry-brush stems and leaf veins, and pale
+    granulating shadows in the {{palette_keyword}} family — soft,
+    desaturated, never saturated digital color. Visible cold-press paper
+    grain across the entire field. No vector edges, no flat fills, no
+    cel-shading, no glow, no airbrush gradients.
+  text_blocks:
+    - { slot: latin_name,  text: '"{{latin_name}}"' }
+    - { slot: common_name, text: '"{{common_name}}"' }
+  preserve:
+    - paper grain
+    - wet-into-wet petal blooms
+    - latin name italic serif
+  negative:
+    - vector flat color
+    - digital airbrush gradient
+    - photographic specimen
+    - cel-shading anime line art
+    - 3D render
+    - drop shadows
+    - cluttered background props
+    - oversaturated neon hues
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

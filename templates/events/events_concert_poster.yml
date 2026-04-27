@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: events_concert_poster
+domain: events
+description: Vertical concert / festival poster with headliner, support, date, and venue.
+
+artifact:
+  type: poster
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: independent promoters, venue art teams, gig-poster collectors
+
+spec:
+  subject: >-
+    A vertical concert poster announcing {{artist_name}} live at
+    {{venue}}, with support from {{support_act}} on {{date_str}}.
+    Genre energy: {{genre_keyword}}. The poster is conceived as a
+    single composed plate — typographic identity over a graphic
+    motif keyed to the genre, not a photographic portrait of any
+    real performer. No identifying likeness; the artist name is
+    rendered as type, not as a face.
+  action: >-
+    The viewer sees the headliner name first (top hierarchy), then
+    the support line, then the date, then the venue. The poster
+    must work both at A2 wheatpaste size and at 4-inch Instagram
+    crop, so the reading order has to be unambiguous at any scale.
+  scene: >-
+    Studio-flat poster surface — no real-world placement, no
+    pasted-up wall mockup. The design lives on a single calibrated
+    paper field with a faint screen-print texture, ready for the
+    printer.
+  composition: >-
+    Vertical 9:16 plate. Top ~52% is the headliner type-block,
+    treated as the visual hero (a custom display word-mark or
+    drawn lettering). A graphic motif evoking {{genre_keyword}}
+    sits behind or beside it without overwhelming the type.
+    Middle band holds the support-act line in a smaller weight.
+    Lower ~22% holds the date and venue stacked, with a thin rule
+    above. 5% safe margins; 8% bleed band reserved at the top for
+    A-size print.
+  style: >-
+    Independent gig-poster aesthetic in the lineage of Hatch Show
+    Print, La Boca, Aesthetic Apparatus — without copying any of
+    them. Limited two- or three-color screen-print palette keyed
+    to {{genre_keyword}}: deep ink-black, one saturated accent,
+    one warm neutral. Type system: a strong display cut for the
+    headliner, a confident sans for the metadata. Texture: subtle
+    halftone or stipple, never glossy. Print-ready, no neon glow.
+  text_blocks:
+    - { slot: artist_name,  text: '"{{artist_name}}"' }
+    - { slot: support_line, text: '"with {{support_act}}"' }
+    - { slot: date_str,     text: '"{{date_str}}"' }
+    - { slot: venue_str,    text: '"{{venue}}"' }
+  preserve: []
+  negative:
+    - real-celebrity likeness
+    - identifying portrait of a real performer
+    - real famous band logos
+    - real famous venue logos
+    - copyrighted festival branding
+    - rainbow gradients
+    - lens flare
+    - 3D chrome reflections
+    - watermarks
+    - stock-photo staging
+    - HDR oversaturation
+    - clip-art icons
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: comic_book_variant_cover
+domain: comic_book
+description: Single-figure American comic-book variant cover with masthead, issue number, and credit slug, in bold inks and halftone.
+
+artifact:
+  type: poster
+  aspect: "2:3"
+  size: "1024x1536"
+  audience: indie comic shops, fictional-IP cover-artist portfolios, comic-convention variant-cover collectors
+
+spec:
+  subject: >-
+    A single hero figure on a variant cover for the fictional comic
+    series "{{title_logo}}", issue {{issue_no}}, drawn by
+    {{cover_artist}}. The figure dominates the frame in a confident
+    {{era_keyword}} hero pose — three-quarter stance, weight on back
+    foot, gaze cutting toward the upper-left masthead. Costume reads
+    as an original design with no real-franchise iconography.
+  action: >-
+    The figure is captured at the apex of a beat — cape mid-snap, fist
+    half-clenched, hair lifting against an off-screen wind. There is
+    no panel grid; the entire 2:3 surface acts as a single dramatic
+    cover plate. Tiny secondary motion lines around the figure imply
+    pressure rather than illustrate it.
+  scene: >-
+    A flat, graphic backdrop calibrated to support the figure: a single
+    bold halftone color field, broken by one or two angular shape
+    bands of a complementary tone. No photographic environment, no
+    rendered cityscape — the cover treats the page as poster, not as
+    window. Subtle four-color halftone dot pattern reads in the
+    midtones.
+  composition: >-
+    Vertical 2:3 page. Title masthead "{{title_logo}}" runs across the
+    top ~12% of the frame in a heavy display letterform. Issue number
+    "{{issue_no}}" sits as a small badge in the upper-right corner.
+    The figure occupies the central 70% of the frame. Cover-artist
+    credit "{{cover_artist}}" sits in a thin slug along the bottom
+    edge, ~3% tall, left-justified. Generous margin of bleed-safe
+    space on all four edges.
+  style: >-
+    American comic-book cover aesthetic in the {{era_keyword}} register
+    of the {{palette}} family. Bold inked outlines with brush-weighted
+    line variation, four-color halftone shading, dense Ben-Day dots in
+    midtones, solid black for shadow accents. Saturated but limited
+    palette — never neon. Display masthead set in a heavy comic
+    serif/sans hybrid letterform; issue number set in a tight numeric
+    slab. No anime line art, no manga screen-tone, no painterly
+    softness, no photoreal rendering.
+  text_blocks:
+    - { slot: title_logo,         text: '"{{title_logo}}"' }
+    - { slot: issue_no,           text: '"#{{issue_no}}"' }
+    - { slot: cover_artist_credit, text: '"cover by {{cover_artist}}"' }
+  preserve:
+    - bold inked outline weight
+    - halftone dot pattern
+    - masthead letterform
+  negative:
+    - manga screen-tone
+    - anime cel-shading
+    - photoreal rendering
+    - painterly soft edges
+    - lens flare
+    - real Marvel or DC trade dress
+    - real-publisher logos
+    - real superhero likenesses
+    - branded character costume IP
+    - watermarks
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

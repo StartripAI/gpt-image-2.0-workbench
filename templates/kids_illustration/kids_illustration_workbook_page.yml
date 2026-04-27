@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: kids_illustration_workbook_page
+domain: kids_illustration
+description: Preschool workbook page — counting / matching / coloring activity with friendly characters and a clear instruction line.
+artifact:
+  type: infographic
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: preschool teachers, early-learning publishers, parents printing at home
+
+spec:
+  subject: >-
+    A vertical preschool workbook page presenting a {{activity_title}}
+    activity on the theme of {{theme}}. The page features a friendly
+    cast of simple-shape characters and a clear instruction line so
+    a four-to-six-year-old can complete the activity with light
+    grown-up help. This is an early-learning artifact — not a comic
+    page, not an academic worksheet.
+  action: >-
+    The reader (or the grown-up reading aloud) processes the activity
+    title, then the instruction line, then engages with the items
+    on the page — counting them, matching pairs, or coloring shapes.
+    The item count label confirms how many objects to expect.
+  scene: >-
+    Studio-flat workbook page on a soft cream paper field with a
+    faint grid wash. The background is reassuring and uncluttered;
+    the activity items float on the paper rather than sit in a
+    photographic environment. No 3D space, no app chrome, no
+    photographic backdrops.
+  composition: >-
+    Vertical 4:5 plate, 6% safe margins. Top ~14% holds the activity
+    title in friendly rounded sans display type. Below it, the
+    instruction line sits in a smaller weight. The central ~62%
+    holds the activity area — items arranged in an even grid or
+    gentle scene, with rounded outlines and clear color blocks.
+    Bottom band carries the item count label like a chip. Generous
+    leading; everything is comfortably reachable by a small finger.
+  style: >-
+    Children's workbook register in the lineage of Eric Carle,
+    Hervé Tullet, and modern Montessori-print materials. Rounded
+    shapes, primary-plus-pastel palette, paper-collage or gouache
+    feel. Type is a friendly rounded sans set large for early
+    readers. No anime, no photoreal rendering, no academic diagram
+    register, no fine pen-and-ink illustration. Generous white
+    space; nothing crowds the page.
+  text_blocks:
+    - { slot: activity_title,   text: '"{{activity_title}}"' }
+    - { slot: instruction_line, text: '"{{instruction}}"' }
+    - { slot: item_count_label, text: '"{{item_count}}"' }
+  preserve: []
+  negative:
+    - anime large eyes
+    - photoreal rendering
+    - academic diagram lines
+    - horror or violence
+    - dark grimdark palette
+    - sexualized characters
+    - real cartoon-IP characters
+    - copyrighted franchise marks
+    - drop shadows
+    - lens flare
+    - watermarks
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: pet_food_packaging
+domain: pet
+description: Pet-food bag or can label — branded packaging plate with feeding metadata.
+
+artifact:
+  type: poster
+  aspect: "3:4"
+  size: "1152x1536"
+  audience: indie pet-food brands, packaging designers, retail-shelf concept reviewers
+
+spec:
+  subject: >-
+    A flat front-facing pet-food package label for the brand
+    "{{brand_name}}", designed for the "{{product_line}}" line in the
+    {{flavor}} variant. The label is rendered as a single rectangular
+    print plate as it would appear when peeled flat from the bag or
+    can. A small illustrative mark of a generic dog or cat silhouette
+    appears as a quiet supporting element; brand typography leads.
+  action: >-
+    The label is a still graphic. A reader scans the brand wordmark at
+    the top, drops into the product-line designation in the middle,
+    notes the flavor descriptor and feeding-age line as smaller cross-
+    lines, and registers the weight or volume marker at the bottom.
+    The hierarchy must read at thumbnail and at full retail-shelf scale.
+  scene: >-
+    The label sits flat against a calm neutral surface — recycled
+    kraft, off-white paperboard, or pale ceramic. No physical bag or
+    can is depicted; this is the unwrapped print plate alone, no
+    photographic kibble, no pet held in arms. Soft even daylight,
+    no theatrical shadow.
+  composition: >-
+    Vertical 3:4 plate. Top zone (~28%) holds the brand wordmark
+    centered, set large with tight tracking. Middle zone (~36%) holds
+    the product-line name in display weight with the flavor descriptor
+    as a smaller cross-line beneath. Lower-middle zone (~18%) holds
+    the small companion-animal silhouette mark and the feeding-age
+    line beside it. Footer band (~10%) holds the weight or volume in
+    small caps. Generous outer margins on all sides.
+  style: >-
+    Indie pet-specialty packaging aesthetic — premium kibble-roaster
+    meets craft-treat brewer. Type system: a confident geometric sans
+    for the brand wordmark, an editorial serif for the product-line
+    name, and a small caps grotesk for the weight line. Palette: a
+    warm paper ground, ink-dark text, and one saturated accent tied
+    to the flavor. No photographic meat imagery, no HDR kibble shots,
+    no metallic foiling beyond a single hairline rule.
+  text_blocks:
+    - { slot: brand_name,    text: '"{{brand_name}}"' }
+    - { slot: product_line,  text: '"{{product_line}}"' }
+    - { slot: weight_volume, text: '"{{weight_volume}}"' }
+    - { slot: feeding_age,   text: '"{{feeding_age}}"' }
+  preserve:
+    - brand wordmark legibility
+    - feeding-age clarity
+  negative:
+    - real famous pet-food brand logos
+    - copyrighted house monograms
+    - real-celebrity pet likeness
+    - photographic raw meat
+    - photographic kibble closeups
+    - HDR oversaturation
+    - rainbow palette
+    - lens flare
+    - watermarks
+    - clip-art icons
+    - 3D rendered glossy plastic
+    - skeuomorphic foil shimmer
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

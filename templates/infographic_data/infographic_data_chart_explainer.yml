@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: infographic_data_chart_explainer
+domain: infographic_data
+description: Single-chart explainer panel — large hero chart annotated with three pull-out callouts and a source line.
+artifact:
+  type: infographic
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: long-form editorial spreads, vertical newsletter inserts, policy-paper figures
+
+spec:
+  subject: >-
+    A vertical single-chart explainer titled "{{chart_title}}". The
+    plate is a single hero chart (line, bar, or area) occupying the
+    upper composition, annotated with three pull-out callouts that
+    mark notable inflection points. A source line anchors the foot.
+    The chart is the artifact; this is dataviz explanation, not a
+    UI screen and not an artifact-shaped business card.
+  action: >-
+    The reader anchors on the title, scans the chart shape, then
+    reads the three callouts in order. The callouts are tied to
+    actual chart positions by quiet leader lines, not floating
+    decorations. A tiny source attribution ({{source}}) closes
+    the read at the foot of the plate.
+  scene: >-
+    Studio-flat editorial plate. The background is an off-white
+    paper field with a faint grid wash; no 3D space, no app chrome,
+    no photographic backdrop.
+  composition: >-
+    Vertical 4:5 plate, 5% safe margins. Top ~12% carries the chart
+    title. The hero chart occupies the central ~58% with full axis
+    labels, gridlines, and ticks. Three callout boxes are arranged
+    along the right edge, each connected to a chart position by a
+    short leader rule. Bottom ~10% holds the source line. Generous
+    leading; no overlapping callouts.
+  style: >-
+    Editorial dataviz register with FT-style discipline. Two-color
+    accent system on a neutral ground; type is one humanist sans
+    used at clear hierarchy levels. Charts read like a newspaper
+    figure — no 3D extrusion, no glow, no rainbow ramps, no
+    photographic stock. Typesetting accuracy beats decoration.
+  text_blocks:
+    - { slot: chart_title, text: '"{{chart_title}}"' }
+    - { slot: callout1,    text: '"{{callout1}}"' }
+    - { slot: callout2,    text: '"{{callout2}}"' }
+    - { slot: callout3,    text: '"{{callout3}}"' }
+  preserve: []
+  negative:
+    - 3D extruded charts
+    - rainbow ramps
+    - app-frame chrome
+    - browser window mockups
+    - glossy plastic gradients
+    - photographic stock
+    - drop shadows
+    - lens flare
+    - watermarks
+    - clip-art icons
+    - real news-brand logos
+    - real public-figure portraits
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0
