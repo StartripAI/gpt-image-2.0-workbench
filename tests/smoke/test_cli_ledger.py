@@ -102,9 +102,11 @@ def test_parse_since_naive_timestamp_becomes_utc() -> None:
 
 
 def test_ledger_query_rejects_invalid_group_by(tmp_ledger: Path) -> None:
+    from tests.conftest import strip_ansi
+
     result = runner.invoke(ledger_app, ["query", "--group-by", "nonsense"])
     assert result.exit_code != 0
-    assert "invalid --group-by" in result.stderr
+    assert "invalid --group-by" in strip_ansi(result.stderr)
 
 
 def test_ledger_top_failures(tmp_ledger: Path) -> None:

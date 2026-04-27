@@ -164,17 +164,22 @@ def test_documented_offline_commands_match_cli_shape(tmp_path: Path) -> None:
 
 
 def test_cli_help_exposes_current_render_and_cost_options() -> None:
+    from tests.conftest import strip_ansi
+
     template_help = runner.invoke(app, ["template", "list", "--help"])
     assert template_help.exit_code == 0, template_help.stdout
-    assert "--domain" in template_help.stdout
-    assert "--lang" not in template_help.stdout
+    template_out = strip_ansi(template_help.stdout)
+    assert "--domain" in template_out
+    assert "--lang" not in template_out
 
     render_help = runner.invoke(app, ["render", "generate", "--help"])
     assert render_help.exit_code == 0, render_help.stdout
-    assert "--prompt-file" in render_help.stdout
-    assert "--prompt " not in render_help.stdout
+    render_out = strip_ansi(render_help.stdout)
+    assert "--prompt-file" in render_out
+    assert "--prompt " not in render_out
 
     budget_help = runner.invoke(app, ["cost", "budget", "--help"])
     assert budget_help.exit_code == 0, budget_help.stdout
-    assert "--plan" in budget_help.stdout
-    assert "--size" not in budget_help.stdout
+    budget_out = strip_ansi(budget_help.stdout)
+    assert "--plan" in budget_out
+    assert "--size" not in budget_out
