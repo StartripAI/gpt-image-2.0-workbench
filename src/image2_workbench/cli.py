@@ -11,7 +11,7 @@ from .commands.doctor import doctor_app
 from .commands.eval_cmd import eval_app
 from .commands.gallery import gallery_app
 from .commands.ledger import ledger_app
-from .commands.preflight import preflight_app
+from .commands.preflight import preflight_command
 from .commands.render import render_app
 from .commands.template import template_app
 
@@ -29,7 +29,10 @@ app.add_typer(batch_app, name="batch")
 app.add_typer(eval_app, name="eval")
 app.add_typer(cost_app, name="cost")
 app.add_typer(doctor_app, name="doctor")
-app.add_typer(preflight_app, name="preflight")
+app.command(
+    "preflight",
+    context_settings={"allow_extra_args": True, "ignore_unknown_options": True},
+)(preflight_command)
 app.add_typer(ledger_app, name="ledger")
 app.add_typer(gallery_app, name="gallery")
 

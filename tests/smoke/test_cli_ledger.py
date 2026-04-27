@@ -76,6 +76,8 @@ def test_ledger_query_outputs_table(tmp_ledger: Path) -> None:
     result = runner.invoke(ledger_app, ["query"])
     assert result.exit_code == 0, result.stdout
     assert "success_rate" in result.stdout
+    assert "cost_per_output" in result.stdout
+    assert "rate_limited:1" in result.stdout
 
 
 def test_ledger_query_filter_by_template(tmp_ledger: Path) -> None:

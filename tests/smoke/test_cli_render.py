@@ -67,15 +67,18 @@ def _read_ledger(path: Path) -> list[dict]:
     return out
 
 
-def _fake_sdk_response(snapshot: str = "snap-test"):
+def _fake_sdk_response(snapshot: str = "snap-test", count: int = 1):
     """Build a mock object that mimics ``OpenAI().images.generate(...)``."""
     from unittest.mock import MagicMock
 
-    item = MagicMock()
-    item.b64_json = _FAKE_PNG_B64
-    item.revised_prompt = "revised"
+    items = []
+    for _ in range(count):
+        item = MagicMock()
+        item.b64_json = _FAKE_PNG_B64
+        item.revised_prompt = "revised"
+        items.append(item)
     resp = MagicMock()
-    resp.data = [item]
+    resp.data = items
     resp.model = snapshot
     resp.created = 1_700_000_000
     return resp
@@ -102,6 +105,7 @@ def test_render_generate_writes_image_sidecar_and_ledger(
                 "--prompt-file", str(prompt_file),
                 "--size", "1024x1024",
                 "--quality", "medium",
+                "--template-id", "business_swot_card",
                 "--out", str(out_path),
             ],
         )
@@ -120,6 +124,38 @@ def test_render_generate_writes_image_sidecar_and_ledger(
     assert len(ok_entries) == 1, entries
     assert ok_entries[0]["kind"] == "generate"
     assert ok_entries[0]["snapshot"] == "snap-test"
+    assert ok_entries[0]["template_id"] == "business_swot_card"
+
+
+def test_render_generate_writes_multiple_images(
+    tmp_path: Path, tmp_ledger: Path, prompt_file: Path
+) -> None:
+    from unittest.mock import MagicMock
+
+    out_path = tmp_path / "img.png"
+    fake_client = MagicMock()
+    fake_client.images.generate.return_value = _fake_sdk_response(
+        "snap-test", count=2
+    )
+
+    with patch(
+        "image2_workbench.runtimes.images_api._new_client",
+        return_value=fake_client,
+    ):
+        result = runner.invoke(
+            app,
+            [
+                "render", "generate",
+                "--prompt-file", str(prompt_file),
+                "-n", "2",
+                "--out", str(out_path),
+            ],
+        )
+    assert result.exit_code == 0, (result.stdout, result.stderr)
+    assert (tmp_path / "img_01.png").exists()
+    assert (tmp_path / "img_02.png").exists()
+    assert (tmp_path / "img_01.png.sidecar.json").exists()
+    assert (tmp_path / "img_02.png.sidecar.json").exists()
 
 
 def test_render_generate_rejects_transparent_background(
@@ -137,6 +173,72 @@ def test_render_generate_rejects_transparent_background(
     )
     assert result.exit_code == 4, (result.stdout, result.stderr)
     assert "transparent" in (result.stdout + result.stderr).lower()
+
+
+def test_render_generate_rejects_bad_size_before_runtime_call(
+    tmp_ledger: Path, prompt_file: Path
+) -> None:
+    with patch("image2_workbench.commands.render.images_api.generate") as generate:
+        result = runner.invoke(
+            app,
+            [
+                "render", "generate",
+                "--prompt-file", str(prompt_file),
+                "--size", "1023x1024",
+            ],
+        )
+    assert result.exit_code == 4, (result.stdout, result.stderr)
+    assert "unsupported_parameter" in result.stderr
+    generate.assert_not_called()
+    entries = _read_ledger(tmp_ledger)
+    assert entries[-1]["status"] == "error"
+    assert entries[-1]["error_code"] == "unsupported_parameter"
+
+
+def test_render_generate_client_init_missing_key_exits_auth(
+    tmp_ledger: Path, prompt_file: Path
+) -> None:
+    with patch(
+        "image2_workbench.runtimes.images_api._new_client",
+        side_effect=ValueError("The api_key client option must be set"),
+    ):
+        result = runner.invoke(
+            app,
+            ["render", "generate", "--prompt-file", str(prompt_file)],
+        )
+    assert result.exit_code == 1, (result.stdout, result.stderr)
+    assert "missing_api_key" in result.stderr
+    entries = _read_ledger(tmp_ledger)
+    assert entries[-1]["status"] == "error"
+    assert entries[-1]["error_exit_code"] == 1
+
+
+def test_render_generate_artifact_failure_logs_error_ledger(
+    tmp_ledger: Path, prompt_file: Path, tmp_path: Path
+) -> None:
+    out_path = tmp_path / "img.png"
+    with (
+        patch(
+            "image2_workbench.commands.render.images_api.generate",
+            return_value=_fake_generate_response(),
+        ),
+        patch(
+            "image2_workbench.commands.render.writer_mod.write_image",
+            side_effect=OSError("disk full"),
+        ),
+    ):
+        result = runner.invoke(
+            app,
+            [
+                "render", "generate",
+                "--prompt-file", str(prompt_file),
+                "--out", str(out_path),
+            ],
+        )
+    assert result.exit_code == 5, (result.stdout, result.stderr)
+    entries = _read_ledger(tmp_ledger)
+    assert [e["status"] for e in entries] == ["error"]
+    assert entries[0]["error_code"] == "artifact_write_failed"
 
 
 def test_render_edit_without_image_exits_4(
@@ -209,3 +311,21 @@ def test_render_edit_validation_error_keeps_auth_error_unused(
     err = auth_error("missing key")
     assert err.envelope.exit_code.value == 1
     assert err.envelope.code == "missing_api_key"
+
+
+def test_render_edit_missing_image_is_reported_before_client_init(
+    tmp_path: Path, tmp_ledger: Path, prompt_file: Path
+) -> None:
+    missing = tmp_path / "missing.png"
+    with patch("image2_workbench.runtimes.images_api._new_client") as new_client:
+        result = runner.invoke(
+            app,
+            [
+                "render", "edit",
+                "--prompt-file", str(prompt_file),
+                "-i", str(missing),
+            ],
+        )
+    assert result.exit_code == 4, (result.stdout, result.stderr)
+    assert "input_image_missing" in result.stderr
+    new_client.assert_not_called()

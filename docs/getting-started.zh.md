@@ -49,13 +49,13 @@ pip install -e ".[dev]"
 两条命令验证安装是否正常：
 
 ```bash
-i2w --help     # 应当列出 8 个动词
+i2w --help     # 应当列出 11 个命令
 pytest -q      # 单元测试与冒烟测试应当全部通过
 ```
 
 输出里能看到 `catalog`、`template`、`render`、`batch`、`eval`、`cost`、
-`doctor`、`version` 这 8 个子命令。如果系统找不到 `i2w`，多半是 venv 没
-激活，重新执行上面那一步即可。
+`doctor`、`preflight`、`ledger`、`gallery`、`version` 这 11 个子命令。
+如果系统找不到 `i2w`，多半是 venv 没激活，重新执行上面那一步即可。
 
 ## 上手就跑的三条命令
 
@@ -83,8 +83,7 @@ i2w template list --domain business
 
 完全离线、瞬间出结果。它会扫描 `templates/business/*.yml`，按 V1 schema
 做校验，然后打印每个模板的 id 和一句话简介。去掉 `--domain` 即可看到
-全部四个领域。加上 `--lang en` 或 `--lang zh` 可以只列出某个语种的
-变体。
+全部四个领域。
 
 ### 3. 把模板渲染成一份可粘贴的提示词
 
@@ -136,7 +135,7 @@ gpt-image-2 就是 "create image" 工具背后的模型）。
 
 ```bash
 i2w render generate \
-    --prompt prompt.md \
+    --prompt-file prompt.md \
     --size 1536x1024 \
     --quality high \
     --out out/swot.png
@@ -145,8 +144,8 @@ i2w render generate \
 输出文件会放在图像同级目录：
 
 - `out/swot.png` — 图像本体。
-- `out/swot.png.json` — 旁路文件（sidecar），包含请求、响应里的 usage
-  数据，以及解析出的成本。
+- `out/swot.png.sidecar.json` — 旁路文件（sidecar），包含请求、响应里
+  的 usage 数据，以及解析出的成本。
 
 这条路径需要 `OPENAI_API_KEY`，并且你的组织已经验证过身份。如果还没
 验证，API 会返回 403，CLI 把它收敛成一行清晰的提示，不会丢一长串
@@ -167,7 +166,8 @@ Settings → Organization 里做一次性验证。通常几分钟内通过；通
 
 **`size 3840x2160 is experimental`。** `2560×1440` 以上的尺寸虽然允许，
 但被标记为 experimental — gpt-image-2 在最高分辨率下的稳定性还不齐整。
-确实要用就加 `--accept-experimental`，否则建议选 2K 区间的尺寸。
+线上渲染前可以先跑 `i2w preflight prompt.md --size 3840x2160` 查看预警，
+否则建议选 2K 区间的尺寸。
 
 **`pytest -q` 报 import 错误。** 多半是没装 `[dev]` 附加依赖或 venv 没
 激活。在 venv 里重跑 `pip install -e ".[dev]"`。

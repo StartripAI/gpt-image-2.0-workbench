@@ -23,6 +23,7 @@ from image2_workbench.runtimes.batch_api import (
     BatchSubmitResult,
     fetch_batch_results,
     get_batch_status,
+    serialize_lines_jsonl,
     submit_batch,
 )
 
@@ -123,6 +124,25 @@ def test_submit_batch_rejects_mixed_endpoints() -> None:
     b = _make_line("b", "/v1/images/edits")
     with pytest.raises(ValueError, match="same endpoint"):
         submit_batch([a, b], client=cli)
+    cli.files.create.assert_not_called()
+    cli.batches.create.assert_not_called()
+
+
+def test_batchjobline_rejects_invalid_gpt_image_size() -> None:
+    with pytest.raises(ValidationError):
+        BatchJobLine(
+            custom_id="bad-size",
+            method="POST",
+            url="/v1/images/generations",
+            body={"prompt": "x", "size": "4096x4096", "quality": "low"},
+        )
+
+
+def test_batch_jsonl_payload_is_serializable() -> None:
+    payload = serialize_lines_jsonl([_make_line("demo")])
+    row = json.loads(payload.strip())
+    assert row["custom_id"] == "demo"
+    assert row["url"] == "/v1/images/generations"
 
 
 def test_submit_batch_wraps_sdk_failure() -> None:
@@ -154,6 +174,22 @@ def test_get_batch_status_with_mock_client() -> None:
     assert st.failed_count == 1
     assert st.total_count == 4
     assert st.output_file_id == "file_out_42"
+
+
+def test_get_batch_status_accepts_dict_response() -> None:
+    cli = MagicMock()
+    cli.batches.retrieve.return_value = {
+        "id": "batch_dict",
+        "status": "completed",
+        "request_counts": {"completed": 2, "failed": 0, "total": 2},
+        "output_file_id": "file_out_dict",
+    }
+    st = get_batch_status("batch_dict", client=cli)
+    assert st.batch_id == "batch_dict"
+    assert st.status == "completed"
+    assert st.completed_count == 2
+    assert st.total_count == 2
+    assert st.output_file_id == "file_out_dict"
 
 
 def test_get_batch_status_rejects_empty_id() -> None:

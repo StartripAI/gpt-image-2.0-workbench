@@ -45,7 +45,7 @@ def _moderation_response(*, flagged: bool, categories: dict[str, bool]) -> objec
 def test_transparent_background_blocks() -> None:
     result = preflight("a cat", background="transparent")
     assert result.passed is False
-    assert "transparent_bg" in result.blocker_codes
+    assert "transparent_bg_unsupported" in result.blocker_codes
     assert any("transparent" in m for m in result.blockers)
 
 
@@ -55,7 +55,7 @@ def test_input_fidelity_extra_param_blocks() -> None:
         extra_params={"input_fidelity": "high"},
     )
     assert result.passed is False
-    assert "input_fidelity_param" in result.blocker_codes
+    assert "input_fidelity_unsupported" in result.blocker_codes
 
 
 def test_size_too_small_blocks() -> None:

@@ -30,11 +30,6 @@ auto-generated from `templates/<domain>/*.yml` by the L2 compiler:
 i2w gallery build
 ```
 
-(If the `gallery build` verb is not yet wired up in your checkout, it is
-landing in V1.5 — until then the per-domain pages are produced manually
-by running `i2w template render <id> --lang zh,en --export markdown` and
-concatenating the output.)
-
 Each render walks the seven-section DSL, substitutes the template's
 default variables, and writes one fenced block per declared
 `language_target`. The build then concatenates the per-template files
@@ -52,10 +47,11 @@ The gallery supports both of the workbench's delivery paths:
   `<angle-bracket>` placeholders before sending. No Python required.
   Full walkthrough in [`../chatgpt-web-mode.md`](../chatgpt-web-mode.md).
 - **Path B — CLI workflow.** Drive the compiler and the OpenAI API
-  directly via `i2w template render` and `i2w render generate` for
-  reproducible artifacts, batch generation, and CI integration. Full
-  walkthrough in [`../getting-started.en.md`](../getting-started.en.md)
-  (or [`../getting-started.zh.md`](../getting-started.zh.md)).
+  directly via `i2w template render ... --out prompt.md` and
+  `i2w render generate --prompt-file prompt.md` for reproducible
+  artifacts, batch generation, and CI integration. Full walkthrough in
+  [`../getting-started.en.md`](../getting-started.en.md) (or
+  [`../getting-started.zh.md`](../getting-started.zh.md)).
 
 ## License
 

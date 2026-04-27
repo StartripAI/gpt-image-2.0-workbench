@@ -6,7 +6,7 @@ from __future__ import annotations
 import pytest
 
 from image2_workbench.costing.heuristics import heuristic_cost, recommend_quality
-from image2_workbench.costing.pricing import estimate_cost
+from image2_workbench.costing.pricing import estimate_cost, estimate_tokens
 
 
 def test_official_table_lookup_1024_medium() -> None:
@@ -79,3 +79,29 @@ def test_estimate_cost_auto_quality_resolves_to_medium_for_forecast() -> None:
 def test_estimate_cost_rejects_malformed_size() -> None:
     with pytest.raises(ValueError):
         estimate_cost("not-a-size", "medium")
+
+
+@pytest.mark.parametrize(
+    "bad_size",
+    [
+        "1024x1025",  # non-multiple of 16
+        "4096x1024",  # max edge > 3840
+        "3840x1264",  # aspect ratio > 3:1
+        "512x512",  # below min pixel floor
+        "3840x2176",  # above max pixel ceiling
+    ],
+)
+def test_estimate_cost_reuses_gpt_image_size_validator(bad_size: str) -> None:
+    with pytest.raises(ValueError):
+        estimate_cost(bad_size, "medium")
+
+
+def test_estimate_cost_allows_3840_by_2160_ceiling() -> None:
+    est = estimate_cost("3840x2160", "medium")
+    assert est.track == "heuristic_pixel"
+    assert est.size == "3840x2160"
+
+
+def test_estimate_tokens_reuses_gpt_image_size_validator() -> None:
+    with pytest.raises(ValueError):
+        estimate_tokens("prompt", "1024x1025", "medium")

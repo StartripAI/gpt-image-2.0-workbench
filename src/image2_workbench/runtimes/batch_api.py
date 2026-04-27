@@ -29,7 +29,13 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field, ValidationError, model_validator
+
+from ..compiler.validators import (
+    validate_background,
+    validate_format_compression,
+    validate_size,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +50,25 @@ class BatchJobLine(BaseModel):
     method: Literal["POST"] = "POST"
     url: Literal["/v1/images/generations", "/v1/images/edits"]
     body: dict[str, Any]
+
+    @model_validator(mode="after")
+    def _validate_body(self) -> BatchJobLine:
+        size = self.body.get("size")
+        if size is not None:
+            validate_size(str(size))
+        quality = self.body.get("quality")
+        if quality is not None and str(quality) not in {"low", "medium", "high", "auto"}:
+            raise ValueError(
+                f"quality must be one of low/medium/high/auto; got {quality!r}"
+            )
+        background = self.body.get("background")
+        if background is not None:
+            validate_background(str(background))
+        fmt = self.body.get("output_format") or self.body.get("format")
+        compression = self.body.get("output_compression")
+        if fmt is not None:
+            validate_format_compression(str(fmt), compression)
+        return self
 
 
 class BatchSubmitResult(BaseModel):
@@ -93,6 +118,11 @@ def _serialize_lines(lines: list[BatchJobLine]) -> bytes:
     return buf.getvalue()
 
 
+def serialize_lines_jsonl(lines: list[BatchJobLine]) -> str:
+    """Return the exact JSONL payload that would be uploaded for ``lines``."""
+    return _serialize_lines(lines).decode("utf-8")
+
+
 def submit_batch(
     lines: list[BatchJobLine],
     *,
@@ -112,6 +142,11 @@ def submit_batch(
             raise TypeError(
                 f"lines[{i}] must be BatchJobLine, got {type(line).__name__}"
             )
+    endpoint_url = lines[0].url
+    if any(line.url != endpoint_url for line in lines):
+        raise ValueError(
+            "all lines in a batch must share the same endpoint url"
+        )
 
     submitted_at = datetime.now(UTC)
     if dry_run:
@@ -141,12 +176,6 @@ def submit_batch(
         # The SDK's typed Literal for `endpoint` lags behind the live
         # service; pass through unchanged. If the runtime SDK rejects
         # the value we surface that as a BatchApiError.
-        endpoint_url = lines[0].url
-        # All lines must target the same endpoint (Batch API requirement).
-        if any(line.url != endpoint_url for line in lines):
-            raise ValueError(
-                "all lines in a batch must share the same endpoint url"
-            )
         batch = cli.batches.create(
             input_file_id=input_file_id,
             endpoint=endpoint_url,
@@ -186,7 +215,11 @@ def get_batch_status(batch_id: str, *, client: Any | None = None) -> BatchStatus
             f"batches.retrieve({batch_id!r}) failed: {exc!s}"
         ) from exc
 
-    counts = getattr(batch, "request_counts", None) or {}
+    counts = (
+        batch.get("request_counts", {})
+        if isinstance(batch, dict)
+        else getattr(batch, "request_counts", None) or {}
+    )
     if hasattr(counts, "model_dump"):
         counts = counts.model_dump()
     elif not isinstance(counts, dict):
@@ -196,13 +229,18 @@ def get_batch_status(batch_id: str, *, client: Any | None = None) -> BatchStatus
             "total": getattr(counts, "total", 0),
         }
 
-    output_file_id = getattr(batch, "output_file_id", None) or (
-        batch.get("output_file_id") if isinstance(batch, dict) else None
-    )
+    if isinstance(batch, dict):
+        batch_id_value = batch.get("id", batch_id)
+        status_value = batch.get("status", "unknown")
+        output_file_id = batch.get("output_file_id")
+    else:
+        batch_id_value = getattr(batch, "id", batch_id)
+        status_value = getattr(batch, "status", "unknown")
+        output_file_id = getattr(batch, "output_file_id", None)
 
     return BatchStatus(
-        batch_id=str(getattr(batch, "id", batch_id)),
-        status=str(getattr(batch, "status", "unknown")),
+        batch_id=str(batch_id_value),
+        status=str(status_value),
         completed_count=int(counts.get("completed", 0) or 0),
         failed_count=int(counts.get("failed", 0) or 0),
         total_count=int(counts.get("total", 0) or 0),
@@ -306,5 +344,6 @@ __all__ = [
     "ValidationError",
     "fetch_batch_results",
     "get_batch_status",
+    "serialize_lines_jsonl",
     "submit_batch",
 ]

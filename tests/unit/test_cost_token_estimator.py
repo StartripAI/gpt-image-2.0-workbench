@@ -31,6 +31,12 @@ def test_basic_estimate_returns_token_estimate() -> None:
     assert est.track == "token_table"
 
 
+def test_reference_1024_medium_output_tokens() -> None:
+    est = estimate_tokens("", "1024x1024", "medium")
+    assert est.image_tokens_out == 1024
+    assert est.total_tokens == 1024
+
+
 def test_text_tokens_round_up() -> None:
     # 7 chars / 4 chars-per-token = 1.75 → ceil to 2.
     est = estimate_tokens("a" * 7, "1024x1024", "low")

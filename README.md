@@ -10,8 +10,9 @@ SPDX-License-Identifier: CC-BY-4.0
 > through moderation, and ledgers every call so you can see what fails
 > and why.
 
-> **Status:** V1.5 alpha — under active development. APIs and template
-> formats may change before the first tagged release.
+> **Status:** v0.2.0 GitHub source-checkout release. APIs and template
+> formats may still change while the workbench is alpha; PyPI/wheel
+> packaging is left to v0.3.
 
 中文版：[README.zh.md](./README.zh.md)
 
@@ -47,7 +48,7 @@ see [`docs/positioning.md`](./docs/positioning.md).
 | Layer | Where it runs | What you ship |
 |-------|---------------|---------------|
 | **L1 — Skill bundle** | Codex, Claude Code, Anthropic Skills, any agent that loads `SKILL.md` | A thin SKILL bundle in [`skills/gpt-image/`](./skills/gpt-image/) that calls into the CLI |
-| **L2 — Python CLI / SDK** | Local terminals, CI, your own agent | The `i2w` command, packaged as `image2-workbench` |
+| **L2 — Python CLI / SDK** | Local terminals, CI, your own agent | The `i2w` command from this checkout (`image2-workbench` package name) |
 | **L3 — Prompt-only templates** | Web ChatGPT, mobile, anywhere there's no Python | Compiled bilingual markdown under [`docs/gallery/`](./docs/gallery/) — copy into a chat box and go |
 
 L1 is a thin wrapper around L2. L3 is a build artifact of L2's compiler — the
@@ -86,14 +87,14 @@ distribution, and a TypeScript shim.
 | Component | State |
 |-----------|-------|
 | Project scaffolding, license layering, CI | shipped |
-| CLI surface (`i2w` with 8 verbs) | in progress |
-| API runtimes (Images API + Responses API) | in progress |
-| Spec-first template DSL & compiler | in progress |
-| Domain templates (4 × 4 = 16) | in progress |
-| Catalog + provenance store | in progress |
-| Eval rubrics (text / layout / edit / continuity) | in progress |
-| Costing (official token track + heuristic) | in progress |
-| Docs + gallery export | in progress |
+| CLI surface (`i2w` with 11 commands) | shipped |
+| API runtimes (Images API + Responses API) | shipped |
+| Spec-first template DSL & compiler | shipped |
+| Domain templates (4 × 4 = 16) | shipped |
+| Catalog + provenance store | shipped |
+| Eval rubrics (text / layout / edit / continuity) | shipped |
+| Costing (official token track + heuristic) | shipped |
+| Docs + gallery export | shipped |
 
 ## Licensing
 

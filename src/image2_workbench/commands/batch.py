@@ -21,11 +21,13 @@ from rich.table import Table
 from ..compiler.loader import load_template, load_vars
 from ..compiler.renderer import render
 from ..costing.pricing import estimate_cost
+from ..ledger import LedgerEntry, append_entry
 from ..runtimes.batch_api import (
     BatchApiError,
     BatchJobLine,
     fetch_batch_results,
     get_batch_status,
+    serialize_lines_jsonl,
     submit_batch,
 )
 
@@ -60,6 +62,13 @@ def _exit(code: str | int, message: str) -> typer.Exit:
 
 def _split_csv(value: str) -> list[str]:
     return [v.strip() for v in value.split(",") if v.strip()]
+
+
+def _append_ledger(entry: LedgerEntry) -> None:
+    try:
+        append_entry(entry)
+    except Exception:  # noqa: BLE001
+        pass
 
 
 def _resolve_template(template: str) -> Path:
@@ -196,13 +205,16 @@ def sweep(
     except Exception as exc:  # noqa: BLE001
         raise _exit("VALIDATION", f"render failed: {exc}") from exc
 
-    lines = _build_lines(
-        template_id=spec.id,
-        rendered_prompt=rendered_prompt,
-        sizes=size_list,
-        qualities=quality_list,
-        n_per=n_per,
-    )
+    try:
+        lines = _build_lines(
+            template_id=spec.id,
+            rendered_prompt=rendered_prompt,
+            sizes=size_list,
+            qualities=quality_list,
+            n_per=n_per,
+        )
+    except Exception as exc:  # noqa: BLE001
+        raise _exit("VALIDATION", f"invalid batch request: {exc}") from exc
 
     # Cost forecast.
     total_usd = 0.0
@@ -214,7 +226,12 @@ def sweep(
     for size in size_list:
         for q in quality_list:
             for k in range(n_per):
-                est = estimate_cost(size=size, quality=q, n=1)  # type: ignore[arg-type]
+                try:
+                    est = estimate_cost(size=size, quality=q, n=1)  # type: ignore[arg-type]
+                except ValueError as exc:
+                    raise _exit(
+                        "VALIDATION", f"invalid (size={size}, quality={q}): {exc}"
+                    ) from exc
                 total_usd += est.total_usd
                 table.add_row(
                     f"{spec.id}__{size}__{q}__{k:02d}",
@@ -240,6 +257,9 @@ def sweep(
     )
 
     if dry_run:
+        if route == "batch-api":
+            typer.echo("batch_jsonl:")
+            typer.echo(serialize_lines_jsonl(lines).rstrip())
         console.print("dry-run: not submitting any jobs.", markup=False)
         return
 
@@ -247,7 +267,33 @@ def sweep(
         try:
             result = submit_batch(lines, dry_run=False)
         except (BatchApiError, ValueError) as exc:
+            _append_ledger(
+                LedgerEntry(
+                    kind="batch_submit",
+                    template_id=spec.id,
+                    status="error",
+                    cost_usd=total_usd,
+                    n=len(lines),
+                    error_code="batch_submission_failed",
+                    error_exit_code=5,
+                    extra={"route": route, "error": str(exc)},
+                )
+            )
             raise _exit("API", f"batch submission failed: {exc}") from exc
+        _append_ledger(
+            LedgerEntry(
+                kind="batch_submit",
+                template_id=spec.id,
+                status="ok",
+                cost_usd=total_usd * 0.5,
+                n=len(lines),
+                extra={
+                    "batch_id": result.batch_id,
+                    "batch_status": result.status,
+                    "route": route,
+                },
+            )
+        )
         console.print(
             f"submitted batch_id={result.batch_id}  status={result.status}  "
             f"requests={result.request_count}",
@@ -288,6 +334,18 @@ def sweep(
         f"immediate: succeeded={succeeded}  failed={failures}",
         markup=False,
     )
+    _append_ledger(
+        LedgerEntry(
+            kind="batch_submit",
+            template_id=spec.id,
+            status="ok" if failures == 0 else "error",
+            cost_usd=total_usd,
+            n=len(lines),
+            error_code=None if failures == 0 else "batch_immediate_failed",
+            error_exit_code=None if failures == 0 else 5,
+            extra={"route": route, "succeeded": succeeded, "failed": failures},
+        )
+    )
     if failures:
         raise _exit("API", f"{failures} requests failed")
 
@@ -303,7 +361,30 @@ def status(
     try:
         st = get_batch_status(batch_id)
     except (BatchApiError, ValueError) as exc:
+        _append_ledger(
+            LedgerEntry(
+                kind="batch_status",
+                status="error",
+                error_code="batch_status_failed",
+                error_exit_code=5,
+                extra={"batch_id": batch_id, "error": str(exc)},
+            )
+        )
         raise _exit("API", f"could not fetch status: {exc}") from exc
+    _append_ledger(
+        LedgerEntry(
+            kind="batch_status",
+            status="ok",
+            n=st.total_count,
+            extra={
+                "batch_id": st.batch_id,
+                "batch_status": st.status,
+                "completed": st.completed_count,
+                "failed": st.failed_count,
+                "output_file_id": st.output_file_id,
+            },
+        )
+    )
     console.print(
         f"batch_id={st.batch_id}  status={st.status}  "
         f"completed={st.completed_count}/{st.total_count}  failed={st.failed_count}",
@@ -328,7 +409,24 @@ def fetch(
     try:
         written = fetch_batch_results(batch_id, out_dir)
     except (BatchApiError, ValueError) as exc:
+        _append_ledger(
+            LedgerEntry(
+                kind="batch_fetch",
+                status="error",
+                error_code="batch_fetch_failed",
+                error_exit_code=5,
+                extra={"batch_id": batch_id, "out_dir": str(out_dir), "error": str(exc)},
+            )
+        )
         raise _exit("API", f"fetch failed: {exc}") from exc
+    _append_ledger(
+        LedgerEntry(
+            kind="batch_fetch",
+            status="ok",
+            n=written,
+            extra={"batch_id": batch_id, "out_dir": str(out_dir), "written": written},
+        )
+    )
     console.print(
         f"wrote {written} image(s) to {out_dir}",
         markup=False,

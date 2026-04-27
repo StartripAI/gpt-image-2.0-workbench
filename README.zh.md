@@ -9,8 +9,8 @@ SPDX-License-Identifier: CC-BY-4.0
 > 预筛 prompt，并把每一次调用写进本地 ledger，让你能看清"什么失败了、
 > 为什么失败"。
 
-> **状态：** V1.5 alpha — 持续开发中。在第一个正式 tag 之前，API 与模板
-> 格式仍可能调整。
+> **状态：** v0.2.0 GitHub 源码 checkout 版本。项目仍处于 alpha，API
+> 与模板格式后续可能调整；PyPI/wheel 打包留到 v0.3。
 
 English: [README.md](./README.md)
 
@@ -44,7 +44,7 @@ prompt 收藏夹帮一个人完成一张图；工作台帮一个团队完成一�
 | 层 | 在哪运行 | 交付什么 |
 |---|---|---|
 | **L1 — 技能包** | Codex / Claude Code / Anthropic Skills / 任何支持 `SKILL.md` 的 agent | [`skills/gpt-image/`](./skills/gpt-image/) 极薄技能包，转发给 CLI |
-| **L2 — Python CLI / SDK** | 本地终端、CI、自有 agent | `i2w` 命令；包名 `image2-workbench` |
+| **L2 — Python CLI / SDK** | 本地终端、CI、自有 agent | 当前 checkout 中的 `i2w` 命令；包名 `image2-workbench` |
 | **L3 — 纯模板** | 网页 ChatGPT、移动端、所有没有 Python 的环境 | [`docs/gallery/`](./docs/gallery/) 下的双语 markdown，可直接粘到对话框 |
 
 L1 是 L2 的薄壳；L3 是 L2 编译器的产物 —— 同一份模板定义同时生成"可执行
@@ -80,14 +80,14 @@ V2 会补 `industrial`、`ecommerce`、自动采集、插件分发、TypeScript 
 | 组件 | 状态 |
 |---|---|
 | 项目骨架、分层许可、CI | 已完成 |
-| CLI 命令面（`i2w` 八个 verb） | 进行中 |
-| API 双后端（Images API + Responses API） | 进行中 |
-| Spec-first 模板 DSL 与编译器 | 进行中 |
-| 各域模板（4×4 = 16） | 进行中 |
-| 语料检索 + provenance | 进行中 |
-| 四类评测 rubric | 进行中 |
-| 成本估算（官方 token + 启发式双轨） | 进行中 |
-| 文档 + gallery 导出 | 进行中 |
+| CLI 命令面（`i2w` 11 个命令） | 已完成 |
+| API 双后端（Images API + Responses API） | 已完成 |
+| Spec-first 模板 DSL 与编译器 | 已完成 |
+| 各域模板（4×4 = 16） | 已完成 |
+| 语料检索 + provenance | 已完成 |
+| 四类评测 rubric | 已完成 |
+| 成本估算（官方 token + 启发式双轨） | 已完成 |
+| 文档 + gallery 导出 | 已完成 |
 
 ## 许可
 

@@ -17,7 +17,14 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
-CallKind = Literal["generate", "edit", "preflight", "batch_submit", "batch_fetch"]
+CallKind = Literal[
+    "generate",
+    "edit",
+    "preflight",
+    "batch_submit",
+    "batch_status",
+    "batch_fetch",
+]
 CallStatus = Literal["ok", "error"]
 
 
@@ -97,6 +104,7 @@ class AggregateRow(BaseModel):
     p50_latency_ms: int | None = None
     p95_latency_ms: int | None = None
     total_cost_usd: float
+    cost_per_output_usd: float | None = None
     error_code_breakdown: dict[str, int] = Field(default_factory=dict)
 
 
@@ -158,6 +166,7 @@ def aggregate(
         err = total - ok
         latencies = [e.latency_ms for e in bucket if e.latency_ms is not None]
         cost_total = sum((e.cost_usd or 0.0) for e in bucket)
+        output_count = sum((e.n or 0) for e in bucket if e.status == "ok")
         breakdown: dict[str, int] = {}
         for e in bucket:
             if e.status == "error" and e.error_code:
@@ -174,6 +183,9 @@ def aggregate(
                 p50_latency_ms=_percentile(latencies, 50.0),
                 p95_latency_ms=_percentile(latencies, 95.0),
                 total_cost_usd=round(cost_total, 6),
+                cost_per_output_usd=(
+                    round(cost_total / output_count, 6) if output_count else None
+                ),
                 error_code_breakdown=breakdown,
             )
         )

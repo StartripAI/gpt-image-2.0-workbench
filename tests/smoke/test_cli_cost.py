@@ -61,6 +61,30 @@ def test_compare_six_rows() -> None:
         f"expected >=12 '$' tokens in 2x3 matrix; got {dollar_count}\n"
         f"stdout:\n{result.stdout}"
     )
+    assert "grand_total_usd=$" in result.stdout
+
+
+@pytest.mark.parametrize(
+    "argv",
+    [
+        ["estimate", "--size", "4096x4096", "--quality", "medium"],
+        ["estimate", "--size", "1024x1024", "--quality", "ultra"],
+        [
+            "estimate",
+            "--size",
+            "1024x1024",
+            "--quality",
+            "medium",
+            "--token-estimate",
+            "--thinking",
+            "ultra",
+        ],
+    ],
+)
+def test_estimate_invalid_inputs_exit_4(argv: list[str]) -> None:
+    result = runner.invoke(cost_app, argv)
+    assert result.exit_code == 4, (result.stdout, result.stderr)
+    assert "exit 4" in result.stderr or result.stderr
 
 
 def test_compare_default_three_by_three() -> None:

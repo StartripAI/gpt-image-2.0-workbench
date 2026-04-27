@@ -14,12 +14,14 @@ from pathlib import Path
 from typing import Annotated
 
 import typer
+from pydantic import ValidationError as PydanticValidationError
 from rich.console import Console
 
 from ..artifacts import sidecar as sidecar_mod
 from ..artifacts import writer as writer_mod
 from ..costing import pricing as pricing_mod
 from ..errors import WorkbenchError, api_error, cli_dispatch, validation_error
+from ..ledger import LedgerEntry, append_entry
 from ..runtimes import images_api
 from ..runtimes.types import (
     ApiCallError,
@@ -38,6 +40,7 @@ _VALID_QUALITIES = {"low", "medium", "high", "auto"}
 _VALID_BACKGROUNDS = {"auto", "opaque"}
 _VALID_FORMATS = {"png", "jpeg", "webp"}
 _VALID_MODERATION = {"auto", "low"}
+_VALID_THINKING = {"auto", "low", "medium", "high"}
 
 
 def _read_prompt(prompt_file: Path) -> str:
@@ -47,10 +50,31 @@ def _read_prompt(prompt_file: Path) -> str:
             f"prompt file not found: {prompt_file}",
             context={"prompt_file": str(prompt_file)},
         )
-    return prompt_file.read_text(encoding="utf-8")
+    if not prompt_file.is_file():
+        raise validation_error(
+            "prompt_file_not_file",
+            f"prompt file is not a file: {prompt_file}",
+            context={"prompt_file": str(prompt_file)},
+        )
+    try:
+        return prompt_file.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        raise validation_error(
+            "prompt_file_unreadable",
+            f"could not read prompt file: {prompt_file}",
+            context={"prompt_file": str(prompt_file)},
+            cause=repr(exc),
+        ) from exc
 
 
-def _validate_common(quality: str, background: str, fmt: str, moderation: str) -> None:
+def _validate_common(
+    size: str,
+    quality: str,
+    background: str,
+    fmt: str,
+    moderation: str,
+    thinking: str | None = None,
+) -> None:
     if background == "transparent":
         raise validation_error(
             "transparent_bg_unsupported",
@@ -59,6 +83,14 @@ def _validate_common(quality: str, background: str, fmt: str, moderation: str) -
             docs_url="docs/error-codes.md#validation",
             context={"background": background},
         )
+    try:
+        images_api.validate_size(size)
+    except UnsupportedParameterError as exc:
+        raise validation_error(
+            "unsupported_parameter",
+            str(exc),
+            cause=repr(exc),
+        ) from exc
     if background not in _VALID_BACKGROUNDS:
         raise validation_error(
             "invalid_background",
@@ -83,6 +115,30 @@ def _validate_common(quality: str, background: str, fmt: str, moderation: str) -
             f"--moderation must be 'auto' or 'low'; got {moderation!r}",
             context={"moderation": moderation},
         )
+    if thinking is not None and thinking not in _VALID_THINKING:
+        raise validation_error(
+            "invalid_thinking",
+            f"--think must be one of auto/low/medium/high; got {thinking!r}",
+            context={"thinking": thinking},
+        )
+
+
+def _request_validation_error(exc: PydanticValidationError) -> WorkbenchError:
+    return validation_error(
+        "invalid_request",
+        "render request options failed validation",
+        detail=str(exc),
+        cause=repr(exc),
+    )
+
+
+def _artifact_write_error(exc: Exception, target: Path) -> WorkbenchError:
+    return api_error(
+        f"artifact write failed for {target}: {exc}",
+        code="artifact_write_failed",
+        context={"path": str(target)},
+        cause=repr(exc),
+    )
 
 
 def _resolve_out(out: Path | None, default_name: str) -> Path:
@@ -98,12 +154,51 @@ def _resolve_out(out: Path | None, default_name: str) -> Path:
     return target
 
 
+def _output_path_for_index(base: Path, index: int, total: int) -> Path:
+    if total == 1:
+        return base
+    suffix = base.suffix or ".png"
+    return base.with_name(f"{base.stem}_{index + 1:02d}{suffix}")
+
+
 def _cost_estimate(size: str, quality: str, n: int) -> float | None:
     try:
         est = pricing_mod.estimate_cost(size, quality, n)  # type: ignore[arg-type]
         return float(est.total_usd)
     except Exception:  # noqa: BLE001 — cost is advisory; never fail the job
         return None
+
+
+def _append_ledger(entry: LedgerEntry) -> None:
+    try:
+        append_entry(entry)
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _append_error_ledger(
+    *,
+    kind: str,
+    template_id: str | None,
+    size: str,
+    quality: str,
+    n: int,
+    latency_ms: int,
+    error: WorkbenchError,
+) -> None:
+    _append_ledger(
+        LedgerEntry(
+            kind=kind,  # type: ignore[arg-type]
+            template_id=template_id,
+            status="error",
+            size=size,
+            quality=quality,
+            n=n,
+            latency_ms=latency_ms,
+            error_code=error.envelope.code,
+            error_exit_code=int(error.envelope.exit_code),
+        )
+    )
 
 
 def _write_artifacts(
@@ -120,33 +215,42 @@ def _write_artifacts(
     thinking: str | None,
     cost_usd: float | None,
     events: list[str] | None,
-) -> tuple[Path, Path]:
-    """Write the first image + sidecar; return both paths."""
+) -> list[tuple[Path, Path]]:
+    """Write every returned image + sidecar; return all paths."""
     if not response.images_b64:
         raise validation_error(
             "empty_response",
             "API returned no image data",
         )
-    primary_b64 = response.images_b64[0]
-    image_path = writer_mod.write_image(primary_b64, out_path, fmt)
-    sc = sidecar_mod.Sidecar(
-        model=response.model,
-        snapshot=response.snapshot,
-        revised_prompt=response.revised_prompt,
-        size=size,
-        quality=quality,
-        n=n,
-        format=fmt,
-        background=background,
-        moderation=moderation,
-        thinking=thinking,
-        prompt_hash=sidecar_mod.hash_prompt(prompt),
-        image_hash=sidecar_mod.hash_image_file(image_path),
-        cost_estimate_usd=cost_usd,
-        events=list(events or []),
-    )
-    sidecar_path = sidecar_mod.write(sc, image_path)
-    return image_path, sidecar_path
+    paths: list[tuple[Path, Path]] = []
+    total = len(response.images_b64)
+    for idx, b64 in enumerate(response.images_b64):
+        target = _output_path_for_index(out_path, idx, total)
+        try:
+            image_path = writer_mod.write_image(b64, target, fmt)
+            sc = sidecar_mod.Sidecar(
+                model=response.model,
+                snapshot=response.snapshot,
+                revised_prompt=response.revised_prompt,
+                size=size,
+                quality=quality,
+                n=n,
+                format=fmt,
+                background=background,
+                moderation=moderation,
+                thinking=thinking,
+                prompt_hash=sidecar_mod.hash_prompt(prompt),
+                image_hash=sidecar_mod.hash_image_file(image_path),
+                cost_estimate_usd=cost_usd,
+                events=list(events or []),
+            )
+            sidecar_path = sidecar_mod.write(sc, image_path)
+        except WorkbenchError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            raise _artifact_write_error(exc, target) from exc
+        paths.append((image_path, sidecar_path))
+    return paths
 
 
 @render_app.command("generate")
@@ -174,62 +278,95 @@ def generate(
         str | None,
         typer.Option("--think", help="auto|low|medium|high (probed)"),
     ] = None,
+    template_id: Annotated[
+        str | None,
+        typer.Option("--template-id", help="Template id for ledger grouping"),
+    ] = None,
 ) -> None:
     """Generate images from a rendered prompt file."""
     console = Console()
 
     def _run() -> None:
-        _validate_common(quality, background, fmt, moderation)
-        prompt = _read_prompt(prompt_file)
-        req = GenerateRequest(
-            prompt=prompt,
-            size=size,
-            quality=quality,  # type: ignore[arg-type]
-            n=n,
-            fmt=fmt,  # type: ignore[arg-type]
-            moderation=moderation,  # type: ignore[arg-type]
-            background=background,  # type: ignore[arg-type]
-            thinking=think,  # type: ignore[arg-type]
-        )
-        events: list[str] = []
-        out_path = _resolve_out(out, default_name=f"render.{fmt}")
         start = time.monotonic()
         try:
-            response = images_api.generate(req, events=events)
-        except WorkbenchError:
+            _validate_common(size, quality, background, fmt, moderation, think)
+            prompt = _read_prompt(prompt_file)
+            try:
+                req = GenerateRequest(
+                    prompt=prompt,
+                    size=size,
+                    quality=quality,  # type: ignore[arg-type]
+                    n=n,
+                    fmt=fmt,  # type: ignore[arg-type]
+                    moderation=moderation,  # type: ignore[arg-type]
+                    background=background,  # type: ignore[arg-type]
+                    thinking=think,  # type: ignore[arg-type]
+                )
+            except PydanticValidationError as exc:
+                raise _request_validation_error(exc) from exc
+            events: list[str] = []
+            out_path = _resolve_out(out, default_name=f"render.{fmt}")
+            try:
+                response = images_api.generate(req, events=events)
+            except UnsupportedParameterError as exc:
+                raise validation_error(
+                    "unsupported_parameter",
+                    str(exc),
+                    cause=repr(exc),
+                ) from exc
+            except ApiCallError as exc:
+                raise api_error(
+                    f"images.generate failed: {exc!s}",
+                    cause=repr(exc),
+                ) from exc
+
+            latency_ms = int((time.monotonic() - start) * 1000)
+            cost_usd = _cost_estimate(size, quality, n)
+            paths = _write_artifacts(
+                prompt=prompt,
+                response=response,
+                out_path=out_path,
+                size=size,
+                quality=quality,
+                n=n,
+                fmt=fmt,
+                background=background,
+                moderation=moderation,
+                thinking=think,
+                cost_usd=cost_usd,
+                events=events,
+            )
+            _append_ledger(
+                LedgerEntry(
+                    kind="generate",
+                    template_id=template_id,
+                    snapshot=response.snapshot,
+                    status="ok",
+                    latency_ms=latency_ms,
+                    cost_usd=cost_usd,
+                    size=size,
+                    quality=quality,
+                    n=n,
+                )
+            )
+            for image_path, sidecar_path in paths:
+                console.print(
+                    f"wrote image: {image_path}  sidecar: {sidecar_path}  "
+                    f"snapshot={response.snapshot}  latency={latency_ms}ms",
+                    markup=False,
+                )
+        except WorkbenchError as wb:
+            latency_ms = int((time.monotonic() - start) * 1000)
+            _append_error_ledger(
+                kind="generate",
+                template_id=template_id,
+                size=size,
+                quality=quality,
+                n=n,
+                latency_ms=latency_ms,
+                error=wb,
+            )
             raise
-        except UnsupportedParameterError as exc:
-            raise validation_error(
-                "unsupported_parameter",
-                str(exc),
-                cause=repr(exc),
-            ) from exc
-        except ApiCallError as exc:
-            raise api_error(
-                f"images.generate failed: {exc!s}",
-                cause=repr(exc),
-            ) from exc
-        latency_ms = int((time.monotonic() - start) * 1000)
-        cost_usd = _cost_estimate(size, quality, n)
-        image_path, sidecar_path = _write_artifacts(
-            prompt=prompt,
-            response=response,
-            out_path=out_path,
-            size=size,
-            quality=quality,
-            n=n,
-            fmt=fmt,
-            background=background,
-            moderation=moderation,
-            thinking=think,
-            cost_usd=cost_usd,
-            events=events,
-        )
-        console.print(
-            f"wrote image: {image_path}  sidecar: {sidecar_path}  "
-            f"snapshot={response.snapshot}  latency={latency_ms}ms",
-            markup=False,
-        )
 
     raise SystemExit(cli_dispatch(_run))
 
@@ -262,67 +399,129 @@ def edit(
         Path | None,
         typer.Option("--out", help="Output path or directory for edited images"),
     ] = None,
+    template_id: Annotated[
+        str | None,
+        typer.Option("--template-id", help="Template id for ledger grouping"),
+    ] = None,
 ) -> None:
     """Edit reference images using a rendered prompt file."""
     console = Console()
 
     def _run() -> None:
-        _validate_common(quality, background, fmt, moderation)
-        if not image:
-            raise validation_error(
-                "missing_reference_image",
-                "i2w render edit requires at least one reference image "
-                "(-i/--image, repeatable)",
-                docs_url="docs/error-codes.md#validation",
-            )
-        prompt = _read_prompt(prompt_file)
-        req = EditRequest(
-            prompt=prompt,
-            images=list(image),
-            mask=mask,
-            size=size,
-            quality=quality,  # type: ignore[arg-type]
-            moderation=moderation,  # type: ignore[arg-type]
-            background=background,  # type: ignore[arg-type]
-            fmt=fmt,  # type: ignore[arg-type]
-        )
-        out_path = _resolve_out(out, default_name=f"edit.{fmt}")
         start = time.monotonic()
         try:
-            response = images_api.edit(req)
-        except WorkbenchError:
+            _validate_common(size, quality, background, fmt, moderation)
+            if not image:
+                raise validation_error(
+                    "missing_reference_image",
+                    "i2w render edit requires at least one reference image "
+                    "(-i/--image, repeatable)",
+                    docs_url="docs/error-codes.md#validation",
+                )
+            for img in image:
+                if not img.exists():
+                    raise validation_error(
+                        "input_image_missing",
+                        f"input image not found: {img}",
+                        docs_url="docs/error-codes.md#validation",
+                        context={"image": str(img)},
+                    )
+                if not img.is_file():
+                    raise validation_error(
+                        "input_image_not_file",
+                        f"input image is not a file: {img}",
+                        docs_url="docs/error-codes.md#validation",
+                        context={"image": str(img)},
+                    )
+            if mask is not None and not mask.exists():
+                raise validation_error(
+                    "mask_missing",
+                    f"mask image not found: {mask}",
+                    docs_url="docs/error-codes.md#validation",
+                    context={"mask": str(mask)},
+                )
+            if mask is not None and not mask.is_file():
+                raise validation_error(
+                    "mask_not_file",
+                    f"mask image is not a file: {mask}",
+                    docs_url="docs/error-codes.md#validation",
+                    context={"mask": str(mask)},
+                )
+            prompt = _read_prompt(prompt_file)
+            try:
+                req = EditRequest(
+                    prompt=prompt,
+                    images=list(image),
+                    mask=mask,
+                    size=size,
+                    quality=quality,  # type: ignore[arg-type]
+                    moderation=moderation,  # type: ignore[arg-type]
+                    background=background,  # type: ignore[arg-type]
+                    fmt=fmt,  # type: ignore[arg-type]
+                )
+            except PydanticValidationError as exc:
+                raise _request_validation_error(exc) from exc
+            out_path = _resolve_out(out, default_name=f"edit.{fmt}")
+            try:
+                response = images_api.edit(req)
+            except UnsupportedParameterError as exc:
+                raise validation_error(
+                    "unsupported_parameter",
+                    str(exc),
+                    cause=repr(exc),
+                ) from exc
+            except ApiCallError as exc:
+                raise api_error(
+                    f"images.edit failed: {exc!s}",
+                    cause=repr(exc),
+                ) from exc
+
+            latency_ms = int((time.monotonic() - start) * 1000)
+            cost_usd = _cost_estimate(size, quality, 1)
+            paths = _write_artifacts(
+                prompt=prompt,
+                response=response,
+                out_path=out_path,
+                size=size,
+                quality=quality,
+                n=1,
+                fmt=fmt,
+                background=background,
+                moderation=moderation,
+                thinking=None,
+                cost_usd=cost_usd,
+                events=None,
+            )
+            _append_ledger(
+                LedgerEntry(
+                    kind="edit",
+                    template_id=template_id,
+                    snapshot=response.snapshot,
+                    status="ok",
+                    latency_ms=latency_ms,
+                    cost_usd=cost_usd,
+                    size=size,
+                    quality=quality,
+                    n=1,
+                )
+            )
+            for image_path, sidecar_path in paths:
+                console.print(
+                    f"wrote image: {image_path}  sidecar: {sidecar_path}  "
+                    f"snapshot={response.snapshot}  latency={latency_ms}ms",
+                    markup=False,
+                )
+        except WorkbenchError as wb:
+            latency_ms = int((time.monotonic() - start) * 1000)
+            _append_error_ledger(
+                kind="edit",
+                template_id=template_id,
+                size=size,
+                quality=quality,
+                n=1,
+                latency_ms=latency_ms,
+                error=wb,
+            )
             raise
-        except UnsupportedParameterError as exc:
-            raise validation_error(
-                "unsupported_parameter",
-                str(exc),
-                cause=repr(exc),
-            ) from exc
-        except ApiCallError as exc:
-            raise api_error(
-                f"images.edit failed: {exc!s}",
-                cause=repr(exc),
-            ) from exc
-        latency_ms = int((time.monotonic() - start) * 1000)
-        cost_usd = _cost_estimate(size, quality, 1)
-        image_path, sidecar_path = _write_artifacts(
-            prompt=prompt,
-            response=response,
-            out_path=out_path,
-            size=size,
-            quality=quality,
-            n=1,
-            fmt=fmt,
-            background=background,
-            moderation=moderation,
-            thinking=None,
-            cost_usd=cost_usd,
-            events=None,
-        )
-        console.print(
-            f"wrote image: {image_path}  sidecar: {sidecar_path}  "
-            f"snapshot={response.snapshot}  latency={latency_ms}ms",
-            markup=False,
-        )
 
     raise SystemExit(cli_dispatch(_run))

@@ -85,13 +85,16 @@ def _local_checks(
     except BackgroundValidationError as exc:
         if "transparent" in background.lower():
             _add_blocker(
-                blockers, blocker_codes, code="transparent_bg", message=str(exc)
+                blockers,
+                blocker_codes,
+                code="transparent_bg_unsupported",
+                message=str(exc),
             )
         else:
             _add_blocker(
                 blockers,
                 blocker_codes,
-                code="background_invalid",
+                code="invalid_background",
                 message=str(exc),
             )
 
@@ -103,7 +106,7 @@ def _local_checks(
             _add_blocker(
                 blockers,
                 blocker_codes,
-                code="input_fidelity_param",
+                code="input_fidelity_unsupported",
                 message=str(exc),
             )
 
@@ -140,7 +143,7 @@ def _local_checks(
         ):
             code = "compression_format_mismatch"
         else:
-            code = "format_invalid"
+            code = "invalid_format"
         _add_blocker(blockers, blocker_codes, code=code, message=str(exc))
 
     # Quality is only advisory at preflight (no hard list locally).

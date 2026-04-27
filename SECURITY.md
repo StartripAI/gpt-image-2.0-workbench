@@ -14,10 +14,9 @@ Use one of the private channels below:
    the repository's "Security" tab → "Report a vulnerability". This routes
    directly to the maintainers, keeps the discussion private, and tracks
    a CVE if one is needed.
-2. **Email backup.** If you cannot use GitHub Security Advisories, write
-   to `<security-contact-here>` with a clear subject line beginning
-   `[security]`. Maintainers replace this placeholder with a working
-   address before announcing the project publicly.
+2. **Private maintainer contact.** If GitHub Security Advisories are not
+   available for your fork, contact the repository maintainer privately
+   before posting public details. Do not include API keys or customer data.
 
 We aim to **acknowledge new reports within 7 business days** and to share a
 remediation timeline within 30 days. Coordinated disclosure timelines are
@@ -74,12 +73,12 @@ contact and we will arrange a private channel.
 
 | Version | Supported |
 |---------|-----------|
-| `main` (V1 alpha) | yes |
-| Tagged releases | not yet — first tagged release pending |
+| `main` (alpha) | yes |
+| `v0.2.x` GitHub source-checkout releases | yes |
 
-While the project is in V1 alpha, only the `main` branch receives security
-fixes. Once we cut tagged releases, this table will be updated to reflect
-the supported window.
+While the project is alpha, security fixes land on `main` first and may
+be backported to the active `v0.2.x` GitHub source-checkout release line
+when the fix is relevant.
 
 ## Acknowledgments
 

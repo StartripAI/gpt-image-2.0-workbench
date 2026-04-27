@@ -13,7 +13,9 @@ from image2_workbench.compiler.loader import load_template
 from image2_workbench.compiler.schema import TemplateSpec
 from image2_workbench.compiler.validators import SizeValidationError, ValidationError
 
-EXAMPLE_PATH = Path(__file__).resolve().parents[2] / "templates" / "_schema" / "example.yml"
+SCHEMA_DIR = Path(__file__).resolve().parents[2] / "templates" / "_schema"
+EXAMPLE_PATH = SCHEMA_DIR / "example.yml"
+SCHEMA_REF_PATH = SCHEMA_DIR / "template.schema.yml"
 
 
 def _example_dict() -> dict:
@@ -63,6 +65,22 @@ def test_invalid_domain_rejected():
     data["domain"] = "espionage"
     with pytest.raises(Exception):
         TemplateSpec.model_validate(data)
+
+
+def test_reference_schema_includes_dashboard_and_photo_artifacts():
+    with SCHEMA_REF_PATH.open("r", encoding="utf-8") as fh:
+        raw = yaml.safe_load(fh)
+    artifact_types = raw["properties"]["artifact"]["properties"]["type"]["enum"]
+    assert {"dashboard", "photo"} <= set(artifact_types)
+
+
+@pytest.mark.parametrize("artifact_type", ["dashboard", "photo"])
+def test_dashboard_and_photo_artifact_types_validate(artifact_type: str):
+    data = _example_dict()
+    data["artifact"] = copy.deepcopy(data["artifact"])
+    data["artifact"]["type"] = artifact_type
+    t = TemplateSpec.model_validate(data)
+    assert t.artifact.type == artifact_type
 
 
 @pytest.mark.parametrize(

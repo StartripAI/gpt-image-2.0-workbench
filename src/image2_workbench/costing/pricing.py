@@ -22,6 +22,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from ..compiler.validators import validate_size
 from .heuristics import QUALITY_MULT, heuristic_cost
 
 Quality = Literal["low", "medium", "high", "auto"]
@@ -50,9 +51,15 @@ _SIZE_QUALITY_USD: dict[tuple[str, Quality], float] = {
 # and bill $0.25 than the other way around.
 #
 # 1024x1024 @ medium ≈ 1024 image-output tokens; we scale by
-# (pixels / 1024**2) for size and by `QUALITY_MULT` for quality.
+# (pixels / 1024**2) for size and by `_TOKEN_QUALITY_MULT` for quality.
 _BASE_OUT_TOKENS_PER_IMAGE: int = 1024  # 1024x1024 medium baseline
 _BASE_PIXELS: int = 1024 * 1024
+_TOKEN_QUALITY_MULT: dict[str, float] = {
+    "low": 0.25,
+    "medium": 1.0,
+    "high": 4.0,
+    "auto": 1.0,
+}
 # Tokens-per-input-image for edit jobs (caller passes how many references).
 _EDIT_INPUT_TOKENS_PER_IMAGE: int = 256
 # Approx chars-per-token for English-leaning prompts. Rough — caller is
@@ -98,14 +105,10 @@ class TokenEstimate(BaseModel):
 
 
 def _parse_size(size: str) -> tuple[int, int]:
-    parts = size.lower().split("x")
-    if len(parts) != 2:
-        raise ValueError(f"size must look like '1024x1024', got {size!r}")
     try:
-        width, height = int(parts[0]), int(parts[1])
+        return validate_size(size)
     except ValueError as exc:
-        raise ValueError(f"size must be two ints separated by 'x', got {size!r}") from exc
-    return width, height
+        raise ValueError(str(exc)) from exc
 
 
 def _effective_quality(quality: Quality) -> Quality:
@@ -116,18 +119,23 @@ def estimate_cost(size: str, quality: Quality, n: int = 1) -> CostEstimate:
     if n <= 0:
         raise ValueError(f"n must be positive, got {n}")
 
+    width, height = _parse_size(size)
+    canonical_size = f"{width}x{height}"
+
     # quality="auto" is a server-side decision; for forecasting we treat it
     # as medium (the modal pick in our internal traces) but flag the note.
     effective_quality: Quality = _effective_quality(quality)
+    if effective_quality not in QUALITY_MULT:
+        raise ValueError(f"unknown quality {quality!r}; known: {sorted(QUALITY_MULT)}")
 
-    table_key = (size, effective_quality)
+    table_key = (canonical_size, effective_quality)
     if table_key in _SIZE_QUALITY_USD:
         per_image = _SIZE_QUALITY_USD[table_key]
         note = "official_table"
         if quality == "auto":
             note = "auto resolved as medium for forecasting; actual quality picked server-side"
         return CostEstimate(
-            size=size,
+            size=canonical_size,
             quality=quality,
             n=n,
             per_image_usd=per_image,
@@ -136,14 +144,13 @@ def estimate_cost(size: str, quality: Quality, n: int = 1) -> CostEstimate:
             note=note,
         )
 
-    width, height = _parse_size(size)
     per_image = heuristic_cost(width, height, effective_quality)
     note = (
-        f"size/quality ({size},{quality}) not in official table; "
+        f"size/quality ({canonical_size},{quality}) not in official table; "
         "falling back to pixel heuristic — verify against OpenAI calculator before billing"
     )
     return CostEstimate(
-        size=size,
+        size=canonical_size,
         quality=quality,
         n=n,
         per_image_usd=per_image,
@@ -182,7 +189,7 @@ def estimate_tokens(
         raise ValueError(f"image_inputs must be >= 0, got {image_inputs}")
 
     eff_quality: Quality = _effective_quality(quality)
-    if eff_quality not in QUALITY_MULT:
+    if eff_quality not in _TOKEN_QUALITY_MULT:
         raise ValueError(f"unknown quality {quality!r}")
 
     # Round up so we never under-quote text input.
@@ -190,14 +197,15 @@ def estimate_tokens(
     image_tokens_in = image_inputs * _EDIT_INPUT_TOKENS_PER_IMAGE
 
     width, height = _parse_size(size)
+    canonical_size = f"{width}x{height}"
     pixel_ratio = max(1.0, (width * height) / _BASE_PIXELS)
-    quality_mult = QUALITY_MULT[eff_quality]
+    quality_mult = _TOKEN_QUALITY_MULT[eff_quality]
     per_image_out = int(round(_BASE_OUT_TOKENS_PER_IMAGE * pixel_ratio * quality_mult))
     image_tokens_out = per_image_out * n
 
     track: TokenTrack = (
         "token_table"
-        if (size, eff_quality) in _SIZE_QUALITY_USD
+        if (canonical_size, eff_quality) in _SIZE_QUALITY_USD
         else "heuristic"
     )
 

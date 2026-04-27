@@ -28,6 +28,7 @@ def _entry(
     cost_usd: float | None = 0.05,
     error_code: str | None = None,
     kind: str = "generate",
+    n: int | None = 1,
     when: datetime | None = None,
 ) -> LedgerEntry:
     return LedgerEntry(
@@ -38,6 +39,7 @@ def _entry(
         status=status,  # type: ignore[arg-type]
         latency_ms=latency_ms,
         cost_usd=cost_usd,
+        n=n,
         error_code=error_code,
     )
 
@@ -130,6 +132,16 @@ def test_aggregate_total_cost(tmp_path: Path) -> None:
     ]
     rows = aggregate(entries, group_by="template")
     assert rows[0].total_cost_usd == pytest.approx(0.25)
+
+
+def test_aggregate_cost_per_output_uses_successful_outputs() -> None:
+    entries = [
+        _entry(template_id="tpl-a", status="ok", cost_usd=0.20, n=2),
+        _entry(template_id="tpl-a", status="ok", cost_usd=0.10, n=1),
+        _entry(template_id="tpl-a", status="error", cost_usd=0.0, n=1),
+    ]
+    rows = aggregate(entries, group_by="template")
+    assert rows[0].cost_per_output_usd == pytest.approx(0.10)
 
 
 def test_aggregate_filter_by_template() -> None:
@@ -232,6 +244,7 @@ def test_aggregate_row_pydantic_shape() -> None:
         "p50_latency_ms",
         "p95_latency_ms",
         "total_cost_usd",
+        "cost_per_output_usd",
         "error_code_breakdown",
     ):
         assert key in dumped

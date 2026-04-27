@@ -23,7 +23,7 @@ description: |
   - When the user has no API key but wants a paste-ready prompt for
     web ChatGPT, the Skill compiles the prompt without making an API
     call.
-version: 0.1.0
+version: 0.2.0
 ---
 
 # gpt-image: image2-workbench Skill
@@ -81,18 +81,25 @@ pip install -e .
 - `i2w eval run` — run an eval rubric against rendered outputs.
 - `i2w cost estimate` — token-based cost estimate before rendering.
 - `i2w doctor capabilities` — probe model capabilities (e.g. `thinking`).
+- `i2w preflight <prompt.md>` — validate a rendered prompt before spending.
+- `i2w ledger query` — inspect local run history and cost/error summaries.
+- `i2w gallery build` — rebuild the bilingual prompt gallery.
+- `i2w version` — print the installed workbench version.
 
 ## Recommended workflow
 
 1. Identify the user's domain (business / academic / uiux / anime / poster).
 2. Run `i2w catalog search <keywords>` to find candidate templates.
-3. Run `i2w template render <id> --lang ...` to compile a prompt.
-4. If the user has an API key, run `i2w render generate ...` (or
-   `i2w render edit ...` for reference-image edits) to produce the
-   image. Optionally run `i2w cost estimate` first.
-5. Otherwise, hand the rendered prompt back to the user — they can
+3. Run `i2w template render <id> --lang ... --vars ... --out prompt.md`
+   to compile a prompt.
+4. Optionally run `i2w preflight prompt.md` and `i2w cost estimate`
+   before spending.
+5. If the user has an API key, run `i2w render generate --prompt-file
+   prompt.md ...` (or `i2w render edit --prompt-file prompt.md --image
+   reference.png ...` for reference-image edits) to produce the image.
+6. Otherwise, hand the rendered prompt back to the user — they can
    paste it into web ChatGPT directly. This is the L3 form factor.
-6. For multi-variant exploration use `i2w batch sweep`; for quality
+7. For multi-variant exploration use `i2w batch sweep`; for quality
    gates use `i2w eval run`.
 
 ## Constraints (must honor)
@@ -111,20 +118,34 @@ pip install -e .
 
 - "Make me a SWOT slide for our Q3 review, English headers, Chinese
   body."
-  → `i2w catalog search swot business` → `i2w template render
-  business/swot --lang en+zh` → `i2w render generate ...`.
+  → `i2w catalog search swot business` →
+  `i2w template render business_swot_card --lang zh-CN --vars
+  templates/business/_vars_examples/swot_acme.yml --out swot_prompt.md` →
+  `i2w render generate --prompt-file swot_prompt.md --size 1536x1024
+  --quality high --out out/swot.png --template-id business_swot_card`.
 
-- "Edit this product photo to swap the background to a beach but keep
-  the bottle exactly as is."
-  → `i2w catalog search product edit preserve` →
-  `i2w template render product/bg-swap` →
-  `i2w render edit --reference product.png --preserve bottle`.
+- "Make a product analytics dashboard mockup for a design review."
+  → `i2w catalog search web dashboard uiux` →
+  `i2w template render uiux_web_dashboard --lang en --vars
+  templates/uiux/_vars_examples/web_dashboard_demo.yml --out
+  dashboard_prompt.md` →
+  `i2w render generate --prompt-file dashboard_prompt.md --size
+  1536x1024 --quality high --out out/dashboard.png --template-id
+  uiux_web_dashboard`.
 
-- "I just want a paste-ready prompt for a four-panel manga storyboard
+- "Edit a reference image using a rendered prompt and keep the subject
+  identity stable."
+  → `i2w template render uiux_design_system_card --lang en --vars
+  templates/uiux/_vars_examples/design_system_demo.yml --out edit_prompt.md` →
+  `i2w render edit --prompt-file edit_prompt.md --image reference.png
+  --out out/reference_edit.png --template-id uiux_design_system_card`.
+
+- "I just want a paste-ready prompt for an 8-panel manga storyboard
   about a cat detective."
   → `i2w catalog search manga storyboard` →
-  `i2w template render anime/storyboard-4panel` (no API call;
-  prompt returned for the user to paste into web ChatGPT).
+  `i2w template render anime_comic_8panel --lang en --vars
+  templates/anime/_vars_examples/comic_demo.yml --out comic_prompt.md`
+  (no API call; prompt returned for the user to paste into web ChatGPT).
 
 ## Provenance
 

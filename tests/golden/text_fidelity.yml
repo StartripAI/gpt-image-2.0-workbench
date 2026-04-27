@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: CC-BY-4.0
+# SPDX-License-Identifier: Apache-2.0
 rubric: text_fidelity
 cases:
   - case_id: swot_acme_text

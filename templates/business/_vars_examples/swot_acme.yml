@@ -1,7 +1,7 @@
 company_name: "Acme Robotics"
 year: 2026
 quarter: "Q1"
-strengths: "vertical-integrated supply chain; 38% gross margin; tier-1 OEM contracts in 4 markets"
-weaknesses: "single-vendor lithium dependency; thin EMEA service network; aging ERP"
-opportunities: "EU Right-to-Repair tailwind; warehouse-automation TAM growing 19% CAGR"
-threats: "low-cost APAC entrants undercutting unit price; pending tariff revision on motor imports"
+strengths: "integrated supply chain; 38% margin; tier-1 OEM contracts"
+weaknesses: "single-vendor lithium; thin EMEA service; aging ERP"
+opportunities: "EU repair tailwind; warehouse automation up 19% CAGR"
+threats: "low-cost APAC rivals; possible motor-import tariffs"

@@ -51,13 +51,14 @@ pip install -e ".[dev]"
 Two commands confirm the install is healthy:
 
 ```bash
-i2w --help     # should list eight verbs
+i2w --help     # should list 11 commands
 pytest -q      # unit + smoke tests should pass
 ```
 
 You should see verbs `catalog`, `template`, `render`, `batch`, `eval`,
-`cost`, `doctor`, and `version`. If `i2w` is not on your `PATH`, your venv
-is probably not activated; re-run the activation step above.
+`cost`, `doctor`, `preflight`, `ledger`, `gallery`, and `version`. If
+`i2w` is not on your `PATH`, your venv is probably not activated; re-run
+the activation step above.
 
 ## The first three commands you'll run
 
@@ -87,8 +88,7 @@ i2w template list --domain business
 
 This is offline and instant. It scans `templates/business/*.yml`, validates
 each against the V1 schema, and prints id + 1-line description. Drop
-`--domain` to see all four domains at once. Add `--lang en` or `--lang zh`
-to restrict to one language target.
+`--domain` to see all four domains at once.
 
 ### 3. Render a template into a paste-ready prompt
 
@@ -143,7 +143,7 @@ generation, or CI integration, drive the API yourself:
 
 ```bash
 i2w render generate \
-    --prompt prompt.md \
+    --prompt-file prompt.md \
     --size 1536x1024 \
     --quality high \
     --out out/swot.png
@@ -152,8 +152,8 @@ i2w render generate \
 Outputs are written next to the image:
 
 - `out/swot.png` — the image bytes.
-- `out/swot.png.json` — a sidecar with the request, the response usage
-  block, and the resolved cost.
+- `out/swot.png.sidecar.json` — a sidecar with the request, the response
+  usage block, and the resolved cost.
 
 This path requires `OPENAI_API_KEY` plus a verified org. If your org isn't
 verified yet, the API returns a 403 and the CLI surfaces it as a single
@@ -176,8 +176,9 @@ with a helpful message; remove the field or switch to `auto`.
 
 **`size 3840x2160 is experimental`.** Anything above `2560×1440` is
 allowed but flagged as experimental — gpt-image-2's quality at maximum
-resolution is uneven. Confirm with `--accept-experimental` if you really
-want it; otherwise pick a 2K size.
+resolution is uneven. Use `i2w preflight prompt.md --size 3840x2160` to
+surface the warning before a live render, or pick a 2K size for more
+predictable output.
 
 **`pytest -q` fails with import errors.** You likely installed without the
 `[dev]` extras, or your venv isn't activated. Re-run

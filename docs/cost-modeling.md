@@ -109,16 +109,19 @@ This is the number printed by `i2w cost estimate --token-estimate`.
 ## Batch API discount math
 
 The OpenAI Batch API runs the same workload at half the price in
-exchange for up to a 24h turnaround. The workbench bakes the discount in
-when you pass `--batch`:
+exchange for up to a 24h turnaround. The `i2w cost` commands report
+undiscounted Images API forecasts. To model a sweep that will be sent
+through the Batch API, use `i2w batch sweep --route batch-api --dry-run`;
+that command prints both the full estimate and the approximate discounted
+total:
 
 ```
 batch_total = base_total * 0.5
 ```
 
-The discount applies uniformly across both cost tracks. `i2w batch
-sweep` always reports both numbers so you can decide whether the latency
-trade-off is worth the savings for a given run.
+The discount applies uniformly across both cost tracks. A submitted
+`batch-api` sweep records the discounted total in the ledger, so you can
+compare the latency trade-off after the run.
 
 ## Worked example: 9-row comparison matrix
 
@@ -141,13 +144,23 @@ Prints (roughly):
 | 2048×2048 | medium  |        0.1500 |    0.1500 | official_table |
 | 2048×2048 | high    |        0.6000 |    0.6000 | official_table |
 
-Multiply by `n` for a sweep. Add `--batch` to halve every total. Add
-`--token-estimate` to see the underlying token counts.
+Multiply by `n` for a sweep. Use `i2w batch sweep --route batch-api
+--dry-run` to preview the Batch API discount for a template sweep. Use
+`i2w cost estimate --token-estimate` on a specific size/quality point to
+see the underlying token counts.
 
 ## A worked budget gate
 
+Create a YAML plan file:
+
+```yaml
+- size: 1024x1024
+  quality: medium
+  n: 200
+```
+
 ```bash
-i2w cost budget --size 1024x1024 --quality medium -n 200 --max-usd 5.00
+i2w cost budget --plan budget.yml --max-usd 5.00
 ```
 
 The estimator reports `200 × 0.053 = 10.60 USD`, which exceeds the

@@ -64,6 +64,12 @@ def _run_dispatched(fn: Any, *args: Any, **kwargs: Any) -> Any:
     return fn(*args, **kwargs)
 
 
+def _raise_validation(message: str):
+    if validation_error is not None:
+        raise validation_error("invalid_cost_request", message)
+    raise _exit_validation(message)
+
+
 def _split_csv(value: str) -> list[str]:
     return [v.strip() for v in value.split(",") if v.strip()]
 
@@ -103,44 +109,54 @@ def estimate(
 ) -> None:
     """Estimate the cost of generating N images at the given size and quality."""
     console = Console()
-    cost = estimate_cost(size=size, quality=quality, n=n)
-    console.print(
-        f"size={cost.size}  quality={cost.quality}  n={cost.n}",
-        markup=False,
-    )
-    console.print(
-        f"per_image=${cost.per_image_usd:.4f}  total=${cost.total_usd:.4f}",
-        markup=False,
-    )
-    console.print(f"track={cost.track}", markup=False)
-    if cost.note:
-        console.print(f"note: {cost.note}", markup=False)
+    def _run() -> None:
+        try:
+            cost = estimate_cost(size=size, quality=quality, n=n)  # type: ignore[arg-type]
+            token_est = None
+            triangulated = None
+            if token_estimate:
+                token_est = estimate_tokens(
+                    prompt=prompt,
+                    size=size,
+                    quality=quality,  # type: ignore[arg-type]
+                    n=n,
+                    image_inputs=image_inputs,
+                    thinking=thinking,
+                )
+                triangulated = estimate_dollar_cost(token_est, size, quality, n)  # type: ignore[arg-type]
+        except ValueError as exc:
+            _raise_validation(str(exc))
 
-    if token_estimate:
-        token_est = estimate_tokens(
-            prompt=prompt,
-            size=size,
-            quality=quality,
-            n=n,
-            image_inputs=image_inputs,
-            thinking=thinking,
-        )
-        triangulated = estimate_dollar_cost(token_est, size, quality, n)
         console.print(
-            (
-                f"token_estimate: text_in={token_est.text_tokens_in} "
-                f"image_in={token_est.image_tokens_in} "
-                f"image_out={token_est.image_tokens_out} "
-                f"thinking_overhead={token_est.thinking_overhead} "
-                f"total_tokens={token_est.total_tokens} "
-                f"track={token_est.track}"
-            ),
+            f"size={cost.size}  quality={cost.quality}  n={cost.n}",
             markup=False,
         )
         console.print(
-            f"triangulated_total=${triangulated:.4f}",
+            f"per_image=${cost.per_image_usd:.4f}  total=${cost.total_usd:.4f}",
             markup=False,
         )
+        console.print(f"track={cost.track}", markup=False)
+        if cost.note:
+            console.print(f"note: {cost.note}", markup=False)
+
+        if token_est is not None and triangulated is not None:
+            console.print(
+                (
+                    f"token_estimate: text_in={token_est.text_tokens_in} "
+                    f"image_in={token_est.image_tokens_in} "
+                    f"image_out={token_est.image_tokens_out} "
+                    f"thinking_overhead={token_est.thinking_overhead} "
+                    f"total_tokens={token_est.total_tokens} "
+                    f"track={token_est.track}"
+                ),
+                markup=False,
+            )
+            console.print(
+                f"triangulated_total=${triangulated:.4f}",
+                markup=False,
+            )
+
+    raise typer.Exit(code=int(_run_dispatched(_run)))
 
 
 @cost_app.command("compare")
@@ -169,6 +185,7 @@ def compare(
     table.add_column("total_usd", justify="right")
     table.add_column("track", justify="left")
 
+    grand_total = 0.0
     for size in size_list:
         for quality in quality_list:
             try:
@@ -182,7 +199,9 @@ def compare(
                 f"${est.total_usd:.4f}",
                 est.track,
             )
+            grand_total += est.total_usd
     console.print(table)
+    console.print(f"grand_total_usd=${grand_total:.4f}", markup=False)
 
 
 @cost_app.command("budget")

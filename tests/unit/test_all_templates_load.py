@@ -8,9 +8,11 @@ from pathlib import Path
 
 import pytest
 import yaml
+from jinja2 import Environment, StrictUndefined
 
 from image2_workbench.compiler.loader import load_template, load_vars
 from image2_workbench.compiler.renderer import render_both
+from image2_workbench.compiler.validators import TEXT_BLOCK_CHAR_LIMIT
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 TEMPLATES_DIR = REPO_ROOT / "templates"
@@ -79,6 +81,28 @@ def test_template_loads_and_renders(template_path: Path):
     assert "zh-CN" in rendered and "en" in rendered
     assert len(rendered["zh-CN"]) > 50
     assert len(rendered["en"]) > 50
+
+
+@pytest.mark.parametrize(
+    "template_path",
+    _list_templates(),
+    ids=lambda p: f"{p.parent.name}/{p.stem}",
+)
+def test_demo_text_blocks_render_under_80_chars(template_path: Path):
+    spec = load_template(template_path)
+    rel = f"{template_path.parent.name}/{template_path.stem}"
+    vars_path = TEMPLATES_DIR / DEMO_VARS_MAP[rel]
+    vars_ = load_vars(vars_path)
+    env = Environment(undefined=StrictUndefined, autoescape=False)
+
+    too_long: list[str] = []
+    for block in spec.spec.text_blocks:
+        rendered_text = env.from_string(block.text).render(**vars_)
+        if len(rendered_text) > TEXT_BLOCK_CHAR_LIMIT:
+            too_long.append(
+                f"{spec.id}.{block.slot}={len(rendered_text)} chars: {rendered_text}"
+            )
+    assert not too_long, "\n".join(too_long)
 
 
 def test_no_template_uses_transparent_or_low_moderation():

@@ -39,9 +39,9 @@ def _parse_since(value: str | None) -> datetime | None:
 
 
 def _aggregate_table(rows, *, title: str) -> Table:
-    table = Table(title=title)
-    table.add_column("template_id")
-    table.add_column("snapshot")
+    table = Table(title=title, expand=False)
+    table.add_column("template_id", overflow="fold")
+    table.add_column("snapshot", overflow="fold")
     table.add_column("total", justify="right")
     table.add_column("ok", justify="right")
     table.add_column("error", justify="right")
@@ -49,7 +49,12 @@ def _aggregate_table(rows, *, title: str) -> Table:
     table.add_column("p50_ms", justify="right")
     table.add_column("p95_ms", justify="right")
     table.add_column("cost_usd", justify="right")
+    table.add_column("cost_per_output", justify="right")
+    table.add_column("errors", overflow="fold")
     for r in rows:
+        errors = ",".join(
+            f"{code}:{count}" for code, count in sorted(r.error_code_breakdown.items())
+        )
         table.add_row(
             r.template_id or "-",
             r.snapshot or "-",
@@ -60,8 +65,45 @@ def _aggregate_table(rows, *, title: str) -> Table:
             "-" if r.p50_latency_ms is None else str(r.p50_latency_ms),
             "-" if r.p95_latency_ms is None else str(r.p95_latency_ms),
             f"{r.total_cost_usd:.4f}",
+            "-" if r.cost_per_output_usd is None else f"${r.cost_per_output_usd:.4f}",
+            errors or "-",
         )
     return table
+
+
+def _print_row_keys(console: Console, rows) -> None:
+    keys = []
+    for row in rows:
+        left = row.template_id or "-"
+        right = row.snapshot or "-"
+        keys.append(f"{left}@{right}")
+    console.print("row_keys: " + ", ".join(keys), markup=False)
+
+
+def _print_row_summaries(console: Console, rows) -> None:
+    for row in rows:
+        errors = ",".join(
+            f"{code}:{count}"
+            for code, count in sorted(row.error_code_breakdown.items())
+        )
+        cost_per_output = (
+            "-"
+            if row.cost_per_output_usd is None
+            else f"{row.cost_per_output_usd:.6f}"
+        )
+        console.print(
+            "row: "
+            f"template_id={row.template_id or '-'} "
+            f"snapshot={row.snapshot or '-'} "
+            f"total={row.total} "
+            f"ok={row.ok} "
+            f"error={row.error} "
+            f"success_rate={row.success_rate:.6f} "
+            f"cost_usd={row.total_cost_usd:.6f} "
+            f"cost_per_output={cost_per_output} "
+            f"errors={errors or '-'}",
+            markup=False,
+        )
 
 
 @ledger_app.command("query")
@@ -97,8 +139,11 @@ def query(
     console.print(
         _aggregate_table(rows, title=f"ledger query (group_by={group_by})")
     )
+    _print_row_keys(console, rows)
+    _print_row_summaries(console, rows)
     console.print(
-        "columns: template_id snapshot total ok error success_rate p50_ms p95_ms cost_usd",
+        "columns: template_id snapshot total ok error success_rate p50_ms p95_ms "
+        "cost_usd cost_per_output errors",
         markup=False,
     )
 
@@ -117,6 +162,8 @@ def top_failures_cmd(
         return
     rows = top_failures(entries, limit=limit)
     console.print(_aggregate_table(rows, title=f"top-failures (limit={limit})"))
+    _print_row_keys(console, rows)
+    _print_row_summaries(console, rows)
 
 
 @ledger_app.command("drift")

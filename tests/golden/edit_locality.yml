@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: CC-BY-4.0
+# SPDX-License-Identifier: Apache-2.0
 rubric: edit_locality
 cases:
   - case_id: replace_logo_only
