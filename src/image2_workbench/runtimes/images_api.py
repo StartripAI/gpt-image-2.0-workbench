@@ -10,9 +10,17 @@ from __future__ import annotations
 
 import logging
 import re
+import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
+from ..errors import (
+    WorkbenchError,
+    api_error,
+    auth_error,
+    rate_limit_error,
+    validation_error,
+)
 from .types import (
     ApiCallError,
     EditRequest,
@@ -200,34 +208,68 @@ def generate(
     cli = client if client is not None else _new_client()
     kwargs = _build_generate_kwargs(req)
 
+    start = time.monotonic()
     try:
-        if req.thinking is not None:
-            try:
-                resp = cli.images.generate(thinking=req.thinking, **kwargs)
-            except Exception as exc:  # noqa: BLE001 — narrow below
-                from openai import BadRequestError  # noqa: WPS433
+        try:
+            if req.thinking is not None:
+                try:
+                    resp = cli.images.generate(thinking=req.thinking, **kwargs)
+                except Exception as exc:  # noqa: BLE001 — narrow below
+                    from openai import BadRequestError  # noqa: WPS433
 
-                if isinstance(exc, BadRequestError) and _is_unknown_param_error(exc):
-                    note = "thinking parameter unsupported by current snapshot"
-                    logger.info(note)
-                    if events is not None:
-                        events.append("thinking_param_dropped")
-                    resp = cli.images.generate(**kwargs)
-                else:
-                    raise
-        else:
-            resp = cli.images.generate(**kwargs)
-    except UnsupportedParameterError:
+                    if isinstance(exc, BadRequestError) and _is_unknown_param_error(exc):
+                        note = "thinking parameter unsupported by current snapshot"
+                        logger.info(note)
+                        if events is not None:
+                            events.append("thinking_param_dropped")
+                        resp = cli.images.generate(**kwargs)
+                    else:
+                        raise
+            else:
+                resp = cli.images.generate(**kwargs)
+        except UnsupportedParameterError:
+            raise
+        except WorkbenchError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            wrapped = _wrap_openai_exception(exc)
+            if wrapped is not None:
+                raise wrapped from exc
+            raise ApiCallError(
+                f"images.generate failed: {exc!s} (req={_safe_req_summary(req)})"
+            ) from exc
+    except WorkbenchError as wb:
+        latency_ms = int((time.monotonic() - start) * 1000)
+        _ledger_append_safe(
+            kind="generate",
+            status="error",
+            snapshot=None,
+            size=req.size,
+            quality=req.quality,
+            n=req.n,
+            latency_ms=latency_ms,
+            cost_usd=None,
+            error_code=wb.envelope.code,
+            error_exit_code=int(wb.envelope.exit_code),
+        )
         raise
-    except Exception as exc:  # noqa: BLE001
-        raise ApiCallError(
-            f"images.generate failed: {exc!s} (req={_safe_req_summary(req)})"
-        ) from exc
 
+    latency_ms = int((time.monotonic() - start) * 1000)
+    snapshot = _extract_snapshot(resp, req.model)
+    _ledger_append_safe(
+        kind="generate",
+        status="ok",
+        snapshot=snapshot,
+        size=req.size,
+        quality=req.quality,
+        n=req.n,
+        latency_ms=latency_ms,
+        cost_usd=_cost_estimate_safe(req.size, req.quality, req.n),
+    )
     return GenerateResponse(
         images_b64=_extract_b64(resp),
         revised_prompt=_extract_revised_prompt(resp),
-        snapshot=_extract_snapshot(resp, req.model),
+        snapshot=snapshot,
         model=req.model,
     )
 
@@ -242,42 +284,76 @@ def edit(
 
     image_handles: list[Any] = []
     mask_handle: Any = None
+    start = time.monotonic()
     try:
-        for p in req.images:
-            image_handles.append(_open_binary(p))
-        if req.mask is not None:
-            mask_handle = _open_binary(req.mask)
-
-        kwargs: dict[str, Any] = {
-            "model": req.model,
-            "prompt": req.prompt,
-            "image": image_handles if len(image_handles) > 1 else image_handles[0],
-            "size": req.size,
-            "quality": req.quality,
-            "background": req.background,
-            "moderation": req.moderation,
-            "output_format": req.fmt,
-        }
-        if mask_handle is not None:
-            kwargs["mask"] = mask_handle
-
         try:
-            resp = cli.images.edit(**kwargs)
-        except UnsupportedParameterError:
+            for p in req.images:
+                image_handles.append(_open_binary(p))
+            if req.mask is not None:
+                mask_handle = _open_binary(req.mask)
+
+            kwargs: dict[str, Any] = {
+                "model": req.model,
+                "prompt": req.prompt,
+                "image": image_handles if len(image_handles) > 1 else image_handles[0],
+                "size": req.size,
+                "quality": req.quality,
+                "background": req.background,
+                "moderation": req.moderation,
+                "output_format": req.fmt,
+            }
+            if mask_handle is not None:
+                kwargs["mask"] = mask_handle
+
+            try:
+                resp = cli.images.edit(**kwargs)
+            except UnsupportedParameterError:
+                raise
+            except WorkbenchError:
+                raise
+            except Exception as exc:  # noqa: BLE001
+                wrapped = _wrap_openai_exception(exc)
+                if wrapped is not None:
+                    raise wrapped from exc
+                raise ApiCallError(
+                    f"images.edit failed: {exc!s} (req={_safe_req_summary(req)})"
+                ) from exc
+        except WorkbenchError as wb:
+            latency_ms = int((time.monotonic() - start) * 1000)
+            _ledger_append_safe(
+                kind="edit",
+                status="error",
+                snapshot=None,
+                size=req.size,
+                quality=req.quality,
+                n=1,
+                latency_ms=latency_ms,
+                cost_usd=None,
+                error_code=wb.envelope.code,
+                error_exit_code=int(wb.envelope.exit_code),
+            )
             raise
-        except Exception as exc:  # noqa: BLE001
-            raise ApiCallError(
-                f"images.edit failed: {exc!s} (req={_safe_req_summary(req)})"
-            ) from exc
     finally:
         for h in image_handles:
             _safe_close(h)
         _safe_close(mask_handle)
 
+    latency_ms = int((time.monotonic() - start) * 1000)
+    snapshot = _extract_snapshot(resp, req.model)
+    _ledger_append_safe(
+        kind="edit",
+        status="ok",
+        snapshot=snapshot,
+        size=req.size,
+        quality=req.quality,
+        n=1,
+        latency_ms=latency_ms,
+        cost_usd=_cost_estimate_safe(req.size, req.quality, 1),
+    )
     return GenerateResponse(
         images_b64=_extract_b64(resp),
         revised_prompt=_extract_revised_prompt(resp),
-        snapshot=_extract_snapshot(resp, req.model),
+        snapshot=snapshot,
         model=req.model,
     )
 
@@ -296,6 +372,104 @@ def _safe_close(h: Any) -> None:
         h.close()
     except Exception:  # noqa: BLE001
         pass
+
+
+def _extract_openai_error_code(exc: Exception) -> str | None:
+    """Pull the ``error.code`` field out of an OpenAI SDK exception body, if any."""
+    body = getattr(exc, "body", None)
+    if isinstance(body, dict):
+        err = body.get("error")
+        if isinstance(err, dict):
+            code = err.get("code")
+            if isinstance(code, str) and code:
+                return code
+    return None
+
+
+def _wrap_openai_exception(exc: Exception) -> WorkbenchError | None:
+    """Translate an OpenAI SDK exception into a ``WorkbenchError`` envelope.
+
+    Returns ``None`` if ``exc`` is not a recognised OpenAI exception type;
+    callers fall back to :class:`ApiCallError`.
+    """
+    try:
+        from openai import (  # noqa: WPS433
+            APIError,
+            AuthenticationError,
+            BadRequestError,
+            RateLimitError,
+        )
+    except Exception:  # noqa: BLE001 — openai missing is itself an API error
+        return None
+
+    if isinstance(exc, AuthenticationError):
+        return auth_error(
+            f"OpenAI authentication failed: {exc!s}",
+            cause=repr(exc),
+        )
+    if isinstance(exc, RateLimitError):
+        return rate_limit_error(
+            f"OpenAI rate-limit / tier-limit hit: {exc!s}",
+            cause=repr(exc),
+        )
+    if isinstance(exc, BadRequestError):
+        code = _extract_openai_error_code(exc) or "bad_request"
+        return validation_error(
+            code,
+            f"OpenAI rejected the request: {exc!s}",
+            cause=repr(exc),
+        )
+    if isinstance(exc, APIError):
+        return api_error(
+            f"OpenAI API error: {exc!s}",
+            cause=repr(exc),
+        )
+    return None
+
+
+def _ledger_append_safe(
+    *,
+    kind: Literal["generate", "edit"],
+    status: Literal["ok", "error"],
+    snapshot: str | None,
+    size: str,
+    quality: str,
+    n: int,
+    latency_ms: int | None,
+    cost_usd: float | None,
+    error_code: str | None = None,
+    error_exit_code: int | None = None,
+) -> None:
+    """Best-effort ledger write. Logs and continues on any failure."""
+    try:
+        from ..ledger import LedgerEntry, append_entry  # noqa: WPS433
+
+        append_entry(
+            LedgerEntry(
+                kind=kind,
+                status=status,
+                snapshot=snapshot,
+                size=size,
+                quality=quality,
+                n=n,
+                latency_ms=latency_ms,
+                cost_usd=cost_usd,
+                error_code=error_code,
+                error_exit_code=error_exit_code,
+            )
+        )
+    except Exception as exc:  # noqa: BLE001 — ledger is observability, not critical
+        logger.debug("ledger append failed: %s", exc)
+
+
+def _cost_estimate_safe(size: str, quality: str, n: int) -> float | None:
+    try:
+        from ..costing.pricing import estimate_cost  # noqa: WPS433
+
+        return float(estimate_cost(size, quality, n).total_usd)  # type: ignore[arg-type]
+    except Exception as exc:  # noqa: BLE001 — cost is advisory
+        logger.debug("cost estimate failed: %s", exc)
+        return None
 
 
 def _safe_req_summary(req: GenerateRequest | EditRequest) -> dict[str, Any]:

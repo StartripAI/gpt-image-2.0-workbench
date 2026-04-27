@@ -59,8 +59,11 @@ def test_text_blocks_rendered_in_chunked_section():
     t = load_template(EXAMPLE_PATH)
     en = render(t, SAMPLE_VARS, "en")
     assert "Text to render exactly" in en
-    assert '- header: "Hello"' in en
-    assert '- subhead: "World"' in en
+    # Templates own their own quoting convention; the renderer does not
+    # double-wrap. The example.yml stores `'{{title}}'` (unquoted), so the
+    # rendered slot line carries only the literal value.
+    assert "- header: Hello" in en
+    assert "- subhead: World" in en
 
 
 def test_negative_appears_when_present():

@@ -40,14 +40,14 @@ def test_version_verb_help() -> None:
         (["catalog", "list"], "Catalog"),
         (["template", "list"], "business_swot_card"),
         (
-            ["render", "generate", "--prompt-file", "p.md", "--quality", "high", "-n", "2"],
-            "[unimplemented]",
+            [
+                "batch", "sweep",
+                "--template", "business_swot_card",
+                "--vars", "templates/business/_vars_examples/swot_acme.yml",
+                "--dry-run",
+            ],
+            "dry",
         ),
-        (
-            ["render", "edit", "--prompt-file", "p.md", "-i", "a.png", "-i", "b.png"],
-            "[unimplemented]",
-        ),
-        (["batch", "sweep", "--template", "t/x", "--vars", "v.yml"], "[unimplemented]"),
         (["eval", "report", "--format", "json"], "V1 does not persist"),
         (["cost", "estimate", "--size", "1536x1024", "--quality", "high", "-n", "3"], "track="),
     ],
@@ -56,3 +56,27 @@ def test_verb_parses_args(argv: list[str], expected_substring: str) -> None:
     result = runner.invoke(app, argv)
     assert result.exit_code == 0, (argv, result.stdout, result.stderr)
     assert expected_substring in result.stdout, (argv, result.stdout)
+
+
+@pytest.mark.parametrize(
+    "argv,expected_exit",
+    [
+        # Missing prompt file -> validation_error -> exit 4
+        (
+            [
+                "render", "generate",
+                "--prompt-file", "p.md",
+                "--quality", "high", "-n", "2",
+            ],
+            4,
+        ),
+        # Missing -i and missing prompt file both yield exit 4
+        (["render", "edit", "--prompt-file", "p.md"], 4),
+    ],
+)
+def test_render_dispatch_returns_validation_exit(
+    argv: list[str], expected_exit: int
+) -> None:
+    """Render now wires through cli_dispatch; missing inputs -> exit 4."""
+    result = runner.invoke(app, argv)
+    assert result.exit_code == expected_exit, (argv, result.stdout, result.stderr)

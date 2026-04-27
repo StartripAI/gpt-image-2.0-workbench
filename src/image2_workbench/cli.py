@@ -9,12 +9,15 @@ from .commands.catalog import catalog_app
 from .commands.cost import cost_app
 from .commands.doctor import doctor_app
 from .commands.eval_cmd import eval_app
+from .commands.gallery import gallery_app
+from .commands.ledger import ledger_app
+from .commands.preflight import preflight_app
 from .commands.render import render_app
 from .commands.template import template_app
 
 app = typer.Typer(
     name="i2w",
-    help="image2-workbench: gpt-image-2 Skill + CLI + bilingual templates",
+    help="image2-workbench: gpt-image-2 production workbench (Skill + CLI + bilingual templates)",
     no_args_is_help=True,
     add_completion=False,
 )
@@ -26,6 +29,9 @@ app.add_typer(batch_app, name="batch")
 app.add_typer(eval_app, name="eval")
 app.add_typer(cost_app, name="cost")
 app.add_typer(doctor_app, name="doctor")
+app.add_typer(preflight_app, name="preflight")
+app.add_typer(ledger_app, name="ledger")
+app.add_typer(gallery_app, name="gallery")
 
 
 @app.command("version")

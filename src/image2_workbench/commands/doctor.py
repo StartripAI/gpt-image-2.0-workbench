@@ -4,7 +4,7 @@
 import typer
 from rich.console import Console
 
-from ..runtimes.capabilities import probe
+from ..runtimes.capabilities import known_failure_patterns, probe
 
 doctor_app = typer.Typer(
     no_args_is_help=True,
@@ -47,3 +47,18 @@ def capabilities() -> None:
         console.print("Notes:", markup=False)
         for note in result.notes:
             console.print(f"  - {note}", markup=False)
+
+    # Proactive parameter compatibility — printed even when no API key is set.
+    # The probe is informational, so this section never changes the exit code.
+    patterns = known_failure_patterns()
+    console.print("", markup=False)
+    console.print("Will-Fail Patterns (gpt-image-2 parameter compatibility):", markup=False)
+    if not patterns:
+        console.print("  (none recorded)", markup=False)
+    else:
+        for entry in patterns:
+            console.print(
+                f"  - [{entry['severity']}] {entry['pattern']}"
+                f" ({entry['code']}): {entry['message']}",
+                markup=False,
+            )

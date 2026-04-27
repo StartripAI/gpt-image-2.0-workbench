@@ -93,7 +93,9 @@ def _assemble(
         body.append("")
         body.append(labels["text_header"] + ":")
         for slot, txt in rendered["text_blocks"]:
-            body.append(f"- {slot}: \"{txt}\"")
+            # Templates already wrap text in their own quoting convention;
+            # don't double-wrap here. See docs/error-codes.md for context.
+            body.append(f"- {slot}: {txt}")
 
     if spec.preserve:
         body.append("")

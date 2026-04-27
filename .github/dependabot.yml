@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: CC-BY-4.0
+#
+# Dependabot configuration for image2-workbench.
+# - Weekly updates for Python packages and GitHub Actions
+# - Grouped PRs so a single review covers a coherent slice
+# - Limit of 5 open PRs per ecosystem to keep the review queue sane
+
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    groups:
+      dev-tools:
+        patterns:
+          - "ruff"
+          - "mypy"
+          - "pytest"
+          - "pytest-*"
+      runtime:
+        patterns:
+          - "openai"
+          - "typer"
+          - "typer-*"
+          - "pydantic"
+          - "pydantic-*"
+          - "pyyaml"
+          - "rich"
+          - "python-dotenv"
+          - "jsonschema"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"

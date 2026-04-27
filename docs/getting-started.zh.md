@@ -91,13 +91,17 @@ i2w template list --domain business
 ```bash
 i2w template render business_swot_card \
     --lang en \
-    --vars vars.yml \
+    --vars templates/business/_vars_examples/swot_acme.yml \
     --out prompt.md
 ```
 
-`vars.yml` 是一个小的 YAML 文件，里面填模板声明的变量（公司名、四象限
-内容等）。编译器会做变量替换，再走七段 DSL 编排，最终把渲染结果写到一
-份 `.md` 文件里。这份文件你可以：
+`--vars` 指向的是一个小 YAML 文件，里面填模板声明的变量（公司名、四象限
+内容等）。每个 V1 模板都在 `templates/<domain>/_vars_examples/` 下提供了
+一份可用的 demo 变量文件。各领域的 demo 文件名**并不统一** —— 完整的
+"模板 → demo 变量"映射表见
+[`tests/unit/test_all_templates_load.py::DEMO_VARS_MAP`](../tests/unit/test_all_templates_load.py)。
+编译器会做变量替换，再走七段 DSL 编排，最终把渲染结果写到一份 `.md` 文
+件里。这份文件你可以：
 
 - 直接粘贴到 ChatGPT，靠对话生成图片，自己根本不需要联网调 API
   （下文路径 A）；或者

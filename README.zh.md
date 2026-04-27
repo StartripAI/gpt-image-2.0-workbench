@@ -4,24 +4,40 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # image2-workbench
 
-一个多形态的 OpenAI gpt-image-2 工作台：**技能（Skill）+ 命令行（CLI）+ 双语
-提示词模板**，覆盖 `商业 / 学术 / UI-UX / 动漫` 四类核心场景。
+> **image2-workbench 不是 prompt 收藏夹，是 gpt-image-2 的生产工作台。**
+> 它在花钱之前先预测成本，在调用失败之前先本地校验参数，先用 moderation
+> 预筛 prompt，并把每一次调用写进本地 ledger，让你能看清"什么失败了、
+> 为什么失败"。
 
-> **状态：** V1 alpha — 持续开发中。在第一个正式 tag 之前，API 与模板格式
-> 仍可能调整。
+> **状态：** V1.5 alpha — 持续开发中。在第一个正式 tag 之前，API 与模板
+> 格式仍可能调整。
 
 English: [README.md](./README.md)
 
-## 为什么做这个
+## 为什么不是又一个 prompt 收藏夹？
 
-- OpenAI 在 2026-04-21 发布 `gpt-image-2`（snapshot
-  `gpt-image-2-2026-04-21`），可以胜任多语言原生排版、参考图编辑、连续叙事、
-  UI 高保真原型、学术插图等真实场景；但社区生态目前还是一堆零散 prompt 仓库，
-  没有模板 DSL、校验、评测和成本估算。
-- 不少现有仓库甚至和官方文档相左 —— 例如默认把 `moderation` 设为 `low`、
-  把"2K"写死为上限。
-- 很多人最终是在**网页 ChatGPT** 而不是 Python 终端里使用，他们用不上 CLI，
-  所以我们需要一种"无 runtime 也能跑"的模板形态，可以直接复制粘贴到对话框。
+围绕 `gpt-image-2` 的公开生态目前已经被 prompt 列表占满了。它们是很好的
+灵感来源，却不是工程化工具。第 3 张图很好玩；当你需要在两个 snapshot、
+三种尺寸、一份非平凡的成本预算下跑第 1000 张时，仅靠一份 markdown 是不够
+的。本仓库围绕三根支柱来填这个缺口：
+
+- **成本可预测（`i2w cost` + `i2w batch`）。** 双轨成本模型 —— 官方
+  `(size, quality)` 价格表 + 像素面积启发式兜底；提供 token-track 估算与
+  Batch API 折扣路径（5 折，最长 24 小时）。详见
+  [`docs/cost-modeling.md`](./docs/cost-modeling.md)。
+- **错误分级（`i2w preflight` + 结构化错误信封）。** 7 个明确退出码
+  （`AUTH`、`RATE_LIMIT`、`MODERATION_BLOCKED`、`VALIDATION`、
+  `API_OTHER`、`INTERNAL`、`OK`），以及稳定的 `code` 字符串；shell
+  脚本无需解析文字即可分支处理。本地参数校验 + 预 moderation
+  在请求到达 OpenAI 之前就把"注定失败"的调用挡在门外。详见
+  [`docs/error-codes.md`](./docs/error-codes.md)。
+- **可观测（ledger）。** 每一次 render / edit / preflight / batch 调用
+  都会向本地 ledger 追加一条 JSONL；`i2w ledger query` 按模板或
+  snapshot 聚合，输出成功率与 p50/p95 时延；`i2w ledger drift`
+  一条命令对比两个 snapshot 的回归情况。
+
+prompt 收藏夹帮一个人完成一张图；工作台帮一个团队完成一千张。完整
+立场陈述见 [`docs/positioning.md`](./docs/positioning.md)。
 
 ## 三层形态
 
@@ -36,15 +52,17 @@ L1 是 L2 的薄壳；L3 是 L2 编译器的产物 —— 同一份模板定义�
 
 ## 快速开始
 
+clone 自己的 fork（或在本地 checkout 中工作）后：
+
 ```bash
-git clone https://github.com/image2-workbench/image2-workbench.git
-cd image2-workbench
-pip install -e ".[dev]"
+cd image2-workbench && pip install -e ".[dev]"
 
 i2w --help                 # 列出所有 verb
 i2w doctor capabilities    # 探活：你的账户、组织、模型支持哪些能力
 pytest -q                  # 跑单元 + smoke 测试
 ```
+
+如果你是从 fork 中阅读，请把命令里的路径替换成你自己 fork 的 URL。
 
 更完整的入门教程见 [`docs/getting-started.zh.md`](./docs/getting-started.zh.md)。
 

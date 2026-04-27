@@ -95,13 +95,18 @@ to restrict to one language target.
 ```bash
 i2w template render business_swot_card \
     --lang en \
-    --vars vars.yml \
+    --vars templates/business/_vars_examples/swot_acme.yml \
     --out prompt.md
 ```
 
-`vars.yml` is a small YAML file with the variables the template declared
-(company name, the four quadrant strings, etc.). The compiler substitutes
-them, runs the seven-section DSL pass, and writes a `.md` file you can:
+The `--vars` argument points at a small YAML file with the variables the
+template declared (company name, the four quadrant strings, etc.). Each V1
+template ships with a working demo vars file under
+`templates/<domain>/_vars_examples/`. Demo filenames are **not uniform**
+across domains — for the canonical template-to-demo mapping, see
+[`tests/unit/test_all_templates_load.py::DEMO_VARS_MAP`](../tests/unit/test_all_templates_load.py).
+The compiler substitutes them, runs the seven-section DSL pass, and writes a
+`.md` file you can:
 
 - Paste into ChatGPT to get an image without ever calling the API yourself
   (path A below), or

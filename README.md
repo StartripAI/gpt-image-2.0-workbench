@@ -4,28 +4,43 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # image2-workbench
 
-A multi-surface OpenAI gpt-image-2 workbench: **Skill + CLI + bilingual prompt
-templates** for `business / academic / UI-UX / anime` scenarios.
+> **image2-workbench is a production workbench around OpenAI's
+> `gpt-image-2` — not a prompt collection.** It predicts cost before
+> you spend, validates parameters before they fail, pre-screens prompts
+> through moderation, and ledgers every call so you can see what fails
+> and why.
 
-> **Status:** V1 alpha — under active development. APIs and template formats
-> may change before the first tagged release.
+> **Status:** V1.5 alpha — under active development. APIs and template
+> formats may change before the first tagged release.
 
 中文版：[README.zh.md](./README.zh.md)
 
-## Why this exists
+## Why not just another prompt collection?
 
-- OpenAI's `gpt-image-2` (released 2026-04-21, snapshot
-  `gpt-image-2-2026-04-21`) covers serious workloads — multilingual typography,
-  reference-image edits, narrative continuity, UI mockups, scientific
-  illustrations — but the public ecosystem is fragmented across loose
-  collections of prompts.
-- Existing prompt repositories tend to ship a flat list of strings without a
-  template DSL, validation, eval rubrics, or cost estimation; many bake in
-  defaults that disagree with OpenAI's docs (e.g. defaulting `moderation` to
-  `low`, hard-coding "2K" as a max).
-- Many users live in **web ChatGPT**, not a Python terminal. We need a
-  template format that survives outside any runtime and can be pasted directly
-  into a chat box.
+The public ecosystem around `gpt-image-2` is saturated with curated
+prompt lists. They are great inspiration; they are not engineered tools.
+The third image you generate is fun. The thousandth — across two
+snapshots, three sizes, and a non-trivial cost ceiling — needs more
+than a markdown file. Three pillars define the difference:
+
+- **Cost predictability (`i2w cost` + `i2w batch`).** Two-track cost
+  model — official `(size, quality)` table plus a pixel-area heuristic
+  fallback — with a token-track estimator and a Batch API discount path
+  (50% off, up to 24h). See [`docs/cost-modeling.md`](./docs/cost-modeling.md).
+- **Granular errors (`i2w preflight` + structured envelopes).** Seven
+  exit codes (`AUTH`, `RATE_LIMIT`, `MODERATION_BLOCKED`, `VALIDATION`,
+  `API_OTHER`, `INTERNAL`, `OK`) and stable `code` strings, so shell
+  wrappers can branch without parsing prose. Local validation and
+  pre-moderation refuse bad calls before they hit OpenAI. See
+  [`docs/error-codes.md`](./docs/error-codes.md).
+- **Observability (the ledger).** Every render, edit, preflight, and
+  batch call appends one JSONL row. `i2w ledger query` aggregates by
+  template / snapshot, prints success rate and p50/p95 latency, and
+  `i2w ledger drift` compares two snapshots in one command.
+
+A prompt collection helps a single person on a single image; a
+workbench helps a team on a thousand. For the full positioning thesis,
+see [`docs/positioning.md`](./docs/positioning.md).
 
 ## Three form factors
 
@@ -41,15 +56,17 @@ prompt.
 
 ## Quick start
 
+After cloning your fork (or working from a local checkout):
+
 ```bash
-git clone https://github.com/image2-workbench/image2-workbench.git
-cd image2-workbench
-pip install -e ".[dev]"
+cd image2-workbench && pip install -e ".[dev]"
 
 i2w --help                 # list verbs
 i2w doctor capabilities    # probe what your account / org / model supports
 pytest -q                  # run unit and smoke tests
 ```
+
+If you're reading from a fork, replace with your fork URL.
 
 See [`docs/getting-started.en.md`](./docs/getting-started.en.md) for a longer
 walkthrough.

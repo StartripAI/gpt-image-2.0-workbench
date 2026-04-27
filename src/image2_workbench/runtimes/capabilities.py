@@ -16,6 +16,71 @@ from .types import CapabilityProbe
 
 _TARGET_MODEL_PREFIX = "gpt-image-2"
 
+# Static table of parameter combinations known to fail against the documented
+# gpt-image-2 surface. The probe never *calls* the API to learn these — they
+# come from the official compatibility matrix and let `i2w doctor` warn users
+# even when no API key is configured. Keep entries small, factual, and
+# documentation-driven; do not speculate.
+_KNOWN_FAILURE_PATTERNS: list[dict[str, str]] = [
+    {
+        "pattern": "input_fidelity",
+        "code": "input_fidelity_unsupported",
+        "severity": "error",
+        "message": (
+            "input_fidelity is not accepted on gpt-image-2 — the parameter is "
+            "rejected by the API. Remove it or target gpt-image-1.5."
+        ),
+    },
+    {
+        "pattern": "background=transparent",
+        "code": "transparent_bg_unsupported",
+        "severity": "error",
+        "message": (
+            "background=transparent is not supported on gpt-image-2 — only "
+            "auto/opaque are accepted. Use gpt-image-1.5 or post-process."
+        ),
+    },
+    {
+        "pattern": "max_edge>3840",
+        "code": "max_edge_exceeded",
+        "severity": "error",
+        "message": (
+            "max_edge greater than 3840 is rejected by gpt-image-2 — the "
+            "documented hard cap on either edge is 3840 pixels."
+        ),
+    },
+    {
+        "pattern": "aspect_ratio>3:1",
+        "code": "aspect_ratio_exceeded",
+        "severity": "error",
+        "message": (
+            "aspect ratio greater than 3:1 (or 1:3) is rejected — gpt-image-2 "
+            "constrains generations to within a 3:1 ratio."
+        ),
+    },
+    {
+        "pattern": "format=png+output_compression",
+        "code": "compression_format_mismatch",
+        "severity": "error",
+        "message": (
+            "output_compression is only valid for jpeg/webp; combining it with "
+            "format=png is rejected client-side and by the API."
+        ),
+    },
+]
+
+
+def known_failure_patterns() -> list[dict[str, str]]:
+    """Return the static known-bad parameter patterns for gpt-image-2.
+
+    Each entry has stable keys: ``pattern`` (human-readable trigger string),
+    ``code`` (matches the ``code`` field used by ``validation_error``),
+    ``severity`` (currently always ``"error"``), and ``message`` (a single
+    user-facing line). The list is returned as a fresh shallow copy so callers
+    cannot mutate the module-level table.
+    """
+    return [dict(entry) for entry in _KNOWN_FAILURE_PATTERNS]
+
 
 def probe(client: Any | None = None) -> CapabilityProbe:
     """Return a capability snapshot, swallowing all network/auth errors."""

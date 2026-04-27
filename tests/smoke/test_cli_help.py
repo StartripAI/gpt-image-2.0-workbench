@@ -19,6 +19,9 @@ def test_root_help() -> None:
         "eval",
         "cost",
         "doctor",
+        "preflight",
+        "ledger",
+        "gallery",
         "version",
     ]:
         assert verb in result.stdout, f"missing verb {verb!r} in --help output"
