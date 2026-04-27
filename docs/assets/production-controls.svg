@@ -1,53 +1,77 @@
-<!--
-SPDX-License-Identifier: CC-BY-4.0
--->
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="430" viewBox="0 0 1280 430" role="img" aria-labelledby="title desc">
-  <title id="title">Production controls</title>
-  <desc id="desc">A dashboard-style visual showing cost estimates, preflight validation, and ledger observability.</desc>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="pc-title pc-desc" preserveAspectRatio="xMidYMid meet">
+  <title id="pc-title">production controls capability matrix</title>
+  <desc id="pc-desc">Bar chart for four pillars (cost, preflight, batch, ledger) across three tiers (manual, opt-in, shipped); image2-workbench ships all four.</desc>
   <defs>
-    <style>
-      .h{font:800 28px Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;fill:#0f172a}
-      .k{font:700 18px Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;fill:#0f172a}
-      .t{font:15px Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;fill:#475569}
-      .m{font:14px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#334155}
-    </style>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#E2E8F0"/>
+    </linearGradient>
+    <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#0d9488"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#1f6feb"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="g3" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#94A3B8"/>
+      <stop offset="1" stop-color="#64748B"/>
+    </linearGradient>
   </defs>
-  <rect width="1280" height="430" rx="24" fill="#f8fafc"/>
-  <text x="52" y="60" class="h">Production controls that prompt galleries usually leave to you</text>
-  <text x="52" y="92" class="t">Budget before generation, block known-bad requests locally, and query what happened after a run.</text>
-
-  <g transform="translate(52 136)">
-    <rect width="356" height="230" rx="20" fill="#ffffff" stroke="#dbe4ee"/>
-    <rect width="356" height="58" rx="20" fill="#ecfeff"/>
-    <text x="24" y="38" class="k">Cost matrix</text>
-    <text x="24" y="88" class="m">size        quality   usd</text>
-    <line x1="24" y1="104" x2="328" y2="104" stroke="#e2e8f0"/>
-    <text x="24" y="132" class="m">1024x1024  low       0.0060</text>
-    <text x="24" y="162" class="m">1024x1024  medium    0.0530</text>
-    <text x="24" y="192" class="m">1536x1024  high      0.2500</text>
-    <text x="24" y="218" fill="#0f766e" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="14" font-weight="700">grand_total_usd=$0.5910</text>
+  <rect width="1200" height="360" rx="20" fill="url(#bg)"/>
+  <text x="40" y="40" font-family="sans-serif" font-size="20" font-weight="800" fill="#0E2A4D">Production controls &#8212; capability matrix</text>
+  <text x="40" y="62" font-family="sans-serif" font-size="13" fill="#475569">Four pillars, three tiers. Bars stack: manual at the base, opt-in in the middle, shipped on top.</text>
+  <g font-family="sans-serif">
+    <line x1="40" y1="320" x2="1160" y2="320" stroke="#94A3B8"/>
+    <line x1="40" y1="100" x2="40" y2="320" stroke="#94A3B8"/>
+    <text x="32" y="324" text-anchor="end" font-size="10" fill="#475569">0</text>
+    <text x="32" y="247" text-anchor="end" font-size="10" fill="#475569">manual</text>
+    <text x="32" y="178" text-anchor="end" font-size="10" fill="#475569">opt-in</text>
+    <text x="32" y="108" text-anchor="end" font-size="10" fill="#475569">shipped</text>
   </g>
-
-  <g transform="translate(462 136)">
-    <rect width="356" height="230" rx="20" fill="#ffffff" stroke="#dbe4ee"/>
-    <rect width="356" height="58" rx="20" fill="#fef3c7"/>
-    <text x="24" y="38" class="k">Preflight validation</text>
-    <text x="24" y="88" class="m">VALIDATION=4</text>
-    <text x="24" y="120" class="m">transparent_bg_unsupported</text>
-    <text x="24" y="152" class="m">input_fidelity_unsupported</text>
-    <text x="24" y="184" class="m">invalid_size</text>
-    <rect x="24" y="202" width="170" height="12" rx="6" fill="#f59e0b"/>
-    <rect x="204" y="202" width="110" height="12" rx="6" fill="#fde68a"/>
+  <g font-family="sans-serif">
+    <g transform="translate(140 100)">
+      <rect y="180" width="120" height="40" rx="4" fill="url(#g3)"/>
+      <rect y="100" width="120" height="80" rx="4" fill="url(#g2)"/>
+      <rect width="120" height="100" rx="4" fill="url(#g1)"/>
+      <text x="60" y="56" text-anchor="middle" font-size="13" font-weight="800" fill="#0E2A4D">SHIPPED</text>
+      <text x="60" y="240" text-anchor="middle" font-size="14" font-weight="800" fill="#0E2A4D">Cost</text>
+      <text x="60" y="256" text-anchor="middle" font-size="11" fill="#475569">i2w cost compare</text>
+    </g>
+    <g transform="translate(380 100)">
+      <rect y="180" width="120" height="40" rx="4" fill="url(#g3)"/>
+      <rect y="100" width="120" height="80" rx="4" fill="url(#g2)"/>
+      <rect width="120" height="100" rx="4" fill="url(#g1)"/>
+      <text x="60" y="56" text-anchor="middle" font-size="13" font-weight="800" fill="#0E2A4D">SHIPPED</text>
+      <text x="60" y="240" text-anchor="middle" font-size="14" font-weight="800" fill="#0E2A4D">Preflight</text>
+      <text x="60" y="256" text-anchor="middle" font-size="11" fill="#475569">i2w preflight</text>
+    </g>
+    <g transform="translate(620 100)">
+      <rect y="180" width="120" height="40" rx="4" fill="url(#g3)"/>
+      <rect y="100" width="120" height="80" rx="4" fill="url(#g2)"/>
+      <rect width="120" height="100" rx="4" fill="url(#g1)"/>
+      <text x="60" y="56" text-anchor="middle" font-size="13" font-weight="800" fill="#0E2A4D">SHIPPED</text>
+      <text x="60" y="240" text-anchor="middle" font-size="14" font-weight="800" fill="#0E2A4D">Batch</text>
+      <text x="60" y="256" text-anchor="middle" font-size="11" fill="#475569">i2w batch sweep</text>
+    </g>
+    <g transform="translate(860 100)">
+      <rect y="180" width="120" height="40" rx="4" fill="url(#g3)"/>
+      <rect y="100" width="120" height="80" rx="4" fill="url(#g2)"/>
+      <rect width="120" height="100" rx="4" fill="url(#g1)"/>
+      <text x="60" y="56" text-anchor="middle" font-size="13" font-weight="800" fill="#0E2A4D">SHIPPED</text>
+      <text x="60" y="240" text-anchor="middle" font-size="14" font-weight="800" fill="#0E2A4D">Ledger</text>
+      <text x="60" y="256" text-anchor="middle" font-size="11" fill="#475569">i2w ledger query</text>
+    </g>
   </g>
-
-  <g transform="translate(872 136)">
-    <rect width="356" height="230" rx="20" fill="#ffffff" stroke="#dbe4ee"/>
-    <rect width="356" height="58" rx="20" fill="#dcfce7"/>
-    <text x="24" y="38" class="k">Run ledger</text>
-    <text x="24" y="88" class="m">template: business_swot_card</text>
-    <text x="24" y="120" class="m">success_rate: 92%</text>
-    <text x="24" y="152" class="m">p95_latency_ms: 1840</text>
-    <text x="24" y="184" class="m">cost_per_output: 0.053</text>
-    <text x="24" y="216" class="m">top_error: moderation_blocked</text>
+  <g transform="translate(40 290)" font-family="sans-serif">
+    <rect width="14" height="14" rx="2" fill="url(#g1)"/>
+    <text x="22" y="11" font-size="11" fill="#0E2A4D" font-weight="600">shipped today</text>
+    <rect x="140" width="14" height="14" rx="2" fill="url(#g2)"/>
+    <text x="162" y="11" font-size="11" fill="#0E2A4D" font-weight="600">opt-in flag</text>
+    <rect x="260" width="14" height="14" rx="2" fill="url(#g3)"/>
+    <text x="282" y="11" font-size="11" fill="#0E2A4D" font-weight="600">manual / external</text>
   </g>
 </svg>
