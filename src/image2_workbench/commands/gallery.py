@@ -318,16 +318,16 @@ def _domain_card(
     Layout (per V0.3.5 polish pass):
         * stable ``<a id="domain-<name>"></a>`` anchor for the bottom nav
         * ``### <emoji> <domain> · <N> templates`` heading with a
-          right-floated 60×40 thumbnail link to the full domain gallery
+          right-floated 60×40 thumbnail link to the full hero render
         * sub-table of templates (template / size / grader)
-        * ``<sub>``-styled footer with "View all" + (when present) a link
+        * ``<sub>``-styled footer with "View templates" + (when present) a link
           to ``templates/<domain>/DOMAIN_CARD.md``
     """
     count = len(template_paths)
     emoji = _domain_emoji(domain)
     anchor = _domain_anchor(domain)
     thumb = (
-        f'<a href="docs/gallery/{domain}.md">'
+        f'<a href="docs/assets/showcase-{domain}.webp">'
         f'<img src="docs/assets/showcase-{domain}.webp" '
         f'width="60" height="40" align="right" alt=""/></a>'
     )
@@ -337,8 +337,8 @@ def _domain_card(
         heading_text = f"{emoji} {domain} · {count} 个模板"
         cols = ("模板", "尺寸", "评测")
         footer_main = (
-            f'<a href="docs/gallery/{domain}.md">'
-            f"<strong>查看 {count} 条 →</strong></a>"
+            f'<a href="templates/{domain}/">'
+            f"<strong>查看 {count} 个模板 →</strong></a>"
         )
         footer_card = (
             f'<a href="templates/{domain}/DOMAIN_CARD.md">域卡</a>'
@@ -347,8 +347,8 @@ def _domain_card(
         heading_text = f"{emoji} {domain} · {count} templates"
         cols = ("template", "size", "grader")
         footer_main = (
-            f'<a href="docs/gallery/{domain}.md">'
-            f"<strong>View all {count} →</strong></a>"
+            f'<a href="templates/{domain}/">'
+            f"<strong>View {count} templates →</strong></a>"
         )
         footer_card = (
             f'<a href="templates/{domain}/DOMAIN_CARD.md">Domain card</a>'
@@ -401,7 +401,13 @@ def _generate_section(
         header = f"## Atlas — {domain_count} domains, {template_count} templates"
         compose_summary = "<strong>Compose your own (CLI / Skill / web ChatGPT)</strong>"
 
-    parts: list[str] = [README_BEGIN_FULL, "", header, ""]
+    parts: list[str] = [
+        README_BEGIN_FULL,
+        "",
+        '<a id="atlas--30-domains-80-templates"></a>',
+        header,
+        "",
+    ]
     # ``cellpadding="12"`` gives each card visible breathing room on
     # GitHub's HTML table renderer; ``cellspacing="0"`` keeps adjacent
     # cards flush without an extra inter-cell gap.

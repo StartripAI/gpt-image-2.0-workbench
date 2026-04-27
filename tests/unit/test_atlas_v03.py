@@ -13,7 +13,8 @@ that ships with `image2-workbench v0.3`:
       ``transparent`` background, no top-level ``input_fidelity`` key
     * dimensional rules (``validate_size``) pass for every artifact
     * READMEs are gallery-drift-free in both languages
-    * READMEs reference all 12 ``docs/assets/showcase-<domain>.webp`` paths
+    * READMEs reference all 30 ``docs/assets/showcase-<domain>.webp`` paths
+    * README local ``href`` / ``src`` / markdown image targets resolve
     * READMEs do not mention competitor names
     * the three SVG hero/workflow/production-controls assets are well-formed
     * the skill-compatibility doc names all 7 advertised runtimes
@@ -23,6 +24,7 @@ before it lands in user-facing artifacts.
 """
 from __future__ import annotations
 
+import re
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -449,8 +451,8 @@ def test_readme_no_competitor_mentions(readme_path: Path, needle: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
-# 14 — README references all 12 showcase webp paths (file presence is NOT
-# asserted; codex renders the bitmaps in a follow-up commit).
+# 14 — README references all 30 showcase webp paths (file presence is NOT
+# asserted here; the local-target check below covers README link integrity).
 # --------------------------------------------------------------------------- #
 
 
@@ -462,6 +464,36 @@ def test_showcase_image_paths_referenced_in_readme(domain: str) -> None:
     assert expected in body_en, f"README.md is missing {expected!r}"
     # zh-CN README should also reference the same showcase asset paths.
     assert expected in body_zh, f"README.zh.md is missing {expected!r}"
+
+
+# --------------------------------------------------------------------------- #
+# 14b — README local links and image targets resolve on GitHub.
+# --------------------------------------------------------------------------- #
+
+
+LOCAL_TARGET_RE = re.compile(
+    r'(?:href|src)=["\']([^"\']+)["\']|!\[[^\]]*\]\(([^)\s]+)'
+)
+EXTERNAL_LINK_RE = re.compile(r"^[a-z][a-z0-9+.-]*:")
+
+
+@pytest.mark.parametrize(
+    "readme_path",
+    [REPO_ROOT / "README.md", REPO_ROOT / "README.zh.md"],
+    ids=lambda p: p.name,
+)
+def test_readme_local_href_src_targets_exist(readme_path: Path) -> None:
+    body = readme_path.read_text(encoding="utf-8")
+    missing: list[str] = []
+    for match in LOCAL_TARGET_RE.finditer(body):
+        raw_target = match.group(1) or match.group(2)
+        target = raw_target.split("#", 1)[0]
+        if not target or target.startswith("#") or EXTERNAL_LINK_RE.match(target):
+            continue
+        if not (readme_path.parent / target).exists():
+            missing.append(raw_target)
+
+    assert not missing, f"{readme_path.name} has broken local targets: {missing}"
 
 
 # --------------------------------------------------------------------------- #
