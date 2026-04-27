@@ -2,117 +2,171 @@
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# image2-workbench
+# GPT Image 2.0 Workbench
 
-> **image2-workbench 不止是 prompt 收藏夹，而是围绕 gpt-image-2 的
-> spec-first 生产工作台。** 它把 prompt pack 变成可复现的 CLI、Skill 与
-> 网页 ChatGPT 工作流，并提供成本估算、preflight 校验和本地运行 ledger。
+面向可复现图像生成工作流的 spec-first 工作台，而不是只靠一次性 prompt 运气。
 
-> **状态：** v0.2.0 GitHub 源码 checkout 版本。项目仍处于 alpha，API
-> 与模板格式后续可能调整；PyPI/wheel 打包留到 v0.3。
+[English](./README.md)
 
-English: [README.md](./README.md)
+![Version](https://img.shields.io/badge/version-v0.2.0-0f766e)
+![Python](https://img.shields.io/badge/python-3.11%2B-3776AB)
+![Tests](https://img.shields.io/badge/tests-375%20passing-15803d)
+![CLI](https://img.shields.io/badge/CLI-11%20commands-334155)
+![License](https://img.shields.io/badge/license-Apache--2.0%20%2B%20CC--BY--4.0-6b7280)
 
-## 为什么不止是 prompt 收藏夹？
+![GPT Image 2.0 Workbench hero](./docs/assets/readme-hero.svg)
 
-精选 prompt 列表很有价值：它们是很好的灵感来源，也能快速展示模型吃什么
-提示词。但当你需要在多个模板、尺寸、成本预算和模型 snapshot 之间复现同一
-套工作流时，仅靠一份 markdown 会开始吃力。本仓库围绕三根支柱来补足这个
-缺口：
+---
 
-- **成本可预测（`i2w cost` + `i2w batch`）。** 双轨成本模型 —— 官方
-  `(size, quality)` 价格表 + 像素面积启发式兜底；提供 token-track 估算与
-  Batch API 折扣路径（5 折，最长 24 小时）。详见
-  [`docs/cost-modeling.md`](./docs/cost-modeling.md)。
-- **错误分级（`i2w preflight` + 结构化错误信封）。** 7 个明确退出码
-  （`AUTH`、`RATE_LIMIT`、`MODERATION_BLOCKED`、`VALIDATION`、
-  `API_OTHER`、`INTERNAL`、`OK`），以及稳定的 `code` 字符串；shell
-  脚本无需解析文字即可分支处理。本地参数校验 + 预 moderation
-  在请求到达 OpenAI 之前就把"注定失败"的调用挡在门外。详见
-  [`docs/error-codes.md`](./docs/error-codes.md)。
-- **可观测（ledger）。** 每一次 render / edit / preflight / batch 调用
-  都会向本地 ledger 追加一条 JSONL；`i2w ledger query` 按模板或
-  snapshot 聚合，输出成功率与 p50/p95 时延；`i2w ledger drift`
-  一条命令对比两个 snapshot 的回归情况。
+## 一眼看懂
 
-prompt 收藏夹帮你探索；image2-workbench 保留这个价值，并把 prompt 变成
-可执行、可审计、双语、可批处理的工作流。完整立场陈述见
-[`docs/positioning.md`](./docs/positioning.md)。
+| 项目 | 内容 |
+|---|---|
+| 核心思路 | 结构化 spec 编译成可运行 prompt、校验、渲染与 ledger 记录 |
+| 模板规模 | 16 个双语模板，覆盖 business / academic / UI/UX / anime |
+| 使用形态 | Skill bundle、Python CLI/SDK、纯 markdown prompt gallery |
+| 生产控制 | 成本估算、Batch API dry-run payload、preflight 校验、结构化错误、本地 ledger |
+| 发布状态 | `v0.2.0` 源码 checkout alpha；PyPI/wheel 打包留到 `v0.3` |
 
-## 三层形态
+---
 
-| 层 | 在哪运行 | 交付什么 |
-|---|---|---|
-| **L1 — 技能包** | Codex / Claude Code / Anthropic Skills / 任何支持 `SKILL.md` 的 agent | [`skills/gpt-image/`](./skills/gpt-image/) 极薄技能包，转发给 CLI |
-| **L2 — Python CLI / SDK** | 本地终端、CI、自有 agent | 当前 checkout 中的 `i2w` 命令；包名 `image2-workbench` |
-| **L3 — 纯模板** | 网页 ChatGPT、移动端、所有没有 Python 的环境 | [`docs/gallery/`](./docs/gallery/) 下的双语 markdown，可直接粘到对话框 |
+## 这个仓库解决什么问题
 
-L1 是 L2 的薄壳；L3 是 L2 编译器的产物 —— 同一份模板定义同时生成"可执行
-命令"与"可粘贴 prompt"。
+当 prompt pack 需要变成可执行工作流时，用这个仓库：
 
-## 快速开始
+- **一次写成 spec。** 把主体、构图、精确文本块、负面约束、尺寸、质量与语言目标放进 YAML。
+- **花钱前先检查。** 在真正调用 API 前校验尺寸、背景、未支持参数，估算成本，并生成 Batch API JSONL payload。
+- **留下证据。** render / edit / preflight / batch 工作流可以写 sidecar 和 ledger，后续能查成功率、成本、错误分布。
+- **跨形态交付。** 同一份模板可以变成 CLI 命令、agent Skill 动作，或可直接粘贴到网页对话框的 prompt。
 
-clone 自己的 fork（或在本地 checkout 中工作）后：
+![Spec-first workflow map](./docs/assets/workflow-map.svg)
+
+---
+
+## 安装
+
+`v0.2.0` 是 GitHub/source-checkout 版本。直接从仓库安装：
 
 ```bash
-cd image2-workbench && pip install -e ".[dev]"
+git clone https://github.com/StartripAI/gpt-image-2.0-workbench.git
+cd gpt-image-2.0-workbench
 
-i2w --help                 # 列出所有 verb
-i2w doctor capabilities    # 探活：你的账户、组织、模型支持哪些能力
-pytest -q                  # 跑单元 + smoke 测试
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
 ```
 
-如果你是从 fork 中阅读，请把命令里的路径替换成你自己 fork 的 URL。
+需要真实渲染时再设置 API key：
 
-更完整的入门教程见 [`docs/getting-started.zh.md`](./docs/getting-started.zh.md)。
+```bash
+export OPENAI_API_KEY="sk-..."
+```
 
-## V1 范围（4 个一级域、16 个模板）
+离线模板编译、成本估算、gallery 构建、本地校验都不需要 live API 调用。
 
-- **business / 职场** — SWOT 卡、融资单页、LinkedIn 轮播、数据仪表板
-- **academic / 学术科研** — 科学图、板书证明、多语言教育海报、期刊海报
-- **uiux / 产品界面** — iOS 应用 mockup、网页仪表板、设计系统卡、小红书风格封面
-- **anime / 娱乐** — 角色三视图、8 格漫画、城市电影海报、CCD 风格自拍
+---
 
-V0.3 会先补 wheel/PyPI 的模板打包，并扩展 prompt atlas、verified corpus
-与 Skill pack 的故事。V2 会补 `industrial`、`ecommerce`、自动采集、插件
-分发、TypeScript 端。
+## 快速使用
 
-## 功能状态
+把一个双语模板编译成英文 prompt：
 
-| 组件 | 状态 |
+```bash
+i2w template render business_swot_card \
+  --lang en \
+  --vars templates/business/_vars_examples/swot_acme.yml \
+  --out out/swot.prompt.md
+```
+
+调用图像 API 前先校验：
+
+```bash
+i2w preflight out/swot.prompt.md --template-id business_swot_card --no-moderation-api
+```
+
+比较不同尺寸与质量的成本：
+
+```bash
+i2w cost compare --size 1024x1024,1536x1024 --quality low,medium,high
+```
+
+先预览批量 payload，默认不花钱：
+
+```bash
+i2w batch sweep \
+  --template business_swot_card \
+  --vars templates/business/_vars_examples/swot_acme.yml \
+  --route batch-api \
+  --dry-run
+```
+
+确认后再生成：
+
+```bash
+i2w render generate \
+  --prompt-file out/swot.prompt.md \
+  --template-id business_swot_card \
+  --size 1536x1024 \
+  --quality medium \
+  --out out/swot.png
+```
+
+![Production controls](./docs/assets/production-controls.svg)
+
+---
+
+## 命令面
+
+| 命令 | 用途 |
 |---|---|
-| 项目骨架、分层许可、CI | 已完成 |
-| CLI 命令面（`i2w` 11 个命令） | 已完成 |
-| API 双后端（Images API + Responses API） | 已完成 |
-| Spec-first 模板 DSL 与编译器 | 已完成 |
-| 各域模板（4×4 = 16） | 已完成 |
-| 语料检索 + provenance | 已完成 |
-| 四类评测 rubric | 已完成 |
-| 成本估算（官方 token + 启发式双轨） | 已完成 |
-| 文档 + gallery 导出 | 已完成 |
+| `i2w catalog` | 搜索和列出模板 / catalog 元数据 |
+| `i2w template` | 列模板，并把 YAML spec 编译成 prompt |
+| `i2w render` | 带本地校验和 sidecar 的生成 / 编辑 |
+| `i2w batch` | 构建安全 batch sweep 和 Batch API job |
+| `i2w eval` | 运行 prompt 层 rubric 检查 |
+| `i2w cost` | 估算、对比、预算图像生成成本 |
+| `i2w doctor` | 检查本地与运行时能力假设 |
+| `i2w preflight` | API 调用前拒绝已知错误请求 |
+| `i2w ledger` | 查询成功率、时延、成本和错误分布 |
+| `i2w gallery` | 从模板生成可复制的 markdown gallery |
+| `i2w version` | 打印当前 workbench 版本 |
+
+---
+
+## 模板 gallery
+
+| 领域 | 模板数 | Gallery |
+|---|---:|---|
+| Business | 4 | [`docs/gallery/business.md`](./docs/gallery/business.md) |
+| Academic | 4 | [`docs/gallery/academic.md`](./docs/gallery/academic.md) |
+| UI/UX | 4 | [`docs/gallery/uiux.md`](./docs/gallery/uiux.md) |
+| Anime | 4 | [`docs/gallery/anime.md`](./docs/gallery/anime.md) |
+
+每个 gallery 页面都由 CLI 使用的同一份模板生成，因此“复制粘贴路径”和“可执行
+工作流”不会各自漂移。
+
+---
+
+## 为什么有用
+
+prompt 示例适合探索；workbench 解决复现。
+
+`image2-workbench` 聚焦长期可用的生产环节：spec 版本化、编译期校验、明确
+成本、安全批量预览、结构化失败模式、以及 ledger 支撑的可观测性。
+
+推荐阅读：
+
+- [`docs/getting-started.zh.md`](./docs/getting-started.zh.md)
+- [`docs/form-factors.md`](./docs/form-factors.md)
+- [`docs/error-codes.md`](./docs/error-codes.md)
+- [`docs/cost-modeling.md`](./docs/cost-modeling.md)
+- [`docs/positioning.md`](./docs/positioning.md)
+
+---
 
 ## 许可
 
-代码（`src/`、`tests/`、`scripts/`、`.github/`）使用 **Apache-2.0**，见
-[`LICENSE`](./LICENSE)。
+代码（`src/`、`tests/`、`scripts/`、`.github/`）使用 **Apache-2.0**。
+模板与文档（`templates/`、`docs/`、`README*`）使用 **CC BY 4.0**。
 
-模板与文档（`templates/`、`docs/`、`README*`）使用 **CC BY 4.0**，见
-[`LICENSE-CONTENT`](./LICENSE-CONTENT)。
-
-`corpus/normalized/` 下的第三方 prompt 记录逐条携带许可元数据，见
-[`corpus/manifests/source_registry.yml`](./corpus/manifests/source_registry.yml)。
-
-致谢与方法论来源说明见 [`NOTICE`](./NOTICE)。
-
-## 参与开发
-
-请先读 [`AGENTS.md`](./AGENTS.md)：它说明了文件归属、禁止的反模式（不许从
-其他仓库 copy 文案、不许使用已废弃参数）、以及 V1 的完成定义。
-
-## 来源声明
-
-本仓库仅在**结构层面**借鉴
-[`wuyoscar/gpt_image_2_skill`](https://github.com/wuyoscar/gpt_image_2_skill)
-（CC BY 4.0）的目录组织方式（Skill + CLI + 参考文档三层分离）。**没有任何
-源码、prompt 原文或 README 段落被复制。** 参数边界与默认值来自 OpenAI 官方
-文档。完整声明见 `NOTICE`。
+见 [`LICENSE`](./LICENSE)、[`LICENSE-CONTENT`](./LICENSE-CONTENT) 与
+[`LICENSE-CC-BY-4.0`](./LICENSE-CC-BY-4.0)。

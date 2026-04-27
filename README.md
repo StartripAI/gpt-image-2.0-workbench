@@ -2,125 +2,179 @@
 SPDX-License-Identifier: CC-BY-4.0
 -->
 
-# image2-workbench
+# GPT Image 2.0 Workbench
 
-> **image2-workbench is more than a prompt collection: it is a
-> spec-first production workbench around OpenAI's `gpt-image-2`.** It
-> turns prompt packs into reproducible CLI, Skill, and web ChatGPT
-> workflows, with cost estimates, preflight validation, and a run ledger.
+Spec-first image generation workflows for people who need repeatable outputs,
+not one-off prompt luck.
 
-> **Status:** v0.2.0 GitHub source-checkout release. APIs and template
-> formats may still change while the workbench is alpha; PyPI/wheel
-> packaging is left to v0.3.
+[中文](./README.zh.md)
 
-中文版：[README.zh.md](./README.zh.md)
+![Version](https://img.shields.io/badge/version-v0.2.0-0f766e)
+![Python](https://img.shields.io/badge/python-3.11%2B-3776AB)
+![Tests](https://img.shields.io/badge/tests-375%20passing-15803d)
+![CLI](https://img.shields.io/badge/CLI-11%20commands-334155)
+![License](https://img.shields.io/badge/license-Apache--2.0%20%2B%20CC--BY--4.0-6b7280)
 
-## Why more than a prompt collection?
+![GPT Image 2.0 Workbench hero](./docs/assets/readme-hero.svg)
 
-Curated prompt lists are useful: they are great inspiration and a fast
-way to learn what the model responds to. They become harder to use when
-you need repeatable outputs across templates, sizes, costs, and model
-snapshots. Three workbench pillars close that gap:
+---
 
-- **Cost predictability (`i2w cost` + `i2w batch`).** Two-track cost
-  model — official `(size, quality)` table plus a pixel-area heuristic
-  fallback — with a token-track estimator and a Batch API discount path
-  (50% off, up to 24h). See [`docs/cost-modeling.md`](./docs/cost-modeling.md).
-- **Granular errors (`i2w preflight` + structured envelopes).** Seven
-  exit codes (`AUTH`, `RATE_LIMIT`, `MODERATION_BLOCKED`, `VALIDATION`,
-  `API_OTHER`, `INTERNAL`, `OK`) and stable `code` strings, so shell
-  wrappers can branch without parsing prose. Local validation and
-  pre-moderation refuse bad calls before they hit OpenAI. See
-  [`docs/error-codes.md`](./docs/error-codes.md).
-- **Observability (the ledger).** Every render, edit, preflight, and
-  batch call appends one JSONL row. `i2w ledger query` aggregates by
-  template / snapshot, prints success rate and p50/p95 latency, and
-  `i2w ledger drift` compares two snapshots in one command.
+## At a glance
 
-Prompt collections help you explore. image2-workbench keeps that value,
-then makes the prompts executable, auditable, bilingual, and batchable.
-For the full positioning thesis, see
-[`docs/positioning.md`](./docs/positioning.md).
+| Item | Value |
+|---|---|
+| Core idea | Structured specs compile into runnable prompts, checks, renders, and ledger rows |
+| Template set | 16 bilingual templates across business, academic, UI/UX, and anime domains |
+| Surfaces | Skill bundle, Python CLI/SDK, and prompt-only markdown gallery |
+| Production controls | Cost estimates, Batch API dry-run payloads, preflight validation, structured errors, run ledger |
+| Release status | `v0.2.0` source-checkout alpha; PyPI/wheel packaging is planned for `v0.3` |
 
-## Three form factors
+---
 
-| Layer | Where it runs | What you ship |
-|-------|---------------|---------------|
-| **L1 — Skill bundle** | Codex, Claude Code, Anthropic Skills, any agent that loads `SKILL.md` | A thin SKILL bundle in [`skills/gpt-image/`](./skills/gpt-image/) that calls into the CLI |
-| **L2 — Python CLI / SDK** | Local terminals, CI, your own agent | The `i2w` command from this checkout (`image2-workbench` package name) |
-| **L3 — Prompt-only templates** | Web ChatGPT, mobile, anywhere there's no Python | Compiled bilingual markdown under [`docs/gallery/`](./docs/gallery/) — copy into a chat box and go |
+## What this repo is for
 
-L1 is a thin wrapper around L2. L3 is a build artifact of L2's compiler — the
-same template definitions yield both a runnable command and a paste-ready
-prompt.
+Use this repo when a prompt pack needs to become an executable workflow:
 
-## Quick start
+- **Write once as a spec.** Store subject, composition, exact text blocks,
+  negative constraints, size, quality, and language targets in YAML.
+- **Run before you spend.** Validate size/background/unsupported parameters,
+  estimate cost, and generate Batch API JSONL payloads before calling the API.
+- **Keep evidence.** Each render/edit/preflight/batch workflow can leave
+  sidecars and ledger rows for later analysis.
+- **Ship across surfaces.** The same template can become a CLI command, an
+  agent Skill action, or a paste-ready prompt for web chat clients.
 
-After cloning your fork (or working from a local checkout):
+![Spec-first workflow map](./docs/assets/workflow-map.svg)
+
+---
+
+## Install
+
+`v0.2.0` is a GitHub/source-checkout release. Install from the repository:
 
 ```bash
-cd image2-workbench && pip install -e ".[dev]"
+git clone https://github.com/StartripAI/gpt-image-2.0-workbench.git
+cd gpt-image-2.0-workbench
 
-i2w --help                 # list verbs
-i2w doctor capabilities    # probe what your account / org / model supports
-pytest -q                  # run unit and smoke tests
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
 ```
 
-If you're reading from a fork, replace with your fork URL.
+Set your API key when you want live rendering:
 
-See [`docs/getting-started.en.md`](./docs/getting-started.en.md) for a longer
-walkthrough.
+```bash
+export OPENAI_API_KEY="sk-..."
+```
 
-## V1 scope (4 domains, 16 templates)
+Offline template, cost, gallery, and validation commands work without a live
+API call.
 
-- **business** — SWOT cards, pitch slides, LinkedIn carousels, data dashboards
-- **academic** — scientific diagrams, chalkboard proofs, multilingual education posters, journal posters
-- **uiux** — iOS app mockups, web dashboards, design system cards, social covers (XHS-style)
-- **anime** — character reference sheets, 8-panel comics, editorial city posters, candid CCD-style portraits
+---
 
-V0.3 will focus on packaging the templates for wheel/PyPI installs and
-expanding the prompt atlas / verified corpus / Skill-pack story. V2 will
-add `industrial`, `ecommerce`, automatic ingestion, plugin distribution,
-and a TypeScript shim.
+## Quick usage
 
-## Status of features
+Render a bilingual template into one English prompt:
 
-| Component | State |
-|-----------|-------|
-| Project scaffolding, license layering, CI | shipped |
-| CLI surface (`i2w` with 11 commands) | shipped |
-| API runtimes (Images API + Responses API) | shipped |
-| Spec-first template DSL & compiler | shipped |
-| Domain templates (4 × 4 = 16) | shipped |
-| Catalog + provenance store | shipped |
-| Eval rubrics (text / layout / edit / continuity) | shipped |
-| Costing (official token track + heuristic) | shipped |
-| Docs + gallery export | shipped |
+```bash
+i2w template render business_swot_card \
+  --lang en \
+  --vars templates/business/_vars_examples/swot_acme.yml \
+  --out out/swot.prompt.md
+```
 
-## Licensing
+Validate before calling the image API:
+
+```bash
+i2w preflight out/swot.prompt.md --template-id business_swot_card --no-moderation-api
+```
+
+Compare cost choices:
+
+```bash
+i2w cost compare --size 1024x1024,1536x1024 --quality low,medium,high
+```
+
+Preview a batch payload without spending:
+
+```bash
+i2w batch sweep \
+  --template business_swot_card \
+  --vars templates/business/_vars_examples/swot_acme.yml \
+  --route batch-api \
+  --dry-run
+```
+
+Generate only when ready:
+
+```bash
+i2w render generate \
+  --prompt-file out/swot.prompt.md \
+  --template-id business_swot_card \
+  --size 1536x1024 \
+  --quality medium \
+  --out out/swot.png
+```
+
+![Production controls](./docs/assets/production-controls.svg)
+
+---
+
+## Command surface
+
+| Command | Purpose |
+|---|---|
+| `i2w catalog` | Search and list template/catalog metadata |
+| `i2w template` | List templates and compile YAML specs into prompts |
+| `i2w render` | Generate or edit images with local validation and sidecars |
+| `i2w batch` | Build safe batch sweeps and Batch API jobs |
+| `i2w eval` | Run prompt-level rubric checks |
+| `i2w cost` | Estimate, compare, and budget image generation cost |
+| `i2w doctor` | Inspect local/runtime capability assumptions |
+| `i2w preflight` | Reject known-bad requests before API calls |
+| `i2w ledger` | Query success rate, latency, cost, and error distribution |
+| `i2w gallery` | Build paste-ready markdown galleries from templates |
+| `i2w version` | Print the installed workbench version |
+
+---
+
+## Template gallery
+
+| Domain | Templates | Gallery |
+|---|---:|---|
+| Business | 4 | [`docs/gallery/business.md`](./docs/gallery/business.md) |
+| Academic | 4 | [`docs/gallery/academic.md`](./docs/gallery/academic.md) |
+| UI/UX | 4 | [`docs/gallery/uiux.md`](./docs/gallery/uiux.md) |
+| Anime | 4 | [`docs/gallery/anime.md`](./docs/gallery/anime.md) |
+
+Each gallery page is generated from the same source templates used by the CLI.
+That keeps the copy-paste prompt path aligned with executable workflows.
+
+---
+
+## Why it is useful
+
+Prompt examples are good for discovery. A workbench is for repeatability.
+
+`image2-workbench` focuses on the operational pieces that make image workflows
+usable over time: spec versioning, compile-time validation, explicit costs,
+safe batch previews, structured failure modes, and ledger-backed observability.
+
+See:
+
+- [`docs/getting-started.en.md`](./docs/getting-started.en.md)
+- [`docs/form-factors.md`](./docs/form-factors.md)
+- [`docs/error-codes.md`](./docs/error-codes.md)
+- [`docs/cost-modeling.md`](./docs/cost-modeling.md)
+- [`docs/positioning.md`](./docs/positioning.md)
+
+---
+
+## License
 
 Code (`src/`, `tests/`, `scripts/`, `.github/`) is licensed under
-**Apache-2.0** — see [`LICENSE`](./LICENSE).
+**Apache-2.0**. Templates and documentation (`templates/`, `docs/`,
+`README*`) are licensed under **CC BY 4.0**.
 
-Templates and documentation (`templates/`, `docs/`, `README*`) are licensed
-under **CC BY 4.0** — see [`LICENSE-CONTENT`](./LICENSE-CONTENT).
-
-Third-party prompt records under `corpus/normalized/` carry per-record license
-metadata; see [`corpus/manifests/source_registry.yml`](./corpus/manifests/source_registry.yml).
-
-For attributions and methodological inspiration, see [`NOTICE`](./NOTICE).
-
-## Contributing
-
-Read [`AGENTS.md`](./AGENTS.md) first — it explains file ownership,
-forbidden anti-patterns (don't copy from other repos, don't pass deprecated
-parameters), and the definition of done for V1.
-
-## Provenance
-
-This project takes structural inspiration only — directory layout, the idea
-of bundling a Skill + CLI + reference docs — from the public structure of
-[`wuyoscar/gpt_image_2_skill`](https://github.com/wuyoscar/gpt_image_2_skill)
-(CC BY 4.0). No source code, prompt text, or README prose was copied.
-Correctness rules (parameter ranges, valid sizes, defaults) are derived from
-OpenAI's public documentation. See `NOTICE` for full details.
+See [`LICENSE`](./LICENSE), [`LICENSE-CONTENT`](./LICENSE-CONTENT), and
+[`LICENSE-CC-BY-4.0`](./LICENSE-CC-BY-4.0).

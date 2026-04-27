@@ -1,0 +1,64 @@
+<!--
+SPDX-License-Identifier: CC-BY-4.0
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="500" viewBox="0 0 1280 500" role="img" aria-labelledby="title desc">
+  <title id="title">GPT Image 2.0 Workbench hero</title>
+  <desc id="desc">A product banner showing a spec-first image generation workflow with templates, preflight validation, rendering, and ledger tracking.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#10243f"/>
+      <stop offset="0.5" stop-color="#1d3b46"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" x2="1">
+      <stop offset="0" stop-color="#67e8f9"/>
+      <stop offset="1" stop-color="#a7f3d0"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#020617" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="500" rx="28" fill="url(#bg)"/>
+  <path d="M70 400 C220 310 338 402 506 324 C684 242 792 172 1210 238" fill="none" stroke="#67e8f9" stroke-width="2" opacity="0.18"/>
+  <path d="M70 438 C232 332 390 434 560 350 C734 264 866 220 1210 286" fill="none" stroke="#a7f3d0" stroke-width="2" opacity="0.14"/>
+
+  <g transform="translate(72 72)">
+    <rect x="0" y="0" width="126" height="34" rx="17" fill="#ecfeff" opacity="0.12"/>
+    <text x="18" y="23" fill="#ccfbf1" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="14" font-weight="700">v0.2.0 alpha</text>
+    <text x="0" y="92" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="54" font-weight="800" letter-spacing="0">GPT Image 2.0 Workbench</text>
+    <text x="0" y="132" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="22">Spec-first image workflows for teams that need repeatable outputs.</text>
+    <text x="0" y="166" fill="#94a3b8" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="18">Bilingual templates · CLI and Skill surfaces · cost estimates · preflight checks · run ledger</text>
+
+    <g transform="translate(0 220)">
+      <rect width="160" height="92" rx="16" fill="#ffffff" opacity="0.10"/>
+      <text x="22" y="36" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="30" font-weight="800">16</text>
+      <text x="22" y="64" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="15">domain templates</text>
+    </g>
+    <g transform="translate(180 220)">
+      <rect width="160" height="92" rx="16" fill="#ffffff" opacity="0.10"/>
+      <text x="22" y="36" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="30" font-weight="800">11</text>
+      <text x="22" y="64" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="15">CLI commands</text>
+    </g>
+    <g transform="translate(360 220)">
+      <rect width="160" height="92" rx="16" fill="#ffffff" opacity="0.10"/>
+      <text x="22" y="36" fill="#f8fafc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="30" font-weight="800">375</text>
+      <text x="22" y="64" fill="#cbd5e1" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="15">tests passing</text>
+    </g>
+  </g>
+
+  <g transform="translate(710 70)" filter="url(#shadow)">
+    <rect width="492" height="360" rx="22" fill="#f8fafc"/>
+    <rect width="492" height="50" rx="22" fill="#e2e8f0"/>
+    <circle cx="30" cy="25" r="7" fill="#ef4444"/>
+    <circle cx="54" cy="25" r="7" fill="#f59e0b"/>
+    <circle cx="78" cy="25" r="7" fill="#10b981"/>
+    <text x="28" y="86" fill="#0f172a" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700">$ i2w template render business_swot_card</text>
+    <text x="28" y="118" fill="#334155" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15">compiled prompt → prompt.md</text>
+    <text x="28" y="158" fill="#0f172a" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700">$ i2w preflight prompt.md</text>
+    <text x="28" y="190" fill="#047857" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15">OK · size valid · no local blockers</text>
+    <text x="28" y="230" fill="#0f172a" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700">$ i2w cost compare --quality low,medium,high</text>
+    <text x="28" y="262" fill="#475569" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15">6 rows · grand_total_usd=$0.5910</text>
+    <rect x="28" y="292" width="436" height="44" rx="12" fill="url(#accent)" opacity="0.9"/>
+    <text x="52" y="320" fill="#0f172a" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="16" font-weight="800">Every run leaves a sidecar and ledger row.</text>
+  </g>
+</svg>
