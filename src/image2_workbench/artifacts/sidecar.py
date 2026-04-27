@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """JSON sidecar metadata for a produced image.
 
 The sidecar is the audit trail: which model, snapshot, prompt hash,

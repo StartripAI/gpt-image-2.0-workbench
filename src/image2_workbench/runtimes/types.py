@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Shared runtime types, request/response models, and exceptions.
 
 These models are the contract between the CLI / SDK callers and the
@@ -12,7 +13,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 Quality = Literal["low", "medium", "high", "auto"]
 Format = Literal["png", "jpeg", "webp"]
@@ -24,6 +25,8 @@ Thinking = Literal["auto", "low", "medium", "high"]
 
 class GenerateRequest(BaseModel):
     """Request envelope for ``images.generate`` and the Responses tool path."""
+
+    model_config = ConfigDict(extra="forbid")
 
     prompt: str
     model: str = "gpt-image-2"
@@ -50,6 +53,8 @@ class GenerateRequest(BaseModel):
 
 class EditRequest(BaseModel):
     """Request envelope for ``images.edit`` (1+ source images, optional mask)."""
+
+    model_config = ConfigDict(extra="forbid")
 
     prompt: str
     model: str = "gpt-image-2"

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Write decoded image bytes from the runtime to disk."""
 
 from __future__ import annotations

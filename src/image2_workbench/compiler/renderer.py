@@ -12,6 +12,7 @@ from typing import Any
 from jinja2 import Environment, StrictUndefined
 
 from .schema import Spec, TemplateSpec, TextBlock
+from .validators import TEXT_BLOCK_CHAR_LIMIT, TextBlockValidationError
 
 SUPPORTED_LANGS = ("zh-CN", "en")
 
@@ -62,7 +63,13 @@ def _render_text_blocks(
 ) -> list[tuple[str, str]]:
     out: list[tuple[str, str]] = []
     for block in blocks:
-        out.append((block.slot, _render_str(env, block.text, vars_)))
+        rendered_text = _render_str(env, block.text, vars_)
+        if len(rendered_text) > TEXT_BLOCK_CHAR_LIMIT:
+            raise TextBlockValidationError(
+                f"text_block[{block.slot}] renders to {len(rendered_text)} chars; "
+                f"chunk into pieces of <= {TEXT_BLOCK_CHAR_LIMIT}"
+            )
+        out.append((block.slot, rendered_text))
     return out
 
 

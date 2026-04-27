@@ -30,12 +30,12 @@ auto-generated from `templates/<domain>/*.yml` by the L2 compiler:
 i2w gallery build
 ```
 
-Each render walks the seven-section DSL, substitutes the template's
-default variables, and writes one fenced block per declared
-`language_target`. The build then concatenates the per-template files
-into the per-domain page, so the gallery never drifts from the runtime —
-when a template's YAML changes, the next build refreshes the gallery
-from the same canonical source.
+Each render walks the seven-section DSL, substitutes the checked-in demo
+variables, and writes one fenced block per declared `language_target`.
+The build then concatenates the per-template files into the per-domain
+page, so the gallery never drifts from the runtime. To customize a
+template, edit the visible demo-filled text fields in the copied block
+or render again with your own `--vars` file.
 
 ## Two paths to a finished image
 
@@ -43,8 +43,8 @@ The gallery supports both of the workbench's delivery paths:
 
 - **Path A — web ChatGPT, copy-paste.** Open a domain page, copy the
   prompt block in your preferred language, paste it into a ChatGPT
-  conversation that has image generation enabled, and replace the
-  `<angle-bracket>` placeholders before sending. No Python required.
+  conversation that has image generation enabled, and edit the demo
+  literal fields before sending. No Python required.
   Full walkthrough in [`../chatgpt-web-mode.md`](../chatgpt-web-mode.md).
 - **Path B — CLI workflow.** Drive the compiler and the OpenAI API
   directly via `i2w template render ... --out prompt.md` and

@@ -138,6 +138,21 @@ def test_batchjobline_rejects_invalid_gpt_image_size() -> None:
         )
 
 
+def test_batchjobline_rejects_input_fidelity() -> None:
+    with pytest.raises(ValidationError):
+        BatchJobLine(
+            custom_id="bad-param",
+            method="POST",
+            url="/v1/images/generations",
+            body={
+                "prompt": "x",
+                "size": "1024x1024",
+                "quality": "low",
+                "input_fidelity": "high",
+            },
+        )
+
+
 def test_batch_jsonl_payload_is_serializable() -> None:
     payload = serialize_lines_jsonl([_make_line("demo")])
     row = json.loads(payload.strip())
@@ -237,6 +252,34 @@ def test_fetch_batch_results_writes_images(tmp_path: Path) -> None:
     assert written == 2
     assert (tmp_path / "demo_a.png").read_bytes() == image_bytes
     assert (tmp_path / "demo_b.png").read_bytes() == image_bytes
+
+
+def test_fetch_batch_results_sanitizes_custom_id_path(tmp_path: Path) -> None:
+    cli = MagicMock()
+    counts = MagicMock()
+    counts.model_dump = lambda: {"completed": 1, "failed": 0, "total": 1}
+    cli.batches.retrieve.return_value = MagicMock(
+        id="batch_x",
+        status="completed",
+        request_counts=counts,
+        output_file_id="file_out",
+    )
+
+    image_bytes = b"\x89PNG\r\n\x1a\nfakepayload"
+    b64 = base64.b64encode(image_bytes).decode("ascii")
+    blob = MagicMock()
+    blob.text = json.dumps(
+        {
+            "custom_id": "../../escape/me",
+            "response": {"body": {"data": [{"b64_json": b64}]}},
+        }
+    )
+    cli.files.content.return_value = blob
+
+    written = fetch_batch_results("batch_x", tmp_path, client=cli)
+    assert written == 1
+    assert (tmp_path / "escape_me.png").exists()
+    assert not (tmp_path.parent / "escape" / "me.png").exists()
 
 
 def test_fetch_batch_results_errors_when_no_output_file() -> None:

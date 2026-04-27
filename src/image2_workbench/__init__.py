@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """image2-workbench: a multi-surface OpenAI gpt-image-2 workbench.
 
 Three form factors share a single Python core:

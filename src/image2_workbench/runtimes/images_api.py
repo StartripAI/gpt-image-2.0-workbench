@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """OpenAI Images API adapter (``client.images.generate`` / ``.edit``).
 
 Maps :class:`GenerateRequest` / :class:`EditRequest` to the SDK call,
@@ -9,14 +10,21 @@ into :class:`GenerateResponse`.
 from __future__ import annotations
 
 import logging
-import re
 from pathlib import Path
 from typing import Any
 
+from ..compiler.validators import (
+    SizeValidationError,
+    is_experimental_size,
+)
+from ..compiler.validators import (
+    validate_size as validate_compiler_size,
+)
 from ..errors import (
     WorkbenchError,
     api_error,
     auth_error,
+    moderation_blocked,
     rate_limit_error,
     validation_error,
 )
@@ -30,57 +38,16 @@ from .types import (
 
 logger = logging.getLogger(__name__)
 
-# Documented hard limits for gpt-image-2.
-_MAX_EDGE = 3840
-_MIN_EDGE = 256  # implied by the multiples-of-16 + min-pixel rules
-_MIN_PIXELS = 655_360
-_MAX_PIXELS = 8_294_400
-_EXPERIMENTAL_PIXELS = 2560 * 1440  # >2K is documented as experimental
-_SIZE_RE = re.compile(r"^(\d+)x(\d+)$")
 _DEFAULT_SNAPSHOT = "gpt-image-2-2026-04-21"
 
 
-def _parse_size(size: str) -> tuple[int, int]:
-    m = _SIZE_RE.match(size)
-    if not m:
-        raise UnsupportedParameterError(
-            f"size must be 'WIDTHxHEIGHT' (e.g. '1024x1024'); got {size!r}"
-        )
-    return int(m.group(1)), int(m.group(2))
-
-
 def _validate_size(size: str) -> None:
-    """Enforce gpt-image-2 documented size constraints.
-
-    Returns ``None`` on success, raises :class:`UnsupportedParameterError`
-    otherwise. Logs a warning for experimental >2K sizes but allows them.
-    """
-    w, h = _parse_size(size)
-    if w <= 0 or h <= 0:
-        raise UnsupportedParameterError(f"size must have positive dimensions; got {size!r}")
-    if max(w, h) > _MAX_EDGE:
-        raise UnsupportedParameterError(
-            f"size {size!r} exceeds max edge {_MAX_EDGE}px"
-        )
-    if w % 16 != 0 or h % 16 != 0:
-        raise UnsupportedParameterError(
-            f"size {size!r} edges must be multiples of 16"
-        )
-    long, short = max(w, h), min(w, h)
-    if long > 3 * short:
-        raise UnsupportedParameterError(
-            f"size {size!r} aspect ratio exceeds 3:1"
-        )
-    pixels = w * h
-    if pixels < _MIN_PIXELS:
-        raise UnsupportedParameterError(
-            f"size {size!r} has {pixels} pixels; min is {_MIN_PIXELS}"
-        )
-    if pixels > _MAX_PIXELS:
-        raise UnsupportedParameterError(
-            f"size {size!r} has {pixels} pixels; max is {_MAX_PIXELS}"
-        )
-    if pixels > _EXPERIMENTAL_PIXELS:
+    """Enforce the shared gpt-image-2 size constraints."""
+    try:
+        width, height = validate_compiler_size(size)
+    except SizeValidationError as exc:
+        raise UnsupportedParameterError(str(exc)) from exc
+    if is_experimental_size(width, height):
         logger.warning(
             "size %s is above 2560x1440 — experimental on gpt-image-2", size
         )
@@ -217,9 +184,7 @@ def generate(
             try:
                 resp = cli.images.generate(thinking=req.thinking, **kwargs)
             except Exception as exc:  # noqa: BLE001 — narrow below
-                from openai import BadRequestError  # noqa: WPS433
-
-                if isinstance(exc, BadRequestError) and _is_unknown_param_error(exc):
+                if _is_unknown_param_error(exc):
                     note = "thinking parameter unsupported by current snapshot"
                     logger.info(note)
                     if events is not None:
@@ -339,6 +304,23 @@ def _extract_openai_error_code(exc: Exception) -> str | None:
     return None
 
 
+def _looks_like_moderation_error(code: str | None, message: str) -> bool:
+    haystack = " ".join(part for part in (code, message) if part).lower()
+    return any(
+        marker in haystack
+        for marker in (
+            "moderation",
+            "content_filter",
+            "content filter",
+            "content_policy",
+            "content policy",
+            "policy",
+            "safety",
+            "blocked",
+        )
+    )
+
+
 def _wrap_openai_exception(exc: Exception) -> WorkbenchError | None:
     """Translate an OpenAI SDK exception into a ``WorkbenchError`` envelope.
 
@@ -375,6 +357,12 @@ def _wrap_openai_exception(exc: Exception) -> WorkbenchError | None:
         )
     if isinstance(exc, BadRequestError):
         code = _extract_openai_error_code(exc) or "bad_request"
+        if _looks_like_moderation_error(code, str(exc)):
+            return moderation_blocked(
+                f"OpenAI policy/moderation rejected the request: {exc!s}",
+                cause=repr(exc),
+                context={"openai_error_code": code},
+            )
         return validation_error(
             code,
             f"OpenAI rejected the request: {exc!s}",

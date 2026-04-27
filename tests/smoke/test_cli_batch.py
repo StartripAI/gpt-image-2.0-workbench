@@ -10,12 +10,15 @@ escape (no OPENAI_API_KEY in test env → :class:`BatchApiError`).
 from __future__ import annotations
 
 import os
+from datetime import UTC, datetime
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
 from typer.testing import CliRunner
 
 from image2_workbench.commands.batch import batch_app
+from image2_workbench.runtimes.batch_api import BatchSubmitResult
 
 runner = CliRunner()
 
@@ -48,6 +51,82 @@ def test_sweep_dry_run_with_real_template_and_vars() -> None:
     assert "total_estimated=$" in result.stdout
     assert "batch_jsonl:" in result.stdout
     assert "\"url\": \"/v1/images/generations\"" in result.stdout
+
+
+def test_sweep_defaults_to_safe_dry_run_without_execute() -> None:
+    assert SWOT_VARS.exists()
+    with patch("image2_workbench.commands.batch.submit_batch") as submit:
+        result = runner.invoke(
+            batch_app,
+            [
+                "sweep",
+                "--template",
+                "business_swot_card",
+                "--vars",
+                str(SWOT_VARS),
+                "--route",
+                "batch-api",
+            ],
+        )
+    assert result.exit_code == 0, (result.stdout, result.stderr)
+    assert "dry-run: not submitting any jobs" in result.stdout
+    assert "batch_jsonl:" in result.stdout
+    submit.assert_not_called()
+
+
+def test_sweep_immediate_execute_is_rejected() -> None:
+    assert SWOT_VARS.exists()
+    result = runner.invoke(
+        batch_app,
+        [
+            "sweep",
+            "--template",
+            "business_swot_card",
+            "--vars",
+            str(SWOT_VARS),
+            "--route",
+            "immediate",
+            "--execute",
+        ],
+    )
+    assert result.exit_code == 4, (result.stdout, result.stderr)
+    assert "immediate execution is disabled" in result.stderr
+
+
+def test_sweep_batch_api_execute_submits_and_ledgers(tmp_path: Path) -> None:
+    assert SWOT_VARS.exists()
+    ledger = tmp_path / "ledger.jsonl"
+    with (
+        patch.dict(os.environ, {"IMAGE2_LEDGER_PATH": str(ledger)}),
+        patch(
+            "image2_workbench.commands.batch.submit_batch",
+            return_value=BatchSubmitResult(
+                batch_id="batch_test",
+                status="validating",
+                request_count=1,
+                submitted_at=datetime(2026, 1, 1, tzinfo=UTC),
+            ),
+        ) as submit,
+    ):
+        result = runner.invoke(
+            batch_app,
+            [
+                "sweep",
+                "--template",
+                "business_swot_card",
+                "--vars",
+                str(SWOT_VARS),
+                "--route",
+                "batch-api",
+                "--quality",
+                "low",
+                "--execute",
+            ],
+        )
+    assert result.exit_code == 0, (result.stdout, result.stderr)
+    assert "submitted batch_id=batch_test" in result.stdout
+    submit.assert_called_once()
+    assert '"batch_id":"batch_test"' in ledger.read_text(encoding="utf-8")
 
 
 def test_sweep_dry_run_immediate_route() -> None:

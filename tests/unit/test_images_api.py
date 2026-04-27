@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Unit tests for the Images API adapter and its policy guards."""
 
 from __future__ import annotations
@@ -75,6 +76,11 @@ def test_validate_background_accepts_auto_and_opaque():
 def test_generate_request_rejects_transparent_via_pydantic():
     with pytest.raises(ValidationError):
         GenerateRequest(prompt="x", background="transparent")  # type: ignore[arg-type]
+
+
+def test_generate_request_forbids_unknown_fields():
+    with pytest.raises(ValidationError):
+        GenerateRequest(prompt="x", input_fidelity="high")  # type: ignore[call-arg]
 
 
 # ----- format / compression guards -----
@@ -167,6 +173,36 @@ def test_generate_drops_thinking_on_bad_request():
     assert "thinking" not in second_kwargs
     assert "thinking_param_dropped" in events
     assert out.images_b64 == ["ZmFrZQ=="]
+
+
+def test_generate_drops_thinking_on_sdk_type_error():
+    cli = MagicMock()
+    cli.images.generate.side_effect = [
+        TypeError("generate() got an unexpected keyword argument 'thinking'"),
+        _mock_response(),
+    ]
+    events: list[str] = []
+    req = GenerateRequest(prompt="x", thinking="auto")
+    out = images_api.generate(req, client=cli, events=events)
+    assert cli.images.generate.call_count == 2
+    second_kwargs = cli.images.generate.call_args_list[1].kwargs
+    assert "thinking" not in second_kwargs
+    assert "thinking_param_dropped" in events
+    assert out.images_b64 == ["ZmFrZQ=="]
+
+
+def test_bad_request_policy_error_maps_to_moderation_blocked():
+    from openai import BadRequestError
+
+    err = BadRequestError(
+        message="Your request was rejected by the content policy",
+        response=MagicMock(),
+        body={"error": {"code": "content_policy_violation"}},
+    )
+    wrapped = images_api._wrap_openai_exception(err)
+    assert wrapped is not None
+    assert wrapped.envelope.exit_code.value == 3
+    assert wrapped.envelope.code == "moderation_blocked"
 
 
 def test_generate_wraps_arbitrary_exceptions_in_apicallerror():

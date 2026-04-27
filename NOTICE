@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
 image2-workbench
 Copyright 2026 image2-workbench contributors
 
@@ -52,9 +54,13 @@ License Layering Summary
 |-------------------------------------|--------------------------------------|
 | src/, tests/, scripts/              | Apache-2.0                           |
 | .github/                            | Apache-2.0                           |
+| skills/gpt-image/scripts/*.py       | Apache-2.0                           |
 | templates/, docs/, README*          | CC BY 4.0                            |
-| LICENSE, LICENSE-CONTENT, NOTICE    | Public (license texts themselves)    |
+| skills/gpt-image/SKILL.md           | CC BY 4.0                            |
+| AGENTS.md, SECURITY.md, NOTICE      | CC BY 4.0                            |
+| LICENSE, LICENSE-CC-BY-4.0          | License texts                        |
 | corpus/normalized/*.jsonl           | Per-record (see source_registry.yml) |
+| corpus/manifests/                   | CC BY 4.0                            |
 | corpus/harvested/                   | Gitignored; never redistributed      |
 
 When in doubt about the license of a particular file, check for an

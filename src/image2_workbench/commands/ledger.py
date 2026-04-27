@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import csv
 import json
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated
 
@@ -33,7 +33,10 @@ def _parse_since(value: str | None) -> datetime | None:
     try:
         if len(value) == 10:
             return datetime.fromisoformat(f"{value}T00:00:00+00:00")
-        return datetime.fromisoformat(value)
+        parsed = datetime.fromisoformat(value)
+        if parsed.tzinfo is None:
+            return parsed.replace(tzinfo=UTC)
+        return parsed
     except ValueError as exc:
         raise typer.BadParameter(f"invalid --since: {value!r} ({exc})") from exc
 
@@ -123,6 +126,10 @@ def query(
 ) -> None:
     """Print an aggregate table from the ledger."""
     console = Console()
+    if group_by not in {"template", "snapshot", "template_snapshot"}:
+        raise typer.BadParameter(
+            "invalid --group-by; expected template, snapshot, or template_snapshot"
+        )
     entries = read_entries()
     if not entries:
         console.print(

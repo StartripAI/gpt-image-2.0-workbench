@@ -175,6 +175,55 @@ def test_render_generate_rejects_transparent_background(
     assert "transparent" in (result.stdout + result.stderr).lower()
 
 
+def test_render_generate_rejects_input_fidelity_before_runtime_call(
+    tmp_ledger: Path, prompt_file: Path
+) -> None:
+    with patch("image2_workbench.commands.render.images_api.generate") as generate:
+        result = runner.invoke(
+            app,
+            [
+                "render", "generate",
+                "--prompt-file", str(prompt_file),
+                "--input-fidelity", "high",
+            ],
+        )
+    assert result.exit_code == 4, (result.stdout, result.stderr)
+    assert "input_fidelity_unsupported" in result.stderr
+    generate.assert_not_called()
+
+
+def test_render_generate_thinking_fallback_records_sidecar_event(
+    tmp_path: Path, tmp_ledger: Path, prompt_file: Path
+) -> None:
+    from unittest.mock import MagicMock
+
+    out_path = tmp_path / "img.png"
+    fake_client = MagicMock()
+    fake_client.images.generate.side_effect = [
+        TypeError("generate() got an unexpected keyword argument 'thinking'"),
+        _fake_sdk_response("snap-test"),
+    ]
+
+    with patch(
+        "image2_workbench.runtimes.images_api._new_client",
+        return_value=fake_client,
+    ):
+        result = runner.invoke(
+            app,
+            [
+                "render", "generate",
+                "--prompt-file", str(prompt_file),
+                "--think", "auto",
+                "--out", str(out_path),
+            ],
+        )
+    assert result.exit_code == 0, (result.stdout, result.stderr)
+    sidecar = out_path.with_name(out_path.name + ".sidecar.json")
+    body = json.loads(sidecar.read_text(encoding="utf-8"))
+    assert "thinking_param_dropped" in body["events"]
+    assert fake_client.images.generate.call_count == 2
+
+
 def test_render_generate_rejects_bad_size_before_runtime_call(
     tmp_ledger: Path, prompt_file: Path
 ) -> None:
@@ -256,6 +305,26 @@ def test_render_edit_without_image_exits_4(
     assert result.exit_code == 4, (result.stdout, result.stderr)
     combined = (result.stdout + result.stderr).lower()
     assert "reference image" in combined or "missing_reference_image" in combined
+
+
+def test_render_edit_rejects_input_fidelity_before_client_init(
+    tmp_path: Path, tmp_ledger: Path, prompt_file: Path
+) -> None:
+    img = tmp_path / "in.png"
+    img.write_bytes(b"\x89PNG\r\n")
+    with patch("image2_workbench.runtimes.images_api._new_client") as new_client:
+        result = runner.invoke(
+            app,
+            [
+                "render", "edit",
+                "--prompt-file", str(prompt_file),
+                "-i", str(img),
+                "--input-fidelity", "high",
+            ],
+        )
+    assert result.exit_code == 4, (result.stdout, result.stderr)
+    assert "input_fidelity_unsupported" in result.stderr
+    new_client.assert_not_called()
 
 
 def test_render_edit_authentication_error_exits_1_and_logs_ledger(

@@ -4,22 +4,21 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # image2-workbench
 
-> **image2-workbench 不是 prompt 收藏夹，是 gpt-image-2 的生产工作台。**
-> 它在花钱之前先预测成本，在调用失败之前先本地校验参数，先用 moderation
-> 预筛 prompt，并把每一次调用写进本地 ledger，让你能看清"什么失败了、
-> 为什么失败"。
+> **image2-workbench 不止是 prompt 收藏夹，而是围绕 gpt-image-2 的
+> spec-first 生产工作台。** 它把 prompt pack 变成可复现的 CLI、Skill 与
+> 网页 ChatGPT 工作流，并提供成本估算、preflight 校验和本地运行 ledger。
 
 > **状态：** v0.2.0 GitHub 源码 checkout 版本。项目仍处于 alpha，API
 > 与模板格式后续可能调整；PyPI/wheel 打包留到 v0.3。
 
 English: [README.md](./README.md)
 
-## 为什么不是又一个 prompt 收藏夹？
+## 为什么不止是 prompt 收藏夹？
 
-围绕 `gpt-image-2` 的公开生态目前已经被 prompt 列表占满了。它们是很好的
-灵感来源，却不是工程化工具。第 3 张图很好玩；当你需要在两个 snapshot、
-三种尺寸、一份非平凡的成本预算下跑第 1000 张时，仅靠一份 markdown 是不够
-的。本仓库围绕三根支柱来填这个缺口：
+精选 prompt 列表很有价值：它们是很好的灵感来源，也能快速展示模型吃什么
+提示词。但当你需要在多个模板、尺寸、成本预算和模型 snapshot 之间复现同一
+套工作流时，仅靠一份 markdown 会开始吃力。本仓库围绕三根支柱来补足这个
+缺口：
 
 - **成本可预测（`i2w cost` + `i2w batch`）。** 双轨成本模型 —— 官方
   `(size, quality)` 价格表 + 像素面积启发式兜底；提供 token-track 估算与
@@ -36,8 +35,9 @@ English: [README.md](./README.md)
   snapshot 聚合，输出成功率与 p50/p95 时延；`i2w ledger drift`
   一条命令对比两个 snapshot 的回归情况。
 
-prompt 收藏夹帮一个人完成一张图；工作台帮一个团队完成一千张。完整
-立场陈述见 [`docs/positioning.md`](./docs/positioning.md)。
+prompt 收藏夹帮你探索；image2-workbench 保留这个价值，并把 prompt 变成
+可执行、可审计、双语、可批处理的工作流。完整立场陈述见
+[`docs/positioning.md`](./docs/positioning.md)。
 
 ## 三层形态
 
@@ -73,7 +73,9 @@ pytest -q                  # 跑单元 + smoke 测试
 - **uiux / 产品界面** — iOS 应用 mockup、网页仪表板、设计系统卡、小红书风格封面
 - **anime / 娱乐** — 角色三视图、8 格漫画、城市电影海报、CCD 风格自拍
 
-V2 会补 `industrial`、`ecommerce`、自动采集、插件分发、TypeScript 端。
+V0.3 会先补 wheel/PyPI 的模板打包，并扩展 prompt atlas、verified corpus
+与 Skill pack 的故事。V2 会补 `industrial`、`ecommerce`、自动采集、插件
+分发、TypeScript 端。
 
 ## 功能状态
 

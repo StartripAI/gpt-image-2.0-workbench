@@ -132,7 +132,19 @@ def _local_checks(
                 "produce inconsistent quality"
             )
 
-    # Format / compression compatibility
+    # Format / compression compatibility. Keep this stricter than the shared
+    # compiler helper because render only accepts SDK output_format values.
+    if output_format and output_format.lower() not in {"png", "jpeg", "webp"}:
+        _add_blocker(
+            blockers,
+            blocker_codes,
+            code="invalid_format",
+            message=(
+                f"unsupported output_format {output_format!r}; expected "
+                "png/jpeg/webp"
+            ),
+        )
+        return
     try:
         validate_format_compression(output_format, output_compression)
     except FormatValidationError as exc:
@@ -146,11 +158,12 @@ def _local_checks(
             code = "invalid_format"
         _add_blocker(blockers, blocker_codes, code=code, message=str(exc))
 
-    # Quality is only advisory at preflight (no hard list locally).
     if quality and quality.lower() not in {"low", "medium", "high", "auto"}:
-        warnings.append(
-            f"quality={quality!r} is not one of low/medium/high/auto — the API "
-            "may reject it"
+        _add_blocker(
+            blockers,
+            blocker_codes,
+            code="invalid_quality",
+            message=f"quality={quality!r} is not one of low/medium/high/auto",
         )
 
 

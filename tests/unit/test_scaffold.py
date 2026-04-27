@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 def test_package_imports():
     import image2_workbench
 

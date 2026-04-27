@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """OpenAI Responses API adapter using the ``image_generation`` tool.
 
 This is a thin wrapper around ``client.responses.create`` that lets

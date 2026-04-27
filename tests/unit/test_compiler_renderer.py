@@ -13,6 +13,7 @@ from jinja2 import UndefinedError
 from image2_workbench.compiler.loader import load_template
 from image2_workbench.compiler.renderer import render, render_both
 from image2_workbench.compiler.schema import TemplateSpec
+from image2_workbench.compiler.validators import TextBlockValidationError
 
 EXAMPLE_PATH = Path(__file__).resolve().parents[2] / "templates" / "_schema" / "example.yml"
 SAMPLE_VARS = {
@@ -118,6 +119,14 @@ def test_oversize_text_block_rejected_at_load():
     ]
     with pytest.raises(Exception):
         TemplateSpec.model_validate(data)
+
+
+def test_oversize_rendered_text_block_rejected():
+    t = load_template(EXAMPLE_PATH)
+    vars_ = dict(SAMPLE_VARS)
+    vars_["title"] = "A" * 81
+    with pytest.raises(TextBlockValidationError):
+        render(t, vars_, "en")
 
 
 def test_no_code_fences_in_output():

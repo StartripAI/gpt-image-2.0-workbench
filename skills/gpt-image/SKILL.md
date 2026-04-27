@@ -26,6 +26,8 @@ description: |
 version: 0.2.0
 ---
 
+<!-- SPDX-License-Identifier: CC-BY-4.0 -->
+
 # gpt-image: image2-workbench Skill
 
 ## When to use this Skill
@@ -55,27 +57,22 @@ version: 0.2.0
 
 ## How this Skill works
 
-The Skill is a thin wrapper around the `i2w` CLI installed by the
-`image2-workbench` package. The script `scripts/run_skill.py` (PEP 723
-inline metadata) invokes the CLI with the right verb based on the
-user's request.
+The Skill is a thin wrapper around the `i2w` CLI from a checked-out
+`image2-workbench` repository. v0.2 is a GitHub/source-checkout release,
+not a PyPI/wheel release. The script `scripts/run_skill.py` (PEP 723
+inline metadata) invokes the CLI with the right verb based on the user's
+request.
 
-If `i2w` is not on PATH, ask the user to install it:
-
-```
-pip install image2-workbench
-```
-
-or, from a checkout:
+If `i2w` is not on PATH, ask the user to install it from the checkout:
 
 ```
-pip install -e .
+pip install -e ".[dev]"
 ```
 
 ## Available verbs (call via `i2w`)
 
-- `i2w catalog list` / `i2w catalog search <keywords>` — find a template.
-- `i2w template render <id>` — produce a paste-ready prompt (no API call).
+- `i2w catalog list` / `i2w catalog search "<keywords>" --domain <domain>` — find a template.
+- `i2w template render <id> --vars <vars.yml>` — produce a paste-ready prompt (no API call).
 - `i2w render generate` / `i2w render edit` — call the API.
 - `i2w batch sweep` — run a quality sweep across parameters.
 - `i2w eval run` — run an eval rubric against rendered outputs.
@@ -89,7 +86,7 @@ pip install -e .
 ## Recommended workflow
 
 1. Identify the user's domain (business / academic / uiux / anime / poster).
-2. Run `i2w catalog search <keywords>` to find candidate templates.
+2. Run `i2w catalog search "<keywords>" --domain <domain>` to find candidate templates.
 3. Run `i2w template render <id> --lang ... --vars ... --out prompt.md`
    to compile a prompt.
 4. Optionally run `i2w preflight prompt.md` and `i2w cost estimate`
@@ -118,19 +115,19 @@ pip install -e .
 
 - "Make me a SWOT slide for our Q3 review, English headers, Chinese
   body."
-  → `i2w catalog search swot business` →
+  → `i2w catalog search swot --domain business` →
   `i2w template render business_swot_card --lang zh-CN --vars
   templates/business/_vars_examples/swot_acme.yml --out swot_prompt.md` →
   `i2w render generate --prompt-file swot_prompt.md --size 1536x1024
   --quality high --out out/swot.png --template-id business_swot_card`.
 
 - "Make a product analytics dashboard mockup for a design review."
-  → `i2w catalog search web dashboard uiux` →
+  → `i2w catalog search "web dashboard" --domain uiux` →
   `i2w template render uiux_web_dashboard --lang en --vars
   templates/uiux/_vars_examples/web_dashboard_demo.yml --out
   dashboard_prompt.md` →
   `i2w render generate --prompt-file dashboard_prompt.md --size
-  1536x1024 --quality high --out out/dashboard.png --template-id
+  1920x1088 --quality high --out out/dashboard.png --template-id
   uiux_web_dashboard`.
 
 - "Edit a reference image using a rendered prompt and keep the subject
@@ -140,9 +137,8 @@ pip install -e .
   `i2w render edit --prompt-file edit_prompt.md --image reference.png
   --out out/reference_edit.png --template-id uiux_design_system_card`.
 
-- "I just want a paste-ready prompt for an 8-panel manga storyboard
-  about a cat detective."
-  → `i2w catalog search manga storyboard` →
+- "I just want a paste-ready prompt for an 8-panel manga storyboard."
+  → `i2w catalog search "manga storyboard" --domain anime` →
   `i2w template render anime_comic_8panel --lang en --vars
   templates/anime/_vars_examples/comic_demo.yml --out comic_prompt.md`
   (no API call; prompt returned for the user to paste into web ChatGPT).

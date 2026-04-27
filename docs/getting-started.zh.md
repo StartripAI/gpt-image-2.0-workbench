@@ -107,17 +107,17 @@ i2w template render business_swot_card \
 - 反过来喂给 `i2w render generate`，让 CLI 替你调 API
   （下文路径 B）。
 
-如果省略 `--vars`，编译器会用模板里写好的默认值渲染，方便你先看一眼
-输出长什么样。
+v0.2 中 `--vars` 是必需参数。编译器不会假设安全的内置默认值；请传入随仓库
+提供的 demo 变量文件，或传入你自己的变量文件。
 
 ## 通往一张成图的两条路径
 
 ### 路径 A — 纯网页版 ChatGPT
 
-第 3 步渲染完成后，再也不需要 Python。输出是普通 Markdown，每个语种各
-有一段 fenced 提示词。打开 `prompt.md`，整段复制 en 或 zh-CN 的代码块，
-粘贴进开启了图像生成的 ChatGPT 对话即可（Plus / Pro / Team 账号；
-gpt-image-2 就是 "create image" 工具背后的模型）。
+第 3 步渲染完成后，再也不需要 Python。输出是一份由 `--lang` 指定语言的
+原始 prompt。打开 `prompt.md`，复制整个文件，粘贴进开启了图像生成的
+ChatGPT 对话即可（Plus / Pro / Team 账号；gpt-image-2 就是 "create image"
+工具背后的模型）。
 
 这条路径：
 

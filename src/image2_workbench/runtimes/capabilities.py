@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Runtime capability probe.
 
 Best-effort, side-effect-free interrogation of the local OpenAI

@@ -4,11 +4,10 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # image2-workbench
 
-> **image2-workbench is a production workbench around OpenAI's
-> `gpt-image-2` — not a prompt collection.** It predicts cost before
-> you spend, validates parameters before they fail, pre-screens prompts
-> through moderation, and ledgers every call so you can see what fails
-> and why.
+> **image2-workbench is more than a prompt collection: it is a
+> spec-first production workbench around OpenAI's `gpt-image-2`.** It
+> turns prompt packs into reproducible CLI, Skill, and web ChatGPT
+> workflows, with cost estimates, preflight validation, and a run ledger.
 
 > **Status:** v0.2.0 GitHub source-checkout release. APIs and template
 > formats may still change while the workbench is alpha; PyPI/wheel
@@ -16,13 +15,12 @@ SPDX-License-Identifier: CC-BY-4.0
 
 中文版：[README.zh.md](./README.zh.md)
 
-## Why not just another prompt collection?
+## Why more than a prompt collection?
 
-The public ecosystem around `gpt-image-2` is saturated with curated
-prompt lists. They are great inspiration; they are not engineered tools.
-The third image you generate is fun. The thousandth — across two
-snapshots, three sizes, and a non-trivial cost ceiling — needs more
-than a markdown file. Three pillars define the difference:
+Curated prompt lists are useful: they are great inspiration and a fast
+way to learn what the model responds to. They become harder to use when
+you need repeatable outputs across templates, sizes, costs, and model
+snapshots. Three workbench pillars close that gap:
 
 - **Cost predictability (`i2w cost` + `i2w batch`).** Two-track cost
   model — official `(size, quality)` table plus a pixel-area heuristic
@@ -39,9 +37,10 @@ than a markdown file. Three pillars define the difference:
   template / snapshot, prints success rate and p50/p95 latency, and
   `i2w ledger drift` compares two snapshots in one command.
 
-A prompt collection helps a single person on a single image; a
-workbench helps a team on a thousand. For the full positioning thesis,
-see [`docs/positioning.md`](./docs/positioning.md).
+Prompt collections help you explore. image2-workbench keeps that value,
+then makes the prompts executable, auditable, bilingual, and batchable.
+For the full positioning thesis, see
+[`docs/positioning.md`](./docs/positioning.md).
 
 ## Three form factors
 
@@ -79,8 +78,10 @@ walkthrough.
 - **uiux** — iOS app mockups, web dashboards, design system cards, social covers (XHS-style)
 - **anime** — character reference sheets, 8-panel comics, editorial city posters, candid CCD-style portraits
 
-V2 will add `industrial`, `ecommerce`, automatic ingestion, plugin
-distribution, and a TypeScript shim.
+V0.3 will focus on packaging the templates for wheel/PyPI installs and
+expanding the prompt atlas / verified corpus / Skill-pack story. V2 will
+add `industrial`, `ecommerce`, automatic ingestion, plugin distribution,
+and a TypeScript shim.
 
 ## Status of features
 

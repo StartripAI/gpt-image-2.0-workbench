@@ -118,7 +118,21 @@ def preflight_command(
                     f"prompt file not found: {resolved_prompt_file}",
                     context={"prompt_file": str(resolved_prompt_file)},
                 )
-            prompt = resolved_prompt_file.read_text(encoding="utf-8")
+            if not resolved_prompt_file.is_file():
+                raise validation_error(
+                    "prompt_file_not_file",
+                    f"prompt file is not a file: {resolved_prompt_file}",
+                    context={"prompt_file": str(resolved_prompt_file)},
+                )
+            try:
+                prompt = resolved_prompt_file.read_text(encoding="utf-8")
+            except (OSError, UnicodeError) as exc:
+                raise validation_error(
+                    "prompt_file_unreadable",
+                    f"could not read prompt file: {resolved_prompt_file}",
+                    context={"prompt_file": str(resolved_prompt_file)},
+                    cause=repr(exc),
+                ) from exc
             extra_params = (
                 {"input_fidelity": input_fidelity}
                 if input_fidelity is not None

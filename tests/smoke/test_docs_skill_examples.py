@@ -20,8 +20,11 @@ GETTING_STARTED = [
 DOCS_AND_SKILL = [
     *GETTING_STARTED,
     REPO_ROOT / "docs" / "cost-modeling.md",
+    REPO_ROOT / "docs" / "form-factors.md",
     REPO_ROOT / "docs" / "gallery" / "index.md",
+    REPO_ROOT / "docs" / "chatgpt-web-mode.md",
     REPO_ROOT / "skills" / "gpt-image" / "SKILL.md",
+    REPO_ROOT / "skills" / "gpt-image" / "scripts" / "run_skill.py",
 ]
 TOP_LEVEL_COMMANDS = [
     "catalog",
@@ -64,6 +67,10 @@ def test_docs_do_not_reference_removed_or_stale_command_shapes() -> None:
         "`--batch`",
         "not yet wired",
         "landing in V1.5",
+        "pip install image2-workbench",
+        "default variables",
+        "documented defaults",
+        "<angle-bracket>",
         "business/swot",
         "anime/storyboard-4panel",
         "product/bg-swap",

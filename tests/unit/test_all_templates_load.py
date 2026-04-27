@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Integration check: every V1 template must load, validate, and render bilingually.
 
 Demo var filenames don't follow a strict `<template_stem>_demo.yml` pattern across

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 """Smoke tests for the L1 Skill bundle (skills/gpt-image)."""
 
 from __future__ import annotations

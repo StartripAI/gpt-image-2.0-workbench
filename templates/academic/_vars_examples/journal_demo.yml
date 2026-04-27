@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: CC-BY-4.0
 paper_title: "Sparse Attention Routing in Long-Context Language Models"
 authors: "L. Park, R. Okafor, M. Tanaka — Stanford NLP Group"
 intro_summary: "Can routed sparse transformers preserve long-context recall?"

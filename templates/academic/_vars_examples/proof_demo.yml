@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: CC-BY-4.0
 theorem_name: "Theorem (Cauchy-Schwarz Inequality)"
 step_1: "For all u, v in inner product space V, define f(t) = ||u + tv||^2"
 step_2: "Expand: f(t) = ||v||^2 t^2 + 2 Re<u,v> t + ||u||^2 >= 0 for all t in R"

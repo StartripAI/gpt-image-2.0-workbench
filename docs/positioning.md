@@ -1,18 +1,19 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-# Positioning: image2-workbench is a production workbench, not a prompt collection
+# Positioning: more than a prompt collection
 
-> **One-line claim.** image2-workbench is a production workbench around
-> OpenAI's `gpt-image-2`. It predicts cost before you spend, validates
-> parameters before they fail, pre-screens prompts through moderation,
-> and ledgers every call so you can see what fails and why.
+> **One-line claim.** image2-workbench turns prompt packs into
+> reproducible CLI, Skill, and web ChatGPT workflows for OpenAI's
+> `gpt-image-2`, with cost estimates, preflight validation, and a run
+> ledger.
 
 ## Why we need a different category
 
-A flat list of clever prompts is a great starting point for a hobbyist,
-but it is not a serious deliverable for a team that ships images at
-production scale. By the time you have spent two weeks running real
-workloads against `gpt-image-2`, your problems have shifted:
+Prompt collections are useful. They are the fastest way to learn what a
+model can do, and the gallery in this repo intentionally keeps that
+copy-paste path alive. The problem starts when prompts need to become
+repeatable workflows. After you have spent time running real workloads
+against `gpt-image-2`, your questions shift:
 
 - You no longer ask "what's a good prompt for a SWOT card?" — you ask
   "what does a 1500-image rerun cost across two snapshots, and which
@@ -24,32 +25,24 @@ workloads against `gpt-image-2`, your problems have shifted:
   a structured exit code, an append-only ledger, and a sidecar JSON
   next to every produced image.
 
-The public ecosystem around image-generation models is saturated with
-**prompt collections** — repos that publish curated `.md` files of clever
-strings. They are useful as inspiration. They are not useful as the
-backbone of a production pipeline.
+The public ecosystem around image-generation models has many strong
+**prompt collections**: curated `.md` files, prompt atlases, and
+copy-paste examples. They are useful as inspiration. A workbench adds
+the machinery needed when those prompts must be compiled, checked,
+batched, measured, and explained.
 
-## What "prompt collections" already cover
+## What prompt collections already cover
 
-To be concrete, the four most-trafficked GitHub repositories near the
-`gpt-image-2` keyword are roughly the following:
+Most prompt collections are optimized for browsing and copy/paste:
+domain categories, example outputs, and ready-made strings. That is a
+real user need, and image2-workbench's gallery exists for the same
+reason.
 
-| Repo                         | Stars  | Shape                              |
-|------------------------------|-------:|------------------------------------|
-| `EvoLinkAI/awesome-gpt-image-1-prompts` | ~5500 | Curated prompt list (markdown)        |
-| `YouMind/gpt-image-1-prompts`           | ~3000 | Curated prompt list (markdown + json) |
-| `Anil-matcha/Awesome-GPT-Image-1`       | ~1700 | Curated prompt list (markdown)        |
-| `wuyoscar/gpt_image_2_skill`            | ~700  | Skill bundle wrapping curated prompts |
-
-(Numbers are approximate; the exact counts drift week to week.)
-
-Every one of these is fundamentally a *flat collection* — a list of
-strings, organized by domain, optimized for browsing and copy/paste.
-They are not engineered tools. They do not estimate cost. They do not
-validate parameters. They do not run preflight moderation. They do not
-keep a ledger. They do not produce sidecar metadata. They do not
-distinguish a transparent-background failure (exit 4) from a rate-limit
-failure (exit 2) from an authentication failure (exit 1).
+What those collections usually do not cover is the production workflow:
+cost forecasting, local parameter validation, preflight moderation,
+sidecar metadata, run history, and stable exit codes. They also usually
+do not distinguish a transparent-background failure (exit 4) from a
+rate-limit failure (exit 2) from an authentication failure (exit 1).
 
 That is the gap.
 
@@ -99,17 +92,18 @@ or not.
 | Per-snapshot regression tracking                           | image2-workbench (`i2w ledger drift`) |
 | A bilingual paste-ready prompt for the iOS app             | image2-workbench gallery (no Python required) |
 
-The right way to think about it: **a prompt collection helps a single
-person on a single image; a workbench helps a team on a thousand
-images**. Most users will start with the gallery and never need the
-ledger; that is fine. But when the third person joins the team and the
-first cost surprise lands, the ledger is what you reach for.
+The right way to think about it: **prompt collections help you explore;
+image2-workbench keeps that value and makes the workflow executable,
+auditable, bilingual, and batchable**. Many users will start with the
+gallery and never need the ledger; that is fine. When repeatability,
+cost, or debugging matters, the ledger and structured CLI are what you
+reach for.
 
 ## What we are explicitly *not* trying to be
 
-- We are not a prompt-marketing site. We do not curate "the 100 best
-  prompts." Our gallery is auto-compiled from templates; it is a build
-  artifact, not a hand-tuned list.
+- We are not trying to win by adding the most prompts. Our gallery is
+  auto-compiled from templates; it is a build artifact, not a hand-tuned
+  list.
 - We are not a model-agnostic image library. We bind tightly to
   `gpt-image-2` snapshots and refuse parameters that snapshot does not
   support (e.g. `transparent` background, `input_fidelity`).
@@ -117,9 +111,10 @@ first cost surprise lands, the ledger is what you reach for.
   account, no upload, no telemetry. Your prompts and metrics stay on
   your machine.
 
-## V1.5 status
+## v0.2.0 status
 
-The three pillars above are live as of V1.5. The companion docs:
+The three pillars above are present in v0.2.0 as source-checkout alpha
+features. The companion docs:
 
 - [`cost-modeling.md`](./cost-modeling.md) — formulas behind the cost
   forecasts, including the official-table track, pixel-heuristic
@@ -127,5 +122,10 @@ The three pillars above are live as of V1.5. The companion docs:
 - [`error-codes.md`](./error-codes.md) — the seven granular exit codes
   and their stable `code` strings.
 
+What is intentionally not claimed yet: a large prompt atlas, a verified
+prompt corpus, OCR/image-diff visual evals, multi-model routing, or
+wheel/PyPI packaging of top-level templates. Those are v0.3+ work.
+
 Both READMEs (`README.md` / `README.zh.md`) lead with the same claim:
-this is a workbench, not a collection.
+this is more than a prompt collection because it makes prompt packs
+executable, auditable, bilingual, and batchable.

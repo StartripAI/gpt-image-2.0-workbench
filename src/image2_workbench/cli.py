@@ -2,6 +2,7 @@
 """image2-workbench CLI entry point (`i2w`)."""
 
 import typer
+from dotenv import load_dotenv
 
 from . import __version__
 from .commands.batch import batch_app
@@ -14,6 +15,8 @@ from .commands.ledger import ledger_app
 from .commands.preflight import preflight_command
 from .commands.render import render_app
 from .commands.template import template_app
+
+load_dotenv()
 
 app = typer.Typer(
     name="i2w",

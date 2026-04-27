@@ -1,3 +1,5 @@
+SPDX-License-Identifier: CC-BY-4.0
+
 This CC BY 4.0 license applies to: templates/, docs/, README.md, README.zh.md, and any
 file with a SPDX-License-Identifier: CC-BY-4.0 header.
 For src/, tests/, scripts/, see LICENSE (Apache-2.0).
@@ -6,7 +8,10 @@ For src/, tests/, scripts/, see LICENSE (Apache-2.0).
 Creative Commons Attribution 4.0 International Public License
 ================================================================================
 
-Full legal text:
+Full legal text is vendored in:
+  LICENSE-CC-BY-4.0
+
+Canonical upstream copy:
   https://creativecommons.org/licenses/by/4.0/legalcode.txt
 
 Human-readable summary (informative, not a substitute for the legal code):

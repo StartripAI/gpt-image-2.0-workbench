@@ -8,12 +8,13 @@ from __future__ import annotations
 
 import csv
 import json
+from datetime import UTC
 from pathlib import Path
 
 import pytest
 from typer.testing import CliRunner
 
-from image2_workbench.commands.ledger import ledger_app
+from image2_workbench.commands.ledger import _parse_since, ledger_app
 from image2_workbench.ledger import LedgerEntry, append_entry
 
 runner = CliRunner()
@@ -84,6 +85,26 @@ def test_ledger_query_filter_by_template(tmp_ledger: Path) -> None:
     result = runner.invoke(ledger_app, ["query", "--template", "tpl-a"])
     assert result.exit_code == 0, result.stdout
     assert "tpl-a" in result.stdout
+
+
+def test_ledger_query_accepts_naive_since_timestamp(tmp_ledger: Path) -> None:
+    result = runner.invoke(
+        ledger_app,
+        ["query", "--since", "2026-01-01T00:00:00"],
+    )
+    assert result.exit_code == 0, (result.stdout, result.stderr)
+
+
+def test_parse_since_naive_timestamp_becomes_utc() -> None:
+    parsed = _parse_since("2026-01-01T00:00:00")
+    assert parsed is not None
+    assert parsed.tzinfo == UTC
+
+
+def test_ledger_query_rejects_invalid_group_by(tmp_ledger: Path) -> None:
+    result = runner.invoke(ledger_app, ["query", "--group-by", "nonsense"])
+    assert result.exit_code != 0
+    assert "invalid --group-by" in result.stderr
 
 
 def test_ledger_top_failures(tmp_ledger: Path) -> None:

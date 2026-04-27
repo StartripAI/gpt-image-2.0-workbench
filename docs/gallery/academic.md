@@ -34,7 +34,7 @@ Text to render exactly (chunked into named slots):
 - step_line_1: "Step 1: For all u, v in inner product space V, define f(t) = ||u + tv||^2"
 - step_line_2: "Step 2: Expand: f(t) = ||v||^2 t^2 + 2 Re<u,v> t + ||u||^2 >= 0 for all t in R"
 - step_line_3: "Step 3: Discriminant non-positive: (2 Re<u,v>)^2 - 4 ||u||^2 ||v||^2 <= 0"
-- step_line_4: "Step 4: Therefore |<u,v>| <= ||u|| ||v||, with equality iff u and v are linearly dependent"
+- step_line_4: "Step 4: Therefore |<u,v>| <= ||u|| ||v||; equality iff dependent"
 - qed_line: "Q.E.D."
 
 NO: watermarks, signatures, busy backgrounds, cartoon style, anime style, neon colors, cluttered desks, student silhouettes, whiteboard markers
@@ -54,7 +54,7 @@ NO: watermarks, signatures, busy backgrounds, cartoon style, anime style, neon c
 - step_line_1: "Step 1: For all u, v in inner product space V, define f(t) = ||u + tv||^2"
 - step_line_2: "Step 2: Expand: f(t) = ||v||^2 t^2 + 2 Re<u,v> t + ||u||^2 >= 0 for all t in R"
 - step_line_3: "Step 3: Discriminant non-positive: (2 Re<u,v>)^2 - 4 ||u||^2 ||v||^2 <= 0"
-- step_line_4: "Step 4: Therefore |<u,v>| <= ||u|| ||v||, with equality iff u and v are linearly dependent"
+- step_line_4: "Step 4: Therefore |<u,v>| <= ||u|| ||v||; equality iff dependent"
 - qed_line: "Q.E.D."
 
 禁止: watermarks, signatures, busy backgrounds, cartoon style, anime style, neon colors, cluttered desks, student silhouettes, whiteboard markers
@@ -82,10 +82,10 @@ NO: watermarks, signatures, busy backgrounds, cartoon style, anime style, neon c
 Text to render exactly (chunked into named slots):
 - title: "Sparse Attention Routing in Long-Context Language Models"
 - authors_line: "L. Park, R. Okafor, M. Tanaka — Stanford NLP Group"
-- intro_header: "Introduction: Long-context transformers face quadratic compute; we ask whether routed sparsity preserves recall."
-- methods_header: "Methods: We trained 1.3B-parameter models with top-k token routing across 32k-token windows on 64 A100 GPUs."
-- results_header: "Results: Routed-sparse variants matched dense baselines on RULER while reducing FLOPs by 41% at 32k context."
-- conclusion_header: "Conclusion: Static routing is competitive; dynamic per-head routing is the most promising next direction."
+- intro_header: "Introduction: Can routed sparse transformers preserve long-context recall?"
+- methods_header: "Methods: 1.3B models with top-k routing over 32k-token windows."
+- results_header: "Results: Sparse variants matched RULER while cutting FLOPs 41%."
+- conclusion_header: "Conclusion: Dynamic per-head routing is the strongest next direction."
 - figure_caption_1: "Fig 1. Per-layer routing entropy across training steps."
 - figure_caption_2: "Fig 2. RULER recall vs. FLOPs at 4k, 16k, 32k context lengths."
 
@@ -104,10 +104,10 @@ NO: watermarks, signatures, busy backgrounds, cartoon style, anime style, clip-a
 文字渲染（请按命名插槽精确呈现）:
 - title: "Sparse Attention Routing in Long-Context Language Models"
 - authors_line: "L. Park, R. Okafor, M. Tanaka — Stanford NLP Group"
-- intro_header: "Introduction: Long-context transformers face quadratic compute; we ask whether routed sparsity preserves recall."
-- methods_header: "Methods: We trained 1.3B-parameter models with top-k token routing across 32k-token windows on 64 A100 GPUs."
-- results_header: "Results: Routed-sparse variants matched dense baselines on RULER while reducing FLOPs by 41% at 32k context."
-- conclusion_header: "Conclusion: Static routing is competitive; dynamic per-head routing is the most promising next direction."
+- intro_header: "Introduction: Can routed sparse transformers preserve long-context recall?"
+- methods_header: "Methods: 1.3B models with top-k routing over 32k-token windows."
+- results_header: "Results: Sparse variants matched RULER while cutting FLOPs 41%."
+- conclusion_header: "Conclusion: Dynamic per-head routing is the strongest next direction."
 - figure_caption_1: "Fig 1. Per-layer routing entropy across training steps."
 - figure_caption_2: "Fig 2. RULER recall vs. FLOPs at 4k, 16k, 32k context lengths."
 

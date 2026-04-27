@@ -44,10 +44,11 @@ For Codex and other agents, follow that agent's skill-discovery
 convention; usually it's "drop the directory into a known location and
 restart the harness".
 
-**What it gives you.** The agent can now make calls like "render a SWOT
-card for this company" without you naming a template id by hand. The
-skill resolves the right template, fills variables from conversational
-context, and runs `i2w render generate`.
+**What it gives you.** The agent now has a documented `i2w` workflow it
+can follow: search the catalog, render a template with an explicit vars
+file, optionally preflight it, then call `i2w render generate` or return
+the prompt for web ChatGPT. The shipped shim is intentionally thin; it
+forwards to the CLI rather than maintaining its own image logic.
 
 **What it doesn't give you.** Programmatic access from your own scripts —
 that's L2's job.
@@ -58,8 +59,9 @@ that's L2's job.
 scriptable workflows, CI integration, or fine-grained control over every
 parameter. You're building automation, not having a conversation.
 
-**What's inside.** The installable package `image2-workbench` exposing
-the `i2w` console script. Eight verbs:
+**What's inside.** The source-checkout package `image2-workbench`
+exposing the `i2w` console script after `pip install -e ".[dev]"`.
+v0.2 is not a PyPI/wheel release. Eleven public commands:
 
 - `i2w doctor` — capability probe and environment check.
 - `i2w template` — list, render, validate templates.
@@ -68,22 +70,28 @@ the `i2w` console script. Eight verbs:
 - `i2w eval` — run rubric-based evaluations against golden outputs.
 - `i2w cost` — estimate cost from request shapes without calling the API.
 - `i2w catalog` — manage the corpus and provenance metadata.
+- `i2w preflight` — validate a prompt and optional moderation before spending.
+- `i2w ledger` — query local run history and cost/error summaries.
+- `i2w gallery` — rebuild the prompt-only gallery.
 - `i2w version` — print the installed version.
 
 **Entry points.**
 
 ```bash
 i2w --help                                   # top-level
-i2w template render <id> --lang en           # offline render
-i2w render generate --prompt prompt.md       # live API call
-i2w batch run plan.yml                       # many at once
+i2w template render <id> --lang en --vars vars.yml --out prompt.md
+i2w render generate --prompt-file prompt.md  # live API call
+i2w batch sweep --template <id> --vars vars.yml --dry-run
 ```
 
-You can also import the package directly:
+You can also import internal Python modules directly while building
+automation from a source checkout:
 
 ```python
-from image2_workbench.compiler import render_template
-from image2_workbench.runtimes import generate_image
+from image2_workbench.compiler.loader import load_template, load_vars
+from image2_workbench.compiler.renderer import render
+from image2_workbench.runtimes.images_api import generate
+from image2_workbench.runtimes.types import GenerateRequest
 ```
 
 **What it gives you.** Determinism, reproducibility, sidecar metadata,
@@ -113,8 +121,8 @@ runtime — it's just text.
 
 **How to use.** Open the file in your browser, find a template that
 matches your scenario, copy the entire compiled prompt block, paste it
-into ChatGPT (with image generation enabled), and tweak the
-`<angle-bracket>` variables to your needs before sending. See
+into ChatGPT (with image generation enabled), and edit the demo-filled
+literal fields to your own content before sending. See
 [`chatgpt-web-mode.md`](./chatgpt-web-mode.md) for the full walkthrough.
 
 **What it gives you.** Zero install, zero credentials, the same template
@@ -134,7 +142,7 @@ templates/<domain>/*.yml
             │
             ▼
    ┌────────────────┐
-   │   compiler     │   (i2w template render --export markdown)
+   │   compiler     │   (i2w gallery build)
    │  (L2 internal) │
    └────────────────┘
             │

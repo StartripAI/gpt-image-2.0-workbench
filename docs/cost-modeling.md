@@ -44,10 +44,10 @@ heuristic. The shape of the heuristic, in pseudocode, is:
 per_image = base_per_pixel * width * height * QUALITY_MULT[quality]
 ```
 
-with `QUALITY_MULT = {low: 1, medium: 4, high: 16}` reflecting the
-roughly-quartic step in image-output token consumption between quality
-tiers. The result is labelled `track="heuristic_pixel"` so callers
-know to verify against the calculator before forecasting at scale.
+with `QUALITY_MULT = {low: 1, medium: 8.5, high: 35, auto: 8.5}`
+calibrated against the shipped table values. The result is labelled
+`track="heuristic_pixel"` so callers know to verify against the
+calculator before forecasting at scale.
 
 Both tracks return a `CostEstimate` with the same fields:
 
@@ -73,8 +73,10 @@ The formulas are conservative — biased toward over-estimation:
 ```
 text_tokens_in   ≈ ceil(len(prompt) / 4)               # English-leaning
 image_tokens_in  =  image_inputs * 256                  # 256 per edit reference
-image_tokens_out =  1024 * (W*H / 1024**2) * QUALITY_MULT[quality] * n
+image_tokens_out =  1024 * (W*H / 1024**2) * TOKEN_QUALITY_MULT[quality] * n
 ```
+
+where `TOKEN_QUALITY_MULT = {low: 0.25, medium: 1.0, high: 4.0, auto: 1.0}`.
 
 A `thinking` parameter, when set, adds a proportional surcharge to the
 running total:
@@ -144,6 +146,7 @@ Prints (roughly):
 | 2048×2048 | medium  |        0.1500 |    0.1500 | official_table |
 | 2048×2048 | high    |        0.6000 |    0.6000 | official_table |
 
+The command also prints a `grand_total_usd=...` line after the table.
 Multiply by `n` for a sweep. Use `i2w batch sweep --route batch-api
 --dry-run` to preview the Batch API discount for a template sweep. Use
 `i2w cost estimate --token-estimate` on a specific size/quality point to

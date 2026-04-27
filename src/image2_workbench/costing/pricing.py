@@ -176,7 +176,7 @@ def estimate_tokens(
         code typically consume more tokens-per-char so we round up).
       * ``image_tokens_in`` = ``image_inputs * 256`` (per-edit-reference).
       * ``image_tokens_out`` per image at 1024x1024 medium ≈ 1024; scaled
-        linearly by pixels and by :data:`QUALITY_MULT` for quality.
+        linearly by pixels and by the token quality multipliers.
       * ``thinking_overhead`` adds 25% (low/auto) / 100% (medium) /
         250% (high) to the running total.
 

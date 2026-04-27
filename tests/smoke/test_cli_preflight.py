@@ -96,6 +96,73 @@ def test_preflight_input_fidelity_exits_4(
     assert "input_fidelity_unsupported" in result.stderr
 
 
+def test_preflight_invalid_quality_exits_4(tmp_path: Path) -> None:
+    prompt_file = tmp_path / "prompt.md"
+    prompt_file.write_text("a logo", encoding="utf-8")
+    result = runner.invoke(
+        app,
+        [
+            "preflight",
+            str(prompt_file),
+            "--quality",
+            "ultra",
+            "--no-moderation-api",
+        ],
+    )
+    assert result.exit_code == 4, (result.stdout, result.stderr)
+    assert "invalid_quality" in result.stderr
+
+
+def test_preflight_rejects_jpg_like_render(tmp_path: Path) -> None:
+    prompt_file = tmp_path / "prompt.md"
+    prompt_file.write_text("a logo", encoding="utf-8")
+    result = runner.invoke(
+        app,
+        [
+            "preflight",
+            str(prompt_file),
+            "--format",
+            "jpg",
+            "--no-moderation-api",
+        ],
+    )
+    assert result.exit_code == 4, (result.stdout, result.stderr)
+    assert "invalid_format" in result.stderr
+
+
+@pytest.mark.parametrize(
+    ("args", "code"),
+    [
+        (["--quality", "ultra"], "invalid_quality"),
+        (["--format", "jpg"], "invalid_format"),
+        (["--background", "transparent"], "transparent_bg_unsupported"),
+        (["--input-fidelity", "high"], "input_fidelity_unsupported"),
+    ],
+)
+def test_preflight_and_render_reject_same_local_options(
+    tmp_path: Path,
+    args: list[str],
+    code: str,
+) -> None:
+    prompt_file = tmp_path / "prompt.md"
+    prompt_file.write_text("a logo", encoding="utf-8")
+    preflight_result = runner.invoke(
+        app,
+        ["preflight", str(prompt_file), "--no-moderation-api", *args],
+    )
+    render_result = runner.invoke(
+        app,
+        ["render", "generate", "--prompt-file", str(prompt_file), *args],
+    )
+    assert preflight_result.exit_code == 4, (
+        preflight_result.stdout,
+        preflight_result.stderr,
+    )
+    assert render_result.exit_code == 4, (render_result.stdout, render_result.stderr)
+    assert code in preflight_result.stderr
+    assert code in render_result.stderr
+
+
 def test_preflight_missing_prompt_file_exits_4(tmp_path: Path) -> None:
     result = runner.invoke(preflight_app, ["run", str(tmp_path / "missing.md")])
     assert result.exit_code == 4, result.stdout

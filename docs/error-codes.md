@@ -2,8 +2,10 @@
 
 # Error codes
 
-Every failure path in image2-workbench surfaces a structured
-`ErrorEnvelope` with two stable identifiers:
+Workbench-managed failures in the render, preflight, template, and most
+production workflow paths surface a structured `ErrorEnvelope` with two
+stable identifiers. A few alpha-era utility paths may still print plain
+Typer errors; those are being folded into the same contract over time.
 
 - An **integer exit code** (one of seven), so shell wrappers can branch
   without parsing prose.
@@ -45,7 +47,7 @@ snapshots without false negatives.
 
 | `code`                          | Common cause                                         | What to do |
 |---------------------------------|------------------------------------------------------|------------|
-| `prompt_file_missing`           | `--prompt-file` points to a non-existent path.       | Fix the path, or run `i2w template render` to produce one. |
+| `prompt_file_missing`           | `--prompt-file` points to a non-existent path.       | Fix the path, or run `i2w template render <id> --vars vars.yml --out prompt.md` to produce one. |
 | `transparent_bg_unsupported`    | `--background transparent` (rejected pre-flight).    | Use `auto` or `opaque`. |
 | `invalid_background`            | `--background` is not one of `auto` / `opaque`.      | Pick a valid value. |
 | `invalid_quality`               | `--quality` not in `low/medium/high/auto`.           | Pick a valid value. |

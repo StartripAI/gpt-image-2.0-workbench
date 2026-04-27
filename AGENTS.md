@@ -18,7 +18,8 @@ L2 CLI/SDK, L3 prompt-only templates).
 
 - **V1 is Python 3.11+ only.** No TypeScript in V1.
 - **Required deps:** `openai>=1.55,<2`, `typer[all]>=0.12`, `pydantic>=2.6`,
-  `pyyaml>=6`, `rich>=13`, `python-dotenv>=1.0`, `jsonschema>=4`.
+  `pyyaml>=6`, `rich>=13`, `jinja2>=3.1`, `python-dotenv>=1.0`,
+  `jsonschema>=4`.
 - **Dev deps:** `pytest>=8`, `pytest-cov`, `ruff>=0.6`, `mypy>=1.10`.
 - **No runtime additions** without updating `pyproject.toml` and noting the
   reason in the PR description.
@@ -29,7 +30,11 @@ L2 CLI/SDK, L3 prompt-only templates).
 |-------------------------------------|--------------------------------------|----------------------------|
 | `src/`, `tests/`, `scripts/`        | Apache-2.0                           | `Apache-2.0`               |
 | `.github/`                          | Apache-2.0                           | `Apache-2.0`               |
+| `skills/gpt-image/scripts/*.py`      | Apache-2.0                           | `Apache-2.0`               |
 | `templates/`, `docs/`, `README*`    | CC BY 4.0                            | `CC-BY-4.0`                |
+| `skills/gpt-image/SKILL.md`          | CC BY 4.0                            | `CC-BY-4.0`                |
+| `AGENTS.md`, `SECURITY.md`, `NOTICE` | CC BY 4.0                           | `CC-BY-4.0`                |
+| `corpus/manifests/`                 | CC BY 4.0                            | `CC-BY-4.0`                |
 | `corpus/normalized/*.jsonl`         | Per-record (see source_registry.yml) | (record-level metadata)    |
 | `corpus/harvested/`                 | Gitignored, never redistributed      | n/a                        |
 
@@ -100,8 +105,8 @@ your lane unless coordinating a cross-cutting change with the team.
 V1 is shippable when **all** of the following hold:
 
 1. `pip install -e ".[dev]"` succeeds on a clean Python 3.11 environment.
-2. `i2w --help` lists 8 verbs: `catalog`, `template`, `render`, `batch`,
-   `eval`, `cost`, `doctor`, `version`.
+2. `i2w --help` lists 11 commands: `catalog`, `template`, `render`, `batch`,
+   `eval`, `cost`, `doctor`, `preflight`, `ledger`, `gallery`, `version`.
 3. `pytest -q` is green (unit + smoke + golden subset).
 4. All 16 V1 templates pass schema validation (`i2w template list` shows
    16 entries; each compiles without errors).

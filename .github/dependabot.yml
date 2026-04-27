@@ -30,6 +30,7 @@ updates:
           - "pydantic-*"
           - "pyyaml"
           - "rich"
+          - "jinja2"
           - "python-dotenv"
           - "jsonschema"
 

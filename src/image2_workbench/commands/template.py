@@ -11,6 +11,7 @@ from ..catalog.index import list_templates
 from ..compiler.exporters import export_markdown
 from ..compiler.loader import load_template, load_vars
 from ..compiler.renderer import render
+from ..errors import cli_dispatch, validation_error
 
 template_app = typer.Typer(
     no_args_is_help=True,
@@ -40,7 +41,11 @@ def _resolve_template_path(template_id: str) -> Path:
     for entry in list_templates():
         if entry.id == template_id:
             return entry.path
-    raise typer.BadParameter(f"unknown template id: {template_id}")
+    raise validation_error(
+        "unknown_template",
+        f"unknown template id: {template_id}",
+        context={"template_id": template_id},
+    )
 
 
 @template_app.command("render")
@@ -58,13 +63,44 @@ def render_cmd(
 ) -> None:
     """Render a template into a final prompt markdown file."""
     console = Console()
-    template_path = _resolve_template_path(template_id)
-    spec = load_template(template_path)
-    vars_data = load_vars(vars) if vars is not None else {}
-    rendered = render(spec, vars_data, lang=lang)
 
-    if out is None:
-        console.print(rendered, markup=False)
-        return
-    export_markdown(rendered, out)
-    console.print(f"Wrote {out}", markup=False)
+    def _run() -> None:
+        if vars is None:
+            raise validation_error(
+                "vars_file_required",
+                "template render requires --vars; no built-in defaults are implied",
+                context={"template_id": template_id},
+            )
+        if not vars.exists():
+            raise validation_error(
+                "vars_file_missing",
+                f"vars file not found: {vars}",
+                context={"vars": str(vars)},
+            )
+        if not vars.is_file():
+            raise validation_error(
+                "vars_file_not_file",
+                f"vars path is not a file: {vars}",
+                context={"vars": str(vars)},
+            )
+
+        template_path = _resolve_template_path(template_id)
+        try:
+            spec = load_template(template_path)
+            vars_data = load_vars(vars)
+            rendered = render(spec, vars_data, lang=lang)
+        except Exception as exc:  # noqa: BLE001
+            raise validation_error(
+                "template_render_failed",
+                f"failed to render template {template_id}: {exc}",
+                context={"template_id": template_id, "lang": lang},
+                cause=repr(exc),
+            ) from exc
+
+        if out is None:
+            console.print(rendered, markup=False)
+            return
+        export_markdown(rendered, out)
+        console.print(f"Wrote {out}", markup=False)
+
+    raise SystemExit(cli_dispatch(_run))

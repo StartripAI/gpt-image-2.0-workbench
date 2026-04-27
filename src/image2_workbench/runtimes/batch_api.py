@@ -25,15 +25,17 @@ from __future__ import annotations
 import io
 import json
 import logging
+import re
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field, ValidationError, model_validator
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
 from ..compiler.validators import (
     validate_background,
     validate_format_compression,
+    validate_no_input_fidelity,
     validate_size,
 )
 
@@ -46,6 +48,8 @@ _ALLOWED_URLS = ("/v1/images/generations", "/v1/images/edits")
 class BatchJobLine(BaseModel):
     """One row in a Batch JSONL upload."""
 
+    model_config = ConfigDict(extra="forbid")
+
     custom_id: str = Field(..., min_length=1)
     method: Literal["POST"] = "POST"
     url: Literal["/v1/images/generations", "/v1/images/edits"]
@@ -53,6 +57,7 @@ class BatchJobLine(BaseModel):
 
     @model_validator(mode="after")
     def _validate_body(self) -> BatchJobLine:
+        validate_no_input_fidelity(self.body)
         size = self.body.get("size")
         if size is not None:
             validate_size(str(size))
@@ -280,6 +285,25 @@ def _extract_image_b64(line_record: dict[str, Any]) -> str | None:
     return None
 
 
+def _safe_custom_id_filename(custom_id: Any, fallback: str) -> str:
+    raw = str(custom_id or fallback)
+    safe = re.sub(r"[^A-Za-z0-9._-]+", "_", raw).strip("._")
+    return safe or fallback
+
+
+def _safe_output_path(out_dir: Path, custom_id: Any, fallback: str) -> Path:
+    safe_name = _safe_custom_id_filename(custom_id, fallback)
+    base = out_dir.resolve()
+    target = (out_dir / f"{safe_name}.png").resolve()
+    try:
+        target.relative_to(base)
+    except ValueError as exc:
+        raise BatchApiError(
+            f"batch output path escaped output directory: {custom_id!r}"
+        ) from exc
+    return target
+
+
 def fetch_batch_results(
     batch_id: str,
     out_dir: Path,
@@ -327,7 +351,7 @@ def fetch_batch_results(
         if not b64:
             logger.warning("no image data for custom_id=%s", custom_id)
             continue
-        target = out_dir / f"{custom_id}.png"
+        target = _safe_output_path(out_dir, custom_id, f"unknown_{written}")
         try:
             target.write_bytes(base64.b64decode(b64))
             written += 1

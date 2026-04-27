@@ -50,10 +50,12 @@ _VALID_ROUTES = ("immediate", "batch-api")
 
 
 def _exit(code: str | int, message: str) -> typer.Exit:
-    if isinstance(code, str) and ExitCode is not None:
+    if code == "API":
+        code = "API_OTHER"
+    if isinstance(code, str) and ExitCode is not None and hasattr(ExitCode, code):
         code_int = int(getattr(ExitCode, code, 4))
     elif isinstance(code, str):
-        code_int = {"VALIDATION": 4, "API": 5, "INTERNAL": 1}.get(code, 1)
+        code_int = {"VALIDATION": 4, "API_OTHER": 5, "INTERNAL": 1}.get(code, 1)
     else:
         code_int = code
     typer.echo(message, err=True)
@@ -158,6 +160,13 @@ def sweep(
         typer.Option("--route", help="immediate | batch-api"),
     ] = "immediate",
     dry_run: Annotated[bool, typer.Option("--dry-run", help="Print plan; do not submit")] = False,
+    execute: Annotated[
+        bool,
+        typer.Option(
+            "--execute",
+            help="Submit jobs. Omit for safe dry-run planning.",
+        ),
+    ] = False,
     out_dir: Annotated[
         Path,
         typer.Option("--out-dir", help="Where Batch fetches will land"),
@@ -252,16 +261,27 @@ def sweep(
         markup=False,
     )
     console.print(
-        f"jobs={len(lines)}  route={route}  dry_run={dry_run}",
+        f"jobs={len(lines)}  route={route}  dry_run={dry_run or not execute}",
         markup=False,
     )
 
-    if dry_run:
+    if dry_run or not execute:
         if route == "batch-api":
             typer.echo("batch_jsonl:")
             typer.echo(serialize_lines_jsonl(lines).rstrip())
-        console.print("dry-run: not submitting any jobs.", markup=False)
+        console.print(
+            "dry-run: not submitting any jobs. Pass --execute to submit.",
+            markup=False,
+        )
         return
+
+    if route == "immediate":
+        raise _exit(
+            "VALIDATION",
+            "immediate execution is disabled for batch sweep because async "
+            "outputs need artifact sidecars; use --route batch-api --execute "
+            "or run i2w render generate for synchronous work.",
+        )
 
     if route == "batch-api":
         try:

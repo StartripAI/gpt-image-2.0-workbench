@@ -15,6 +15,7 @@ from typer.testing import CliRunner
 from image2_workbench.cli import app
 
 runner = CliRunner()
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_gallery_build_writes_four_domain_files(tmp_path: Path) -> None:
@@ -73,3 +74,15 @@ def test_gallery_build_bilingual_blocks_are_present(tmp_path: Path) -> None:
     # The renderer un-doubles inner quotes; the SWOT card should now
     # render `- header: "..."` (one set), not `""..."" `.
     assert '""' not in body
+
+
+def test_checked_in_gallery_matches_generated_output(tmp_path: Path) -> None:
+    out_dir = tmp_path / "gallery"
+    result = runner.invoke(app, ["gallery", "build", "--out-dir", str(out_dir)])
+    assert result.exit_code == 0, (result.stdout, result.stderr)
+    for domain in ("business", "academic", "uiux", "anime"):
+        checked_in = (REPO_ROOT / "docs" / "gallery" / f"{domain}.md").read_text(
+            encoding="utf-8"
+        )
+        generated = (out_dir / f"{domain}.md").read_text(encoding="utf-8")
+        assert checked_in == generated, f"docs/gallery/{domain}.md is stale"

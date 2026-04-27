@@ -113,18 +113,18 @@ The compiler substitutes them, runs the seven-section DSL pass, and writes a
 - Feed back into `i2w render generate` to drive the API directly
   (path B below).
 
-If `--vars` is omitted, the compiler renders with the template's documented
-defaults so you can see the shape of the output.
+`--vars` is required in v0.2. The compiler does not assume safe built-in
+defaults; pass one of the demo vars files or your own variables.
 
 ## Two paths to a finished image
 
 ### Path A — Pure web ChatGPT
 
-You don't need Python after rendering once. The output of step 3 is plain
-markdown with a single fenced prompt block per language target. Open
-`prompt.md`, copy the entire en or zh-CN block, and paste it into a
-ChatGPT conversation that has image generation enabled (Plus / Pro / Team
-accounts; gpt-image-2 is the model behind the "create image" tool).
+You don't need Python after rendering once. The output of step 3 is one
+raw prompt in the language selected by `--lang`. Open `prompt.md`, copy
+the whole file, and paste it into a ChatGPT conversation that has image
+generation enabled (Plus / Pro / Team accounts; gpt-image-2 is the model
+behind the "create image" tool).
 
 This path:
 

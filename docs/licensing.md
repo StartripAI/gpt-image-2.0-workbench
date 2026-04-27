@@ -8,12 +8,13 @@ This project ships under a **layered license**: code is permissively
 licensed, content (templates, docs, gallery markdown) is openly licensed
 with attribution, and third-party corpus records carry per-record
 licensing metadata. This page is a plain-English guide; for legal text,
-see `LICENSE` (Apache-2.0) and `LICENSE-CONTENT` (CC BY 4.0).
+see `LICENSE` (Apache-2.0), `LICENSE-CONTENT` (content-layer summary),
+and `LICENSE-CC-BY-4.0` (full CC BY 4.0 legal code).
 
 ## Code — Apache-2.0
 
-Everything under `src/`, `tests/`, `scripts/`, and `.github/` is
-Apache-2.0.
+Everything under `src/`, `tests/`, `.github/`, and executable scripts
+such as `skills/gpt-image/scripts/*.py` is Apache-2.0.
 
 **What you can do:**
 
@@ -40,8 +41,10 @@ Apache-2.0.
 
 ## Templates and docs — CC BY 4.0
 
-Everything under `templates/`, `docs/`, and the top-level `README*`
-files is Creative Commons Attribution 4.0 International.
+Everything under `templates/`, `docs/`, `corpus/manifests/`,
+`skills/gpt-image/SKILL.md`, and the top-level content files
+(`README*`, `AGENTS.md`, `SECURITY.md`, `NOTICE`) is Creative Commons
+Attribution 4.0 International.
 
 **What you can do:**
 

@@ -74,7 +74,15 @@ def _validate_common(
     fmt: str,
     moderation: str,
     thinking: str | None = None,
+    input_fidelity: str | None = None,
 ) -> None:
+    if input_fidelity is not None:
+        raise validation_error(
+            "input_fidelity_unsupported",
+            "input_fidelity is not supported on gpt-image-2; remove the flag",
+            docs_url="docs/error-codes.md#validation",
+            context={"input_fidelity": input_fidelity},
+        )
     if background == "transparent":
         raise validation_error(
             "transparent_bg_unsupported",
@@ -278,6 +286,13 @@ def generate(
         str | None,
         typer.Option("--think", help="auto|low|medium|high (probed)"),
     ] = None,
+    input_fidelity: Annotated[
+        str | None,
+        typer.Option(
+            "--input-fidelity",
+            help="Rejected for gpt-image-2; provided for explicit diagnostics",
+        ),
+    ] = None,
     template_id: Annotated[
         str | None,
         typer.Option("--template-id", help="Template id for ledger grouping"),
@@ -289,7 +304,15 @@ def generate(
     def _run() -> None:
         start = time.monotonic()
         try:
-            _validate_common(size, quality, background, fmt, moderation, think)
+            _validate_common(
+                size,
+                quality,
+                background,
+                fmt,
+                moderation,
+                think,
+                input_fidelity,
+            )
             prompt = _read_prompt(prompt_file)
             try:
                 req = GenerateRequest(
@@ -395,6 +418,13 @@ def edit(
         typer.Option("--background", help="auto | opaque (transparent is rejected)"),
     ] = "auto",
     fmt: Annotated[str, typer.Option("--format", help="png | jpeg | webp")] = "png",
+    input_fidelity: Annotated[
+        str | None,
+        typer.Option(
+            "--input-fidelity",
+            help="Rejected for gpt-image-2; provided for explicit diagnostics",
+        ),
+    ] = None,
     out: Annotated[
         Path | None,
         typer.Option("--out", help="Output path or directory for edited images"),
@@ -410,7 +440,14 @@ def edit(
     def _run() -> None:
         start = time.monotonic()
         try:
-            _validate_common(size, quality, background, fmt, moderation)
+            _validate_common(
+                size,
+                quality,
+                background,
+                fmt,
+                moderation,
+                input_fidelity=input_fidelity,
+            )
             if not image:
                 raise validation_error(
                     "missing_reference_image",

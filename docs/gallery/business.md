@@ -89,7 +89,7 @@ Text to render exactly (chunked into named slots):
 - stat_tile_2: "$1.8M saved for customers"
 - stat_tile_3: "23 enterprise design partners"
 - stat_tile_4: "Net Promoter Score 72"
-- mission: "Building durable infrastructure for the next generation of climate-aware operators."
+- mission: "Durable infrastructure for climate-aware operators."
 
 NO: watermarks, signatures, busy backgrounds, hand-drawn style, casual fonts, stock-photo overlays, emoji clutter, rainbow gradients, 3D text, drop shadows
 ```
@@ -109,7 +109,7 @@ NO: watermarks, signatures, busy backgrounds, hand-drawn style, casual fonts, st
 - stat_tile_2: "$1.8M saved for customers"
 - stat_tile_3: "23 enterprise design partners"
 - stat_tile_4: "Net Promoter Score 72"
-- mission: "Building durable infrastructure for the next generation of climate-aware operators."
+- mission: "Durable infrastructure for climate-aware operators."
 
 禁止: watermarks, signatures, busy backgrounds, hand-drawn style, casual fonts, stock-photo overlays, emoji clutter, rainbow gradients, 3D text, drop shadows
 ```
@@ -183,10 +183,10 @@ NO: watermarks, signatures, busy backgrounds, hand-drawn style, casual fonts, co
 
 Text to render exactly (chunked into named slots):
 - header: "Acme Robotics SWOT 2026 Q1"
-- quadrant_strengths: "Strengths: vertical-integrated supply chain; 38% gross margin; tier-1 OEM contracts in 4 markets"
-- quadrant_weaknesses: "Weaknesses: single-vendor lithium dependency; thin EMEA service network; aging ERP"
-- quadrant_opportunities: "Opportunities: EU Right-to-Repair tailwind; warehouse-automation TAM growing 19% CAGR"
-- quadrant_threats: "Threats: low-cost APAC entrants undercutting unit price; pending tariff revision on motor imports"
+- quadrant_strengths: "Strengths: integrated supply chain; 38% margin; tier-1 OEM contracts"
+- quadrant_weaknesses: "Weaknesses: single-vendor lithium; thin EMEA service; aging ERP"
+- quadrant_opportunities: "Opportunities: EU repair tailwind; warehouse automation up 19% CAGR"
+- quadrant_threats: "Threats: low-cost APAC rivals; possible motor-import tariffs"
 
 NO: watermarks, signatures, busy backgrounds, hand-drawn style, casual fonts, clip-art icons, stock-photo people, rainbow palettes
 ```
@@ -202,10 +202,10 @@ NO: watermarks, signatures, busy backgrounds, hand-drawn style, casual fonts, cl
 
 文字渲染（请按命名插槽精确呈现）:
 - header: "Acme Robotics SWOT 2026 Q1"
-- quadrant_strengths: "Strengths: vertical-integrated supply chain; 38% gross margin; tier-1 OEM contracts in 4 markets"
-- quadrant_weaknesses: "Weaknesses: single-vendor lithium dependency; thin EMEA service network; aging ERP"
-- quadrant_opportunities: "Opportunities: EU Right-to-Repair tailwind; warehouse-automation TAM growing 19% CAGR"
-- quadrant_threats: "Threats: low-cost APAC entrants undercutting unit price; pending tariff revision on motor imports"
+- quadrant_strengths: "Strengths: integrated supply chain; 38% margin; tier-1 OEM contracts"
+- quadrant_weaknesses: "Weaknesses: single-vendor lithium; thin EMEA service; aging ERP"
+- quadrant_opportunities: "Opportunities: EU repair tailwind; warehouse automation up 19% CAGR"
+- quadrant_threats: "Threats: low-cost APAC rivals; possible motor-import tariffs"
 
 禁止: watermarks, signatures, busy backgrounds, hand-drawn style, casual fonts, clip-art icons, stock-photo people, rainbow palettes
 ```
