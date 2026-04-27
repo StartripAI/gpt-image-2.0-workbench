@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo vars for templates/advertising/advertising_campaign_key_visual.yml.
+# Renders an OOH-grade hero for a fictional craft soft-drink brand.
+
+brand: "Aurora Drinks"
+product: "Citrus Bloom"
+tagline: "Wake the daylight."
+cta: "Find a bottle near you"
+mood: "sunrise amber and pale gold, optimistic and crisp"

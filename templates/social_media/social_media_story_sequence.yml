@@ -1,0 +1,73 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: social_media_story_sequence
+domain: social_media
+description: 9:16 vertical Instagram-Story-style 3-frame mini-narrative grid stitched into one image.
+
+artifact:
+  type: poster
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: social-content creators sketching a 3-card story arc before they cut it into individual story slides
+
+spec:
+  subject: >-
+    A vertical 9:16 mini-narrative built as three stacked Instagram-Story-style
+    frames, telling a tight three-beat story about {{topic}}. The result is
+    one rendered image that previews the entire arc — designers will later
+    cut it apart into separate slides, but for review it lives as a single
+    grid.
+  action: >-
+    Across the three stacked frames the beats are:
+    frame 1 — {{frame1}};
+    frame 2 — {{frame2}};
+    frame 3 — {{frame3}}.
+    Frame 1 hooks attention, frame 2 elaborates, frame 3 pays off with a
+    clear emotional or informational landing. The hero subject stays
+    visually consistent across the three frames so the eye tracks them
+    as one continuous arc.
+  scene: >-
+    Each frame is a self-contained social-story canvas — flat
+    designed surfaces with bold color blocking, no physical room
+    around them. Between frames there is a soft paper-grain divider
+    band, mimicking the way Story slides separate during review.
+  composition: >-
+    9:16 vertical canvas split into three equal horizontal bands of
+    16:9-feeling proportion (each ~33% of the height). Inside every
+    band: an off-center hero element on the left and a stacked text
+    block on the right, with consistent margins and a faint frame
+    counter ("1/3", "2/3", "3/3") in a corner of each band so reviewers
+    can read the order at a glance.
+  style: >-
+    Story-format social aesthetic — saturated flat color blocks, one
+    crisp display sans for headlines, one slimmer companion sans for
+    secondary copy, generous white-space rhythm. Subtle film grain on
+    each frame. Palette is a tight three-color story (one warm hero,
+    one cool accent, one neutral). No photographic backdrops, no glow.
+  text_blocks:
+    - { slot: frame1_caption, text: '"1/3 — {{frame1}}"' }
+    - { slot: frame2_caption, text: '"2/3 — {{frame2}}"' }
+    - { slot: frame3_caption, text: '"3/3 — {{frame3}}"' }
+  preserve:
+    - hero subject identity across frames
+    - palette continuity across frames
+  negative:
+    - watermarks
+    - signatures
+    - real famous brand logos
+    - real-celebrity likeness
+    - rainbow palettes
+    - photographic backdrops
+    - clip-art icons
+    - lens flare
+    - inconsistent character design
+    - heavy 3D shadows
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: continuity
+license: CC-BY-4.0

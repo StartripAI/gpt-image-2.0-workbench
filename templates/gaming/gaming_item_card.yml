@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: gaming_item_card
+domain: gaming
+description: Vertical 3:4 collectible RPG/CCG-style item card with name, rarity ribbon, stat lines, and lore blurb.
+
+artifact:
+  type: poster
+  aspect: "3:4"
+  size: "1152x1536"
+  audience: tabletop and CCG designers, indie RPG creators, lore-card collectors reviewing a single item card layout
+
+spec:
+  subject: >-
+    A vertical 3:4 collectible item card in fantasy RPG / trading-card
+    style for the item {{item_name}}. The card is the entire image —
+    a single rectangular card face with rounded corners, framed
+    border, hero illustration window, name banner, rarity ribbon,
+    stat lines, and a lore blurb at the bottom. Nothing exists outside
+    the card face itself.
+  action: >-
+    Read the card top to bottom: the name reads first, the
+    illustration anchors identity, the rarity ribbon signals worth,
+    the stat block delivers mechanics, and the lore blurb closes the
+    impression. There is no in-world action; the illustration shows
+    the item at rest with diegetic light catching its key features.
+  scene: >-
+    Inside the illustration window: a small, centered, slightly-3D
+    item portrait set against a soft diorama background tied to the
+    item's flavor. Around the illustration: an ornamented metallic
+    card border with corner motifs. No physical environment outside
+    the card face — the background of the rendered image is the
+    card-bleed area, a flat dark field.
+  composition: >-
+    3:4 vertical card. Top ~9% holds a name banner across the width.
+    Below it (~46% of the height) is the rectangular illustration
+    window with rounded corners. A diagonal rarity ribbon sits in
+    the upper-right corner of the illustration window. Below the
+    illustration, two side-by-side stat lines sit in their own
+    bordered tiles. The bottom ~16% holds a small lore-blurb panel
+    with italic flavor text. Margins inside the card are generous.
+  style: >-
+    Painterly fantasy card aesthetic — rich saturated illustration in
+    the window, ornate but disciplined metallic frame around it,
+    crisp display serif for the item name, small condensed sans-serif
+    for stats and lore. Rarity color (e.g. gold for legendary, violet
+    for epic) keys the ribbon and the frame highlights. No real-world
+    branding, no franchise references.
+  text_blocks:
+    - { slot: item_name, text: '"{{item_name}}"' }
+    - { slot: rarity,    text: '"{{rarity}}"' }
+    - { slot: stat1,     text: '"{{stat1}}"' }
+    - { slot: stat2,     text: '"{{stat2}}"' }
+  preserve:
+    - card frame structural border
+    - rarity color cue
+  negative:
+    - watermarks
+    - signatures
+    - real famous game franchise logos or assets
+    - real-celebrity likeness
+    - rainbow neon palette
+    - clip-art icons
+    - cluttered floating ornaments
+    - chibi super-deformed proportions
+    - lens flare
+    - photographic real-world objects
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

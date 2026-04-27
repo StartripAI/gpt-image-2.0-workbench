@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: CC-BY-4.0
+_status: theoretical
+format: hermes_agent_skill_v0
+spec_url: https://hermes-agent.nousresearch.com/docs/
+skills_hub: https://agentskills.io
+repo_url: https://github.com/NousResearch/hermes-agent
+skill_md: ../SKILL.md
+entrypoint:
+  kind: shell
+  command: python ../scripts/run_skill.py
+install_hint: >-
+  Hermes Agent declares itself agentskills.io-compatible. Drop this
+  skill folder into the Hermes skills directory (consult the Hermes
+  Skills Hub for the latest path). The agentskills.io spec only
+  requires `name` and `description` in the SKILL.md frontmatter,
+  both of which we satisfy.
+verification_status: >-
+  Documented as agentskills.io-compatible but not run end-to-end against
+  a live Hermes Agent build. Runtime authors: if the Hermes path differs
+  from the published agentskills.io spec, prefer the LangChain or
+  smolagents shim and adapt.
+license: CC-BY-4.0

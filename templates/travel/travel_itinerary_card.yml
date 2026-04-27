@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: travel_itinerary_card
+domain: travel
+description: Single-page vertical itinerary card with day-by-day items for a short trip.
+
+artifact:
+  type: infographic
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: travel concierges, social-share itinerary readers, hospitality content teams
+
+spec:
+  subject: >-
+    A vertical 9:16 itinerary card titled "{{trip_title}}". The card
+    presents a short three-day trip as a clean editorial layout: a title
+    block at the top, a vertical timeline running down the centre, and
+    three day-rows each carrying a label, a small illustrative icon, and
+    the planned activity for that day.
+  action: >-
+    The card must read as a finished printed itinerary, not a chat-screen
+    summary. The eye drops naturally from the title down through Day 1,
+    Day 2, and Day 3 in order, dwelling on each row long enough to read
+    its planned activity. No motion, no narrative people.
+  scene: >-
+    Document-grade card surface — soft warm paper field with very faint
+    paper grain. No photographic background, no real-place photography
+    inside the icons. Each row's icon is a quiet two-colour symbol
+    (sun, peak, wave, lantern) consistent with the trip's spirit.
+  composition: >-
+    Vertical 9:16 frame. Top ~16% holds the title block. Below it, a
+    vertical hairline timeline runs down the central axis from ~22% to
+    ~92%. Three day-rows are pinned to the timeline with small numbered
+    nodes (Day 1, Day 2, Day 3); each row's text reads to the right of
+    the node and its icon to the left.
+  style: >-
+    Editorial concierge-card aesthetic. Palette: warm bone paper,
+    indigo type, one muted accent (sun-faded coral) reserved for the
+    timeline nodes. Type system: a humanist serif for the title, a
+    geometric sans-serif for day labels and items. Hairline 1px rules,
+    no drop shadows, no rainbow gradients, no 3D.
+  text_blocks:
+    - { slot: trip_title, text: '"{{trip_title}}"' }
+    - { slot: day1_item, text: '"Day 1 — {{day1}}"' }
+    - { slot: day2_item, text: '"Day 2 — {{day2}}"' }
+    - { slot: day3_item, text: '"Day 3 — {{day3}}"' }
+  preserve: []
+  negative:
+    - real cities by name
+    - real famous landmarks
+    - real-celebrity likeness
+    - photographic stock backgrounds
+    - lens flare
+    - HDR oversaturation
+    - rainbow gradients
+    - clip-art stickers
+    - watermarks
+    - signatures
+    - 3D extruded text
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

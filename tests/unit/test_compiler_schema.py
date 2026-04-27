@@ -67,6 +67,53 @@ def test_invalid_domain_rejected():
         TemplateSpec.model_validate(data)
 
 
+# Canonical V0.3 domain set — 4 V1 domains + 12 V0.3 expansion domains.
+ALL_V03_DOMAINS = [
+    "business",
+    "academic",
+    "uiux",
+    "anime",
+    "ecommerce",
+    "industrial",
+    "product",
+    "advertising",
+    "social_media",
+    "gaming",
+    "photography",
+    "fashion",
+    "food",
+    "architecture",
+    "interior",
+    "travel",
+]
+
+
+def test_domain_literal_has_sixteen_values():
+    from typing import get_args
+
+    from image2_workbench.compiler.schema import ALLOWED_DOMAINS, Domain
+
+    assert len(get_args(Domain)) == 16
+    assert set(get_args(Domain)) == set(ALL_V03_DOMAINS)
+    assert set(ALLOWED_DOMAINS) == set(ALL_V03_DOMAINS)
+
+
+@pytest.mark.parametrize("domain", ALL_V03_DOMAINS)
+def test_each_v03_domain_validates(domain: str):
+    data = _example_dict()
+    data["domain"] = domain
+    t = TemplateSpec.model_validate(data)
+    assert t.domain == domain
+
+
+def test_reference_schema_enumerates_all_sixteen_domains():
+    with SCHEMA_REF_PATH.open("r", encoding="utf-8") as fh:
+        raw = yaml.safe_load(fh)
+    domain_enum = raw["properties"]["domain"]["enum"]
+    assert set(domain_enum) == set(ALL_V03_DOMAINS)
+    assert len(domain_enum) == 16
+
+
 def test_reference_schema_includes_dashboard_and_photo_artifacts():
     with SCHEMA_REF_PATH.open("r", encoding="utf-8") as fh:
         raw = yaml.safe_load(fh)

@@ -125,6 +125,11 @@ features. The companion docs:
 What is intentionally not claimed yet: a large prompt atlas, a verified
 prompt corpus, OCR/image-diff visual evals, multi-model routing, or
 wheel/PyPI packaging of top-level templates. Those are v0.3+ work.
+The v0.3 line of work expands the canonical domain set from 4 to **16
+domains** (business, academic, uiux, anime, ecommerce, industrial,
+product, advertising, social_media, gaming, photography, fashion, food,
+architecture, interior, travel) with a target of **52 executable
+templates** across them.
 
 Both READMEs (`README.md` / `README.zh.md`) lead with the same claim:
 this is more than a prompt collection because it makes prompt packs

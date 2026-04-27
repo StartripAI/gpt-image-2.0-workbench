@@ -1,0 +1,67 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: travel_destination_poster
+domain: travel
+description: Vintage-style travel poster for a fictional or generic destination, with name, tagline, and year.
+
+artifact:
+  type: poster
+  aspect: "2:3"
+  size: "1024x1536"
+  audience: travel-brand creatives, hospitality marketers, gallery print buyers
+
+spec:
+  subject: >-
+    A vertical 2:3 vintage-style travel poster for the destination
+    "{{destination}}". The poster is a single illustrated composition
+    rendered as a printed mid-century travel artifact: a stylised hero
+    landscape (coastline, mountain ridge, plaza, or coast town) anchors
+    the upper two-thirds, with the destination name set large below.
+  action: >-
+    The poster must feel like a found print from a tourism office of an
+    earlier era: confident composition, flat shapes, evocative without
+    photographic precision. There is no narrative scene, no cars, no
+    crowds — just the destination's iconic-feeling geography rendered as
+    a poster artist would simplify it.
+  scene: >-
+    A generic, never real-named landscape consistent with the destination
+    descriptor: harbor, hill town, coastline, lakeside, or alpine valley.
+    No identifiable real landmark, no real flag, no real-city skyline. A
+    soft golden or dusk light suits the {{era_style}} sensibility.
+  composition: >-
+    Vertical 2:3 frame. Top ~60% holds the illustrated landscape, framed
+    as a stylised vista. Lower ~30% holds the destination name set very
+    large in a serif display cut, with a smaller tagline beneath and a
+    discreet year line at the bottom margin. Generous outer border.
+  style: >-
+    Mid-century travel-poster aesthetic — flat illustrated shapes, screen-
+    printed feel, three to five colour palette anchored on
+    "{{palette}}". Type system: a slab or condensed serif for the
+    destination, a quiet grotesque for tagline and year. No photographic
+    realism, no gradient skies, no lens flare, no neon.
+  text_blocks:
+    - { slot: destination_name, text: '"{{destination}}"' }
+    - { slot: tagline, text: '"{{tagline}}"' }
+    - { slot: year, text: '"Est. {{year}}"' }
+  preserve: []
+  negative:
+    - real cities by name
+    - real famous landmarks
+    - identifiable real flags
+    - real-celebrity likeness
+    - photographic realism
+    - lens flare
+    - HDR oversaturation
+    - rainbow gradients
+    - watermarks
+    - signatures
+    - 3D extruded text
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

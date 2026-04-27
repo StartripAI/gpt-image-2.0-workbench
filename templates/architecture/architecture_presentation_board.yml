@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: architecture_presentation_board
+domain: architecture
+description: Multi-panel architecture presentation board combining concept, diagram, render, and short text.
+
+artifact:
+  type: infographic
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: design-jury reviewers, RFP shortlist panels, studio portfolio readers
+
+spec:
+  subject: >-
+    A 16:9 architecture presentation board for the project "{{project_title}}"
+    ({{year}}). The board is a single composite artifact partitioned into
+    four labelled panels: a concept sketch, a small site diagram, a hero
+    exterior render, and a short typographic statement. It reads as one
+    page from a competition portfolio.
+  action: >-
+    The viewer's eye must move predictably from the concept panel to the
+    diagram, into the hero render, and finally rest on the typographic
+    block carrying the keywords {{concept}} and {{structure}}. No motion,
+    no narrative people — the board itself is the deliverable.
+  scene: >-
+    Document-grade portfolio surface. Warm bone paper field with fine
+    paper grain; each panel sits inside its own quiet frame with generous
+    breathing room. No physical setting, no perspective beyond what lives
+    inside the render panel itself.
+  composition: >-
+    16:9 frame partitioned into a 2x2 grid of unequal panels. Upper-left
+    (~28% width) holds the concept sketch panel. Upper-right (~72% width)
+    holds the hero render. Lower-left holds the small site diagram.
+    Lower-right holds the typography block (title, year, two keywords).
+    A 4% gutter and a 6% outer margin separate the panels cleanly.
+  style: >-
+    Studio-portfolio editorial aesthetic. Palette: bone-paper ground,
+    slate ink, one warm accent (terracotta or ochre, drawn from
+    {{materials}}). Type system: a humanist serif for the project title,
+    a geometric sans-serif for captions. Hairline 1px rules around panels,
+    no drop shadows, no decorative gradients, no 3D extrusion.
+  text_blocks:
+    - { slot: project_title, text: '"{{project_title}} ({{year}})"' }
+    - { slot: concept_keyword, text: '"Concept: {{concept}}"' }
+    - { slot: structure_keyword, text: '"Structure: {{structure}}"' }
+  preserve: []
+  negative:
+    - real famous buildings
+    - real-architect likeness
+    - identifiable city skylines
+    - photo-real cityscape backgrounds
+    - lens flare
+    - rainbow gradients
+    - HDR oversaturation
+    - watermarks
+    - signatures
+    - 3D extruded text
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

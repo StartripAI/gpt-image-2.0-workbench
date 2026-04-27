@@ -1,0 +1,73 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: food_packaging_label
+domain: food
+description: Packaged-goods label mock — branded coffee bag, bottle, or jar wrapper design.
+
+artifact:
+  type: poster
+  aspect: "3:4"
+  size: "1152x1536"
+  audience: indie food makers, packaging designers, brand strategists pitching label concepts
+
+spec:
+  subject: >-
+    A flat front-facing packaged-goods label for {{brand}}, designed
+    for the {{product_line}} product line in the {{flavor}} variant.
+    The label is rendered as a single rectangular print plate, as it
+    would appear when peeled off the package and laid flat. Typography
+    leads; any illustrative element is small and supportive.
+  action: >-
+    The label is a still graphic. Reader scans the brand wordmark at
+    the top, drops into the product-line designation in the middle,
+    notes the flavor descriptor as a smaller cross-line, and registers
+    the weight or volume marker at the bottom. The graphic hierarchy
+    must work at a thumbnail and at full size.
+  scene: >-
+    The label sits flat against a calm neutral surface — recycled
+    kraft, off-white paperboard, or pale ceramic. No physical product
+    (no bag, no bottle, no jar) is depicted; this is the unwrapped
+    print plate alone. Soft even daylight with no theatrical shadow.
+  composition: >-
+    Vertical 3:4 plate. Top zone (~30%) holds the brand wordmark
+    centered, set large with tight tracking, and a small tag line.
+    Middle zone (~40%) holds the product-line name in display weight
+    and the flavor descriptor as a smaller cross-line beneath it.
+    Lower zone (~22%) holds a single small illustrative ornament
+    (a leaf, a wave, a geometric mark) — restrained, not decorative.
+    Footer band (~8%) holds the weight or volume in small caps.
+  style: >-
+    Indie specialty-food packaging aesthetic — third-wave coffee
+    roaster meets craft kombucha brewer. Type system: a confident
+    geometric sans for the brand wordmark, an editorial serif for
+    the product-line name, and a small caps grotesk for the weight
+    line. Palette: a single warm paper ground, deep ink, and one
+    saturated accent color tied to the flavor. No photographic
+    fruit images, no metallic foiling beyond a single hairline rule.
+  text_blocks:
+    - { slot: brand_name,    text: '"{{brand}}"' }
+    - { slot: product_line,  text: '"{{product_line}}"' }
+    - { slot: weight_volume, text: '"{{weight_or_volume}}"' }
+  preserve: []
+  negative:
+    - real famous brand logos
+    - copyrighted house monograms
+    - photographic fruit imagery
+    - HDR oversaturation
+    - rainbow palette
+    - lens flare
+    - watermarks
+    - clip-art icons
+    - 3D rendered glossy plastic
+    - skeuomorphic foil shimmer
+    - cluttered decorative borders
+    - cinematic teal-orange grading
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: social_media_thumbnail_grid
+domain: social_media
+description: 1:1 YouTube-style 3-up thumbnail grid for previewing alternate channel-cover thumbnail concepts.
+
+artifact:
+  type: poster
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: video creators and channel managers triaging three alternate thumbnail concepts side-by-side before publishing
+
+spec:
+  subject: >-
+    A 1:1 design-review board showing three alternate YouTube-style
+    thumbnails for the channel "{{channel_name}}" stacked as a vertical
+    3-up grid. The whole image is a single review artifact: each row
+    is one candidate thumbnail in 16:9 form, framed by review-board
+    chrome (channel name banner at top, frame counters at the side).
+  action: >-
+    The viewer should be able to compare the three candidates at a
+    single glance. Each thumbnail must look like a finished YouTube
+    thumbnail in its own right — bold focal expression or scene, big
+    title text, high contrast — but the surrounding board shows
+    they're being judged together, not consumed in feed.
+  scene: >-
+    A neutral light-grey design-review surface with subtle grid lines,
+    not a feed UI. Channel name sits in a header band; the three
+    16:9 thumbnail frames have soft drop shadows so they read as
+    distinct artifacts pinned to a board. No browser chrome, no
+    YouTube UI, no platform watermark.
+  composition: >-
+    1:1 frame with 6% outer margins. Top 10% holds the channel-name
+    banner. Beneath it the three 16:9 thumbnail frames stack vertically
+    with even gutters, each labeled "A", "B", "C" on its left edge.
+    Inside each thumbnail: a focal hero element occupies ~60% on one
+    side, the title string occupies the other ~40% in oversized type.
+  style: >-
+    YouTube-thumbnail aesthetic inside a quiet review board. Each
+    thumbnail uses high-contrast color blocking, oversized punchy
+    sans-serif titles with a light text-stroke for legibility, and
+    clearly defined hero focus. The wrapping board uses a calm flat
+    palette so all three candidates can be compared without bias.
+  text_blocks:
+    - { slot: title_a,      text: '"A: {{title_a}}"' }
+    - { slot: title_b,      text: '"B: {{title_b}}"' }
+    - { slot: title_c,      text: '"C: {{title_c}}"' }
+    - { slot: channel_name, text: '"{{channel_name}}"' }
+  preserve:
+    - distinct title per row
+    - row label legibility (A/B/C)
+  negative:
+    - watermarks
+    - signatures
+    - real famous brand logos
+    - real platform UI chrome (YouTube logo, controls)
+    - real-celebrity likeness
+    - rainbow palettes
+    - clip-art icons
+    - lens flare
+    - identical thumbnails across rows
+    - cluttered floating ornaments
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

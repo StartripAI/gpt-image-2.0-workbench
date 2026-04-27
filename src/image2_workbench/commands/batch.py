@@ -93,22 +93,31 @@ def _resolve_template(template: str) -> Path:
             f"templates dir not found at {templates_dir}; pass --template as a path"
         )
 
-    # Try direct id-as-filename matches.
+    # Restrict the search to *real* templates: top-level yaml under
+    # templates/<domain>/, excluding _vars_examples/ and _schema/.
+    candidates = [
+        p
+        for p in templates_dir.rglob("*.yml")
+        if "_vars_examples" not in p.parts and "_schema" not in p.parts
+    ]
+
+    # Try direct id-as-filename matches first (cheap).
     target_id = template.replace("/", "_")
-    for path in templates_dir.rglob("*.yml"):
+    for path in candidates:
         if path.stem == target_id or path.stem == template:
             return path
-        # Also match by reading the file's id field — but that's expensive,
-        # so only do it if filename matching failed and we have <50 files.
-    candidates = list(templates_dir.rglob("*.yml"))
-    if len(candidates) < 50:
-        for path in candidates:
-            try:
-                spec = load_template(path)
-                if spec.id == template:
-                    return path
-            except Exception:  # noqa: BLE001
-                continue
+
+    # Slow-path: open each yaml and check its `id` field. The candidate set
+    # is bounded by domain-template count (current ceiling ~52), so we run
+    # this unconditionally rather than gating on a magic length threshold
+    # that broke once atlas + demo-vars crossed 50 files.
+    for path in candidates:
+        try:
+            spec = load_template(path)
+            if spec.id == template:
+                return path
+        except Exception:  # noqa: BLE001
+            continue
     raise FileNotFoundError(f"could not resolve template {template!r}")
 
 

@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: advertising_billboard_mockup
+domain: advertising
+description: Photoreal urban billboard mockup with the hero ad pasted on a real-feeling outdoor placement.
+
+artifact:
+  type: mockup
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: media planners, OOH agencies, account managers presenting placement context to a client
+
+spec:
+  subject: >-
+    A photoreal mockup of a single large-format billboard standing in
+    the urban context of {{city}} during {{time_of_day}}. The billboard
+    is the primary subject — the structure, the printed surface, and
+    its weathered street footing must all read convincingly. The
+    pasted-up ad face features the brand {{brand}} and the hero text,
+    but the IMAGE is the placement, not the ad alone.
+  action: >-
+    The viewer should perceive the billboard as if photographed from a
+    pedestrian or low-angle vehicle perspective on an actual street.
+    Pedestrians and traffic, if any, appear only as out-of-focus
+    silhouettes in the foreground gutter, never as recognizable
+    individuals. Lighting on the billboard surface must agree with the
+    declared time of day.
+  scene: >-
+    A generic mid-rise streetscape evocative of {{city}} (low-rise
+    masonry, signage clutter, a slice of road and curb), depicted
+    without identifying any real building, real shop, or recognizable
+    landmark. Atmosphere is set by {{time_of_day}} — golden hour, blue
+    hour, or daylight — with weather-consistent ambient haze.
+  composition: >-
+    16:9 frame. The billboard occupies the upper-right two-thirds of
+    the canvas, set at a slight three-quarter perspective so the
+    structure's depth and lighting are legible. Streetscape fills the
+    remaining lower-left third as supporting context, with safe
+    foreground bokeh. The ad face inside the billboard is roughly
+    16:9 within itself, its hero text and brand mark clearly readable.
+  style: >-
+    Photoreal commercial-mockup aesthetic. Realistic camera optics
+    (24-35mm equivalent), shallow depth of field on foreground only,
+    accurate ambient color cast and printed-vinyl surface texture.
+    Subtle dust, grime, and material aging on the billboard frame for
+    plausibility. No HDR over-cooking, no plastic CGI sheen.
+  text_blocks:
+    - { slot: hero_text,       text: '"{{hero_text}}"' }
+    - { slot: brand_logo_text, text: '"{{brand}}"' }
+  preserve:
+    - billboard structural perspective
+    - printed surface legibility
+  negative:
+    - real famous brand logos
+    - real recognizable landmarks
+    - real-celebrity likeness
+    - identifiable license plates
+    - watermarks
+    - signatures
+    - HDR over-saturation
+    - plastic CGI sheen
+    - clip-art skyline
+    - cartoon styling
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: industrial_process_diagram
+domain: industrial
+description: Wide 16:9 industrial process-flow diagram with four labeled stages and connecting arrows.
+
+artifact:
+  type: diagram
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: plant managers, process engineers, technical-training instructors briefing line operators
+
+spec:
+  subject: >-
+    A horizontal 16:9 industrial process-flow diagram titled
+    {{process_name}}, depicting four sequential stages laid out left-to-
+    right inside hex or rounded-rectangle nodes, connected by arrowed
+    lines. Each node carries its own small monochrome icon for the
+    operation it represents (intake, process, inspect, output) and a
+    short label.
+  action: >-
+    The eye must trace the flow strictly from left to right with no
+    branching, dwelling at each numbered stage long enough to read its
+    label, then advancing along the arrow to the next. The diagram is a
+    technical reference, not a sales artifact — it must read as a
+    process spec.
+  scene: >-
+    Document-grade engineering surface: a flat near-white field with
+    very faint blueprint grid (8% opacity, cool grey) behind the nodes.
+    No factory photography, no human operators, no perspective. The
+    composition is engineered to print cleanly to a B-size sheet for
+    line-side posting.
+  composition: >-
+    16:9 frame. Top ~10% is a title band with the process name. Below
+    it, four equally sized nodes are arranged in a horizontal row across
+    ~75% of the frame, separated by directional arrows. Each node has a
+    small icon centered above its step label. Step numbers (1-4) sit in
+    a small circle at each node's top-left corner. Bottom ~8% margin
+    reserved for an optional revision footer.
+  style: >-
+    Engineering documentation aesthetic — closer to a Visio / draw.io
+    rendering than to marketing infographics. Palette: cool slate grey
+    nodes, one safety-orange accent reserved for arrows and step
+    numbers, charcoal type. Geometric sans-serif (Inter / Roboto family)
+    with strict 1-pixel hairline rules around node borders. No gloss, no
+    drop shadows, no 3D extrusion, no decorative gradients.
+  text_blocks:
+    - { slot: title, text: '"{{process_name}}"' }
+    - { slot: step1, text: '"1. {{step1}}"' }
+    - { slot: step2, text: '"2. {{step2}}"' }
+    - { slot: step3, text: '"3. {{step3}}"' }
+    - { slot: step4, text: '"4. {{step4}}"' }
+  preserve: []
+  negative:
+    - human operators
+    - factory floor photography
+    - 3D extruded nodes
+    - glossy chrome
+    - lens flare
+    - decorative gradients
+    - rainbow palettes
+    - clip-art mascots
+    - watermarks
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

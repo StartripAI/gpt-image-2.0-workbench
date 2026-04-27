@@ -88,7 +88,8 @@ i2w template list --domain business
 
 This is offline and instant. It scans `templates/business/*.yml`, validates
 each against the V1 schema, and prints id + 1-line description. Drop
-`--domain` to see all four domains at once.
+`--domain` to see every shipped domain at once (V1 ships four:
+business, academic, uiux, anime; V0.3 expands the canonical set to 16).
 
 ### 3. Render a template into a paste-ready prompt
 
@@ -195,4 +196,5 @@ predictable output.
 - [`licensing.md`](./licensing.md) — how the layered Apache-2.0 + CC BY 4.0
   license works in practice.
 - [`gallery/index.md`](./gallery/index.md) — the bilingual prompt gallery
-  for all four V1 domains.
+  for the V1 domains (business, academic, uiux, anime); V0.3 expands the
+  canonical set to 16 domains.

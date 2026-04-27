@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: food_menu_poster
+domain: food
+description: Vertical restaurant menu wall poster — categorized dish list with prices and accent.
+
+artifact:
+  type: poster
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: independent restaurants, cafe owners, menu and signage designers
+
+spec:
+  subject: >-
+    A vertical wall-mount menu poster for {{restaurant_name}}. The
+    poster is conceived as a single large printed sheet that diners
+    read from across the room: a strong masthead at the top, a dish
+    list of three featured items in the middle ({{dish1}}, {{dish2}},
+    {{dish3}}), and a quiet footer band at the bottom for hours and
+    house notes. No food photographs, no decorative illustration.
+  action: >-
+    The poster is purely typographic and static. The reader's eye
+    starts at the masthead, scans down the dish stack, lingers on
+    each dish name and price pair, and resolves at the small footer.
+    Each dish line includes a name, a one-line ingredient note, and
+    a price set flush right.
+  scene: >-
+    The poster sits as a printed artifact on textured paper stock —
+    warm cream, oat, or stone. There is no implied physical location,
+    no restaurant interior visible behind it, no props. The
+    background is a single calm paper tone with subtle grain.
+  composition: >-
+    Vertical 9:16 frame. Header zone (~16%) holds the restaurant
+    wordmark large with tight tracking. Body zone (~70%) holds the
+    three dish blocks evenly spaced top to bottom, each set with the
+    dish name in a display weight, the ingredient note in italic
+    body, and the price right-aligned. Footer zone (~10%) holds a
+    single quiet hours-and-address line. Generous outer margins of
+    approximately 6%.
+  style: >-
+    Independent-restaurant menu aesthetic — somewhere between a
+    French bistro chalkboard and a Tokyo coffee-stand printed menu.
+    Type system mixes a confident editorial serif for dish names,
+    a humanist italic for ingredient notes, and a small caps sans
+    for prices and the masthead. Palette is paper, warm ink, and a
+    single accent of {{accent_color}} reserved for separators and
+    small flourishes. No food photography, no clip-art icons.
+  text_blocks:
+    - { slot: restaurant_name, text: '"{{restaurant_name}}"' }
+    - { slot: dish1,           text: '"{{dish1}}"' }
+    - { slot: dish2,           text: '"{{dish2}}"' }
+    - { slot: dish3,           text: '"{{dish3}}"' }
+  preserve: []
+  negative:
+    - real famous restaurant brand names
+    - copyrighted franchise marks
+    - photographic dish images
+    - HDR oversaturation
+    - rainbow palette
+    - lens flare
+    - watermarks
+    - clip-art food icons
+    - 3D rendered surfaces
+    - cluttered decorative borders
+    - cinematic teal-orange grading
+    - busy patterned backdrops
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

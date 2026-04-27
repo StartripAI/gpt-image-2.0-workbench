@@ -9,10 +9,13 @@ SPDX-License-Identifier: CC-BY-4.0
 ## Project goal
 
 Build a multi-surface OpenAI gpt-image-2 workbench (Skill + CLI + bilingual
-prompt templates) covering four V1 domains: business / academic / uiux / anime.
-The product targets three runtime environments simultaneously — Codex, Claude
-Code, and web ChatGPT — through a layered form-factor design (L1 Skill,
-L2 CLI/SDK, L3 prompt-only templates).
+prompt templates). V1 shipped four domains (business / academic / uiux / anime);
+V0.3 expands the canonical domain set to **16**: business, academic, uiux,
+anime, ecommerce, industrial, product, advertising, social_media, gaming,
+photography, fashion, food, architecture, interior, travel — backed by a
+target of 52 executable templates. The product targets three runtime
+environments simultaneously — Codex, Claude Code, and web ChatGPT — through a
+layered form-factor design (L1 Skill, L2 CLI/SDK, L3 prompt-only templates).
 
 ## Languages and tech stack
 
@@ -108,8 +111,10 @@ V1 is shippable when **all** of the following hold:
 2. `i2w --help` lists 11 commands: `catalog`, `template`, `render`, `batch`,
    `eval`, `cost`, `doctor`, `preflight`, `ledger`, `gallery`, `version`.
 3. `pytest -q` is green (unit + smoke + golden subset).
-4. All 16 V1 templates pass schema validation (`i2w template list` shows
-   16 entries; each compiles without errors).
+4. All V1 templates pass schema validation (`i2w template list` shows the
+   shipped entries across the 4 V1 domains; each compiles without errors).
+   V0.3 expands the canonical domain set to 16 with a target of 52
+   executable templates.
 5. `i2w doctor capabilities` runs without crashing and reports the probe
    results clearly (even if API access is unavailable, it reports that
    gracefully).

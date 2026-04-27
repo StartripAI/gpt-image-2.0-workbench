@@ -1,0 +1,73 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: product_comparison_board
+domain: product
+description: Vertical 4:5 side-by-side comparison of three product variants with feature checkboxes by axis.
+
+artifact:
+  type: infographic
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: product-page comparison module readers, launch-deck reviewers, retail-buying decision-makers
+
+spec:
+  subject: >-
+    A vertical 4:5 product comparison board for {{title}}. Three
+    product variants — labeled {{variant_a_label}}, {{variant_b_label}},
+    and {{variant_c_label}} — sit in three equally weighted columns,
+    each topped with a small product silhouette and followed by a
+    matching list of feature rows. Each feature row carries a
+    checkbox or a dash indicating presence by variant, organized
+    around the {{comparison_axis}} axis.
+  action: >-
+    The viewer scans top-to-bottom within each column, then sweeps
+    horizontally across rows to compare the same feature across
+    variants. The composition is fixed and readable — no animation,
+    no toggle, no carousel; this is a quiet decision-support figure.
+  scene: >-
+    Document-grade flat field: warm off-white background with very
+    faint paper grain, calibrated for both screen comparison and
+    printed handouts. No environment, no human models, no in-use
+    scenario.
+  composition: >-
+    Vertical 4:5 frame. Top ~10% holds the title in a single line.
+    Below it, three equal-width columns split the remaining frame
+    with a 4% gutter. Each column's top ~20% shows a small product
+    silhouette and the variant label beneath. Below that, a stack of
+    feature rows, each row a single line with a left-aligned feature
+    name and a right-aligned check / dash mark. Hairline horizontal
+    rules separate rows. Bottom ~6% margin reserved as safe area.
+  style: >-
+    Editorial design-press comparison aesthetic. Palette: warm off-
+    white background, charcoal type, a single quiet accent
+    (forest green) reserved for affirmative checkmarks. Type system:
+    geometric sans-serif headline, slightly lighter weight body. No
+    color-coding by variant beyond the checkmark accent — the columns
+    are visually equal in weight. No gloss, no 3D, no decorative
+    gradients.
+  text_blocks:
+    - { slot: title,           text: '"{{title}}"' }
+    - { slot: axis,            text: '"Compared by: {{comparison_axis}}"' }
+    - { slot: variant_a_label, text: '"A. {{variant_a_label}}"' }
+    - { slot: variant_b_label, text: '"B. {{variant_b_label}}"' }
+    - { slot: variant_c_label, text: '"C. {{variant_c_label}}"' }
+  preserve: []
+  negative:
+    - human models
+    - lifestyle photography
+    - 3D chrome reflections
+    - rainbow gradients
+    - lens flare
+    - watermarks
+    - cartoon mascots
+    - sale-price stickers
+    - busy promotional badges
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

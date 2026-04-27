@@ -1,0 +1,76 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: food_recipe_card
+domain: food
+description: Single-recipe card — image hero with recipe meta and key-ingredient callout.
+
+artifact:
+  type: infographic
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: cooking-magazine designers, recipe bloggers, cookbook layout artists
+
+spec:
+  subject: >-
+    A vertical single-recipe card for {{dish_name}}, a {{cuisine}}
+    dish. The card pairs a stylized illustrated dish hero in the
+    upper half with a typographic recipe-meta block in the lower
+    half: dish name, prep-time label, serves label, and a single
+    key-ingredient callout pulled forward.
+  action: >-
+    The card is a static layout. The reader scans the dish hero
+    illustration first, drops into the dish-name title beneath it,
+    reads the prep-time and serves chips on the same line, and
+    finishes on the key-ingredient callout. No step-by-step list,
+    no nutritional breakdown — this is a hero card, not a procedural
+    page.
+  scene: >-
+    The card sits on a calm cream paper ground with subtle grain.
+    The illustrated hero shows the finished dish from a soft three-
+    quarter angle on a single ceramic plate, no garnish flourish,
+    no styled tablescape. No physical kitchen, no hands, no props
+    beyond the plate.
+  composition: >-
+    Vertical 4:5 card. Hero zone (~52%) at the top holds the
+    illustrated dish on a calm background, framed by a hairline rule.
+    Title zone (~12%) holds the dish name in display serif weight.
+    Meta-line zone (~10%) sits below as two pill-shaped chips: a
+    prep-time chip on the left, a serves chip on the right. Callout
+    zone (~16%) at the bottom holds the key-ingredient callout in
+    italic body. Footer margin (~10%) is left clean.
+  style: >-
+    Cookbook editorial aesthetic — a contemporary illustrated recipe
+    page, somewhere between a Phaidon hardcover and a Sunday
+    magazine recipe column. Illustration style: gouache-soft food
+    rendering with honest color and gentle shadow, NOT photographic.
+    Type system: an editorial serif for dish name and callout, a
+    humanist sans for the meta chips. Palette: paper, ink, and the
+    natural colors of the dish itself.
+  text_blocks:
+    - { slot: dish_name,       text: '"{{dish_name}}"' }
+    - { slot: prep_time_label, text: '"Prep {{prep_time}}"' }
+    - { slot: serves_label,    text: '"Serves {{serves}}"' }
+    - { slot: key_ingredient,  text: '"Star: {{key_ingredient}}"' }
+  preserve: []
+  negative:
+    - real famous restaurant brand names
+    - copyrighted cookbook house marks
+    - photographic dish images
+    - HDR oversaturation
+    - rainbow palette
+    - lens flare
+    - watermarks
+    - clip-art food icons
+    - 3D rendered glossy plastic
+    - cluttered decorative borders
+    - cinematic teal-orange grading
+    - busy patterned backdrops
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

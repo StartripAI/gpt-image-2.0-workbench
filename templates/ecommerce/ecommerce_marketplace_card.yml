@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: ecommerce_marketplace_card
+domain: ecommerce
+description: Compact 1:1 marketplace tile — product, price, and a single trust badge — built for grid views.
+
+artifact:
+  type: poster
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: marketplace search-grid shoppers scanning many tiles per second
+
+spec:
+  subject: >-
+    A compact 1:1 marketplace tile for {{title}} sold by {{vendor_name}}.
+    The product sits centered against a clean off-white backdrop, with a
+    small price tag and a single trust-style badge ({{badge}}) anchored
+    near the corner. Reads as one card in a 4-column or 6-column results
+    grid.
+  action: >-
+    The viewer's eye registers the product first, the price second, and
+    the badge third — all within a single fixation. No carousel, no
+    scrolling, no in-card animation; the tile must work as a thumb-
+    scroll-stopping still.
+  scene: >-
+    Studio marketplace stage: soft warm off-white backdrop, a faint floor
+    shadow grounding the product, no environmental props. The vendor
+    name appears as a small subdued line under the title — present but
+    visually quiet.
+  composition: >-
+    Square 1:1 frame. Top ~8% holds the product title in a single line.
+    Central ~62% band shows the product silhouette generously padded.
+    Bottom ~22% carries the vendor wordmark on the left, the price chip
+    and trust badge on the right. Internal padding ~6% on all sides; the
+    composition reads cleanly even at 240px thumbnail size.
+  style: >-
+    Marketplace-grid aesthetic. Palette: warm off-white field, charcoal
+    text, one quiet accent (signal blue or olive) for the badge. Type:
+    geometric sans-serif at title weight 600, smaller weights for vendor
+    and price. Matte surfaces, soft 1-pixel hairline rules, no gloss, no
+    harsh shadows, no border outline around the tile itself.
+  text_blocks:
+    - { slot: title,       text: '"{{title}}"' }
+    - { slot: vendor_name, text: '"{{vendor_name}}"' }
+    - { slot: price,       text: '"{{price_str}}"' }
+    - { slot: badge,       text: '"{{badge}}"' }
+  preserve: []
+  negative:
+    - lifestyle photography
+    - human models
+    - busy promotional banners
+    - watermarks
+    - rainbow gradients
+    - clip-art icons
+    - cluttered multi-badge stacks
+    - lens flare
+    - cartoon mascots
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

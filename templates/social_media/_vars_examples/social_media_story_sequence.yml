@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo vars for templates/social_media/social_media_story_sequence.yml.
+# Renders a 3-frame morning routine arc for a fictional fitness creator.
+
+topic: "a 5-minute morning stretch routine"
+frame1: "quiet bedroom, alarm dismissed, host stands barefoot"
+frame2: "host demonstrates a slow side-bend, breathing label visible"
+frame3: "smiling host with coffee, caption Ready for the day"

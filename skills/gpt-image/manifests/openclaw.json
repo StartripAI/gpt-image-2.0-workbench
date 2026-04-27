@@ -1,0 +1,19 @@
+{
+  "_status": "theoretical",
+  "format": "openclaw_skill_v0",
+  "spec_url": "https://docs.openclaw.ai/tools/skills",
+  "repo_url": "https://github.com/openclaw/openclaw",
+  "skill_md": "../SKILL.md",
+  "entrypoint": {
+    "kind": "shell",
+    "command": "python ../scripts/run_skill.py"
+  },
+  "install_hint": "Place this directory under ~/.openclaw/workspace/skills/gpt-image/. OpenClaw reads name + description from the SKILL.md frontmatter and injects a compact XML stub into the system prompt; full body loads on activation.",
+  "openclaw_optional_keys": {
+    "homepage": "https://github.com/star/image2-workbench",
+    "user-invocable": true,
+    "command-arg-mode": "raw"
+  },
+  "verification_status": "Documentation read but skill not run end-to-end against an OpenClaw build. Runtime authors should treat this manifest as a starting point and adapt as needed.",
+  "license": "CC-BY-4.0"
+}

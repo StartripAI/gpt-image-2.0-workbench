@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: advertising_storyboard_3frame
+domain: advertising
+description: Three-panel storyboard sketch for a 30-second commercial, with brand seal beneath the panels.
+
+artifact:
+  type: comic_page
+  aspect: "3:2"
+  size: "1536x1024"
+  audience: agency creatives and producers reviewing the beat-by-beat arc of a 30-second TVC concept
+
+spec:
+  subject: >-
+    A clean three-panel storyboard sketch for a 30-second commercial
+    pitched around the concept "{{concept}}" for the brand {{brand}}.
+    The page is one continuous artifact: three same-size frames in a
+    horizontal row plus a slim brand-seal strip running underneath.
+    Each frame depicts a single staged moment, not a montage.
+  action: >-
+    Across the three panels the action arc is:
+    panel 1 — {{panel1}};
+    panel 2 — {{panel2}};
+    panel 3 — {{panel3}}.
+    Each frame uses a distinct shot type (e.g. wide establishing,
+    over-shoulder, hero close-up) so the sequence reads as a deliberate
+    cut, and the hero subject's identity stays consistent across cuts.
+  scene: >-
+    The world inside each panel is depicted as a quick board-style
+    sketch — props, characters, and background suggested with confident
+    line and one tone of marker fill rather than full painting. The
+    surrounding page is a calm warm-paper field framing the three
+    boards.
+  composition: >-
+    3:2 page divided into a 3-up panel row occupying ~78% of the
+    vertical space, with each panel a 4:3 ratio frame separated by
+    16-pixel ink-ruled borders and 24-pixel gutters. Beneath the panels
+    a slim full-width band (~14% of height) holds the brand seal
+    centered, with thin rule lines above and below. Each panel carries
+    a small slug caption inside its lower margin.
+  style: >-
+    Agency storyboard aesthetic — confident pencil and marker line
+    work, single-tone gray wash for shape, occasional accent in a
+    single muted brand color. Type for slugs and seal is a clean
+    industrial sans, all caps for slugs only. No full color rendering,
+    no painterly photographs, no 3D.
+  text_blocks:
+    - { slot: panel1_action, text: '"1. {{panel1}}"' }
+    - { slot: panel2_action, text: '"2. {{panel2}}"' }
+    - { slot: panel3_action, text: '"3. {{panel3}}"' }
+    - { slot: brand_seal,    text: '"{{brand}}"' }
+  preserve:
+    - hero character identity across panels
+    - prop continuity across panels
+  negative:
+    - watermarks
+    - signatures
+    - real-celebrity likeness
+    - real famous brand logos
+    - photographic rendering
+    - 3D render
+    - rainbow palettes
+    - inconsistent character design
+    - clip-art icons
+    - lens flare
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: continuity
+license: CC-BY-4.0

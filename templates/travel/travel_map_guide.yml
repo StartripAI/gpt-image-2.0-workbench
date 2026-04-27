@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: travel_map_guide
+domain: travel
+description: Illustrated tourist map with three numbered points of interest across a generic region.
+
+artifact:
+  type: diagram
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: hospitality desk handouts, tourist-board print maps, in-magazine travel features
+
+spec:
+  subject: >-
+    A 16:9 illustrated tourist map of a generic region named "{{region}}",
+    drawn in flat top-down view. The map carries a soft coastline or
+    valley shape, a small compass rose, a graphic scale bar, and three
+    numbered points of interest pinned across the region with labelled
+    callouts.
+  action: >-
+    The map must read as a finished concierge artifact: each numbered POI
+    is unambiguous and readable, the path between them is implied by a
+    quiet dotted route line, and the eye moves naturally from POI 1 to
+    POI 2 to POI 3. There is no narrative person, no photographic inset.
+  scene: >-
+    Document-grade illustrated-map surface — warm bone paper field with
+    very faint paper grain. Land is a calm warm tone, water a muted
+    slate. Trees and hills are abstracted as small illustrated symbols,
+    consistent with a "{{map_style_keyword}}" feel.
+  composition: >-
+    16:9 frame. Top ~10% is a title band carrying the region name and a
+    small compass rose at the top-right. The map body occupies the
+    central ~78% of the canvas. Three numbered POI markers are arranged
+    so the eye traces a gentle curve. Bottom ~10% holds a short legend
+    strip and a graphic scale bar.
+  style: >-
+    Illustrated tourist-map aesthetic — flat shapes, hand-feel symbols,
+    quiet line work. Restrained palette anchored on warm bone, slate
+    blue water, terracotta route line, charcoal type. Geometric sans-
+    serif labels with hairline rules. No photographic realism, no 3D
+    extrusion, no lens flare, no rainbow.
+  text_blocks:
+    - { slot: region_name, text: '"{{region}}"' }
+    - { slot: poi1, text: '"1. {{poi1}}"' }
+    - { slot: poi2, text: '"2. {{poi2}}"' }
+    - { slot: poi3, text: '"3. {{poi3}}"' }
+  preserve: []
+  negative:
+    - real cities by name
+    - real famous landmarks
+    - identifiable real coastlines
+    - real-celebrity likeness
+    - photographic realism
+    - lens flare
+    - HDR oversaturation
+    - rainbow gradients
+    - watermarks
+    - signatures
+    - 3D extruded text
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

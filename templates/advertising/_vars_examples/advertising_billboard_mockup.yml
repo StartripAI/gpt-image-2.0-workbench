@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo vars for templates/advertising/advertising_billboard_mockup.yml.
+# Renders a fictional indie record-label billboard at golden hour.
+
+brand: "Helio Records"
+hero_text: "New album out Friday."
+city: "a temperate mid-sized European port city"
+time_of_day: "golden hour, low warm sunlight from camera-left"

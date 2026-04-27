@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: product_packaging_concept
+domain: product
+description: Single-product packaging concept rendering — branded box / bottle / pouch on a minimal studio backdrop.
+
+artifact:
+  type: poster
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: brand designers, packaging concept reviewers, design-press editorial
+
+spec:
+  subject: >-
+    A 1:1 branded packaging concept render for {{brand_name}}'s
+    {{product_line}}. The package — a {{material}} box, bottle, or
+    pouch — is rendered as a single hero unit centered on an editorial
+    studio backdrop. Brand wordmark is set on the package face along
+    with the tagline, with a slim accent stripe in {{accent_color}}
+    establishing the visual identity.
+  action: >-
+    The viewer's eye lands on the wordmark, drops to the tagline, and
+    only then registers the surface texture of the {{material}}. No
+    in-use scene, no model holding the package, no retail-shelf
+    context — this is a design-studio mood shot, not a sales hero.
+  scene: >-
+    Editorial studio: a soft graduated paper-grey backdrop sweeping
+    from a ~3% darker top to a ~3% lighter floor, with a soft
+    floor-shadow grounding the package. Lighting is a single soft key
+    from upper-left, no rim light, no specular gloss, no environmental
+    reflections.
+  composition: >-
+    Square 1:1 frame. Package occupies the central ~60% area, framed
+    with generous negative space. Brand wordmark sits within the
+    package face, naturally aligned to its surface geometry. Tagline
+    appears either on the package or as a small typeset line under
+    the package, never as a floating banner. Bottom ~10% reserved as
+    safe area; product line label may sit there as a subdued caption.
+  style: >-
+    Design-press editorial aesthetic, reminiscent of premium D&AD-
+    annual photography. Palette anchored on {{accent_color}} with
+    neutral paper-grey backdrop and one warm neutral. Type system: a
+    refined geometric or quiet humanist sans-serif (Söhne / Neue
+    Haas Grotesk family). Materials feel matte, paperboard, or
+    softly tactile — no glossy chrome, no plastic specular highlights,
+    no marketing-loud color.
+  text_blocks:
+    - { slot: brand_name,   text: '"{{brand_name}}"' }
+    - { slot: product_line, text: '"{{product_line}}"' }
+    - { slot: tagline,      text: '"{{tagline}}"' }
+  preserve: []
+  negative:
+    - retail shelf context
+    - human models
+    - lifestyle photography
+    - lens flare
+    - rainbow gradients
+    - watermarks
+    - existing famous brand logos
+    - 3D chrome reflections
+    - cartoon mascots
+    - glossy plastic specular highlights
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

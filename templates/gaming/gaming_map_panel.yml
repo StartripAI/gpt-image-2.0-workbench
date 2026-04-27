@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: gaming_map_panel
+domain: gaming
+description: 16:9 fantasy world-map / quest-map panel with three labeled regions and a parchment border.
+
+artifact:
+  type: diagram
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: indie RPG worldbuilders and narrative designers reviewing a fantasy region map for an in-game codex screen
+
+spec:
+  subject: >-
+    A 16:9 fantasy quest map of the fictional world {{world_name}},
+    rendered as an in-game codex panel. The image is the full map
+    framed by a parchment border with rolled-corner motifs. The map
+    interior shows a single contiguous region with three named sub-
+    regions, connecting routes, and small iconographic markers for
+    settlements, perils, and waypoints.
+  action: >-
+    Reading the map: the world title sits in a top cartouche; the
+    three sub-regions are labeled at their geographic centers; routes
+    connect them as dotted ink trails. The viewer should be able to
+    trace a journey between the three labeled regions without
+    ambiguity. No characters, no live battles — this is a static
+    in-codex reference page.
+  scene: >-
+    The "scene" is the map itself: stylized topography with hills,
+    forest stipple, river ink lines, and a coastline. No real-world
+    geography, no recognizable map projections of Earth, no real
+    place names. The surrounding parchment border is a distinct
+    framing element with worn edges and one corner scroll motif.
+  composition: >-
+    16:9 frame. Outer 7% is parchment border. The map interior fills
+    the central area with the world-name cartouche pinned to the top
+    edge (~9% tall). The three sub-regions are spaced as a rough
+    triangle across the map — region 1 upper-left, region 2 middle-
+    right, region 3 lower-center — each with a small icon and a
+    label set in italic display. A small compass rose sits in the
+    lower-right corner, a scale bar in the lower-left.
+  style: >-
+    Hand-drawn fantasy cartography aesthetic — sepia and slate ink on
+    cream parchment, fine cross-hatching for hills and forests,
+    painterly water tones, italic display type for labels. Subtle
+    paper grain and edge wear. No modern UI elements, no real-world
+    cartographic features (no Mercator grid, no GPS pins).
+  text_blocks:
+    - { slot: world_name, text: '"{{world_name}}"' }
+    - { slot: region1,    text: '"{{region1}}"' }
+    - { slot: region2,    text: '"{{region2}}"' }
+    - { slot: region3,    text: '"{{region3}}"' }
+  preserve:
+    - parchment border integrity
+    - relative region positions (UL, MR, LC)
+  negative:
+    - watermarks
+    - signatures
+    - real-world geography or place names
+    - real famous game franchise logos or assets
+    - modern UI elements
+    - GPS pins or app-style icons
+    - rainbow neon palette
+    - clip-art icons
+    - lens flare
+    - photographic real terrain
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: CC-BY-4.0
+hazard: "Arc flash — 480V switchgear"
+ppe_required: "Class 2 face shield, FR coveralls"
+action_required: "De-energize and verify zero voltage"
+contact: "Maintenance ext. 2400"

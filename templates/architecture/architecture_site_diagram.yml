@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: architecture_site_diagram
+domain: architecture
+description: Site plan / urban-context diagram with three labeled zones, drawn in plan view.
+
+artifact:
+  type: diagram
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: planning-board reviewers, urban-design jurors, masterplan stakeholders
+
+spec:
+  subject: >-
+    A wide 16:9 architectural site-plan diagram for "{{site_name}}", drawn
+    in orthographic plan view from directly above. The diagram reads as a
+    technical document — building footprints, hatched ground textures, a
+    north arrow, and a graphic scale bar (calibrated to {{scale}}) anchor
+    it as a real planning artifact.
+  action: >-
+    The diagram must communicate a parti at a glance: the eye lands on
+    {{zone1}} first, then traces movement axes through {{zone2}} and
+    arrives at {{zone3}}. There is no perspective view, no sky, no
+    photographic texture — only the flat top-down logic of a working
+    site plan.
+  scene: >-
+    Document-grade plan surface — flat warm-paper field with a faint
+    drafting-grid underprint. No people, no cars, no theatrical lighting.
+    Trees are abstracted as soft circles, water as a calm hatched field,
+    paving as fine dotted grain.
+  composition: >-
+    16:9 frame. Top ~8% is a title band carrying the site name and a small
+    north arrow at the top-right. The plan occupies the central ~78% of the
+    canvas, padded with generous margins. The three zones are labelled
+    in-place with thin leader lines, set in small caps. Bottom ~10% holds
+    a graphic scale bar and a quiet legend strip.
+  style: >-
+    Urban-design plan-graphic aesthetic — closer to a planning-jury board
+    than a marketing render. Restrained palette: warm bone paper ground,
+    cool slate building footprints, a single muted accent (oxidised teal)
+    reserved for circulation arrows and the north symbol. Geometric sans-
+    serif type, 1px hairline rules, no drop shadows, no 3D extrusion.
+  text_blocks:
+    - { slot: site_label, text: '"{{site_name}}"' }
+    - { slot: zone1, text: '"Zone A — {{zone1}}"' }
+    - { slot: zone2, text: '"Zone B — {{zone2}}"' }
+    - { slot: zone3, text: '"Zone C — {{zone3}}"' }
+  preserve: []
+  negative:
+    - photographic textures
+    - perspective views
+    - real-city street grids
+    - recognisable real landmarks
+    - 3D extruded buildings
+    - drop shadows
+    - lens flare
+    - rainbow palettes
+    - watermarks
+    - clip-art trees
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

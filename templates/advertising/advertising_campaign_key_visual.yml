@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: advertising_campaign_key_visual
+domain: advertising
+description: Premium production-grade brand campaign hero key-visual with tagline, product name, and call-to-action.
+
+artifact:
+  type: poster
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: brand creative directors, agency art directors, OOH placement reviewers vetting a campaign hero
+
+spec:
+  subject: >-
+    A campaign hero key-visual for the brand {{brand}} announcing the
+    product {{product}}. The image reads as a confident OOH-grade poster
+    suitable for a feature-spread magazine page or a wild-posting site —
+    a single bold concept anchoring the brand identity, the hero product
+    silhouette, and the call-to-action in one assertive frame.
+  action: >-
+    The composition must feel decisive on first glance. The hero subject
+    holds the upper-left visual mass; the product name and tagline appear
+    near it without competing; the CTA sits as a small standalone
+    affordance, never crowding the picture. There is no narrative
+    progression — the still must work as a 3-second eyeball capture.
+  scene: >-
+    A flagship art-directed studio environment evoking the mood
+    {{mood}} — controlled colored gel lighting, seamless backdrop, no
+    real-world clutter or storefront context. Background falls off into
+    soft chromatic gradient that frames the hero rather than competing
+    with it. No actual storefront, no street.
+  composition: >-
+    16:9 hero canvas. The frame is split rule-of-thirds with the product
+    silhouette and brand mark occupying the left two-thirds, while the
+    right third is reserved as quiet negative space holding the tagline
+    block stacked above the product name and a small pill-shaped CTA at
+    the lower-right. Generous safe margins (6%) protect type from edge
+    crop in OOH placements.
+  style: >-
+    Premium art-directed campaign aesthetic. Restrained editorial palette
+    keyed to {{mood}} (e.g. warm amber for "summer release", cool steel
+    for "performance launch") with one signature accent. Type system: a
+    sharp display serif for the tagline, a precise geometric sans for
+    product name and CTA. No clipart, no clichéd lens flare; lighting is
+    cinematic but disciplined.
+  text_blocks:
+    - { slot: brand_tagline, text: '"{{tagline}}"' }
+    - { slot: product_name,  text: '"{{brand}} {{product}}"' }
+    - { slot: cta,           text: '"{{cta}}"' }
+  preserve:
+    - hero product silhouette
+    - brand wordmark legibility
+  negative:
+    - watermarks
+    - signatures
+    - busy collage background
+    - real-celebrity likeness
+    - real famous brand logos
+    - lens flare cliché
+    - clip-art icons
+    - rainbow palettes
+    - busy stock photography
+    - text-stroke outlines
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: interior_material_board
+domain: interior
+description: Square material / finish / color board (4-6 swatches with named labels) for an interior project.
+
+artifact:
+  type: infographic
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: interior project clients reviewing finish selections, FFE specifiers, design-studio internals
+
+spec:
+  subject: >-
+    A 1:1 square material and finish board for the project labelled
+    "{{project_label}}". The board reads as a designer's deliverable: a
+    grid of physical material chips (textile, wood, metal, stone, paint)
+    photographed flat, each chip labelled with its material name and a
+    short specifier note.
+  action: >-
+    The viewer should be able to read the entire palette at a glance and
+    pair each chip with its label. There is no styled vignette, no in-
+    situ room context — only the chips themselves on a calm field. Tactile
+    legibility comes first; nothing is decorative.
+  scene: >-
+    Flat-lay studio surface — a soft warm grey paper field with subtle
+    paper grain, even diffused overhead light. No props, no plants, no
+    cropped hands. Chips read as physical materials, lifted slightly off
+    the field with a quiet contact shadow.
+  composition: >-
+    1:1 frame. Top ~10% is a slim header band carrying the project label.
+    The remaining ~80% is a 2x3 grid of six chips with even gutters; the
+    bottom ~10% holds the palette keyword. Each chip occupies one cell, a
+    small label tag pinned to its lower edge.
+  style: >-
+    Designer-deliverable flat-lay aesthetic. Palette anchored on
+    "{{palette_keyword}}". Materials feel real and physical; metal chips
+    catch a soft reflection, textile chips show weave grain, stone chips
+    show veining. Geometric sans-serif label type, hairline 1px rules. No
+    drop shadows beyond the chip contact, no glossy chrome, no rainbow.
+  text_blocks:
+    - { slot: project_label, text: '"{{project_label}}"' }
+    - { slot: material1_name, text: '"01 — {{material1}}"' }
+    - { slot: material2_name, text: '"02 — {{material2}}"' }
+    - { slot: material3_name, text: '"03 — {{material3}}"' }
+  preserve: []
+  negative:
+    - in-situ room photography
+    - human models
+    - mood-board collage scraps
+    - rainbow gradient
+    - HDR oversaturation
+    - lens flare
+    - watermarks
+    - signatures
+    - clip-art textures
+    - 3D extruded chips
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

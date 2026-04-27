@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo vars for templates/gaming/gaming_hud_mockup.yml.
+# Renders an in-play HUD for a fictional fantasy RPG.
+
+game_title: "Embergate Saga"
+location: "Sunken Marsh of Velhar"
+objective: "find the witch's lantern"
+hp_pct: "62%"

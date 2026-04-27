@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: photography_documentary_scene
+domain: photography
+description: Documentary photojournalism — natural, candid scene grounded in real-world observation.
+
+artifact:
+  type: photo
+  aspect: "3:2"
+  size: "1536x1024"
+  audience: photojournalists, NGO communicators, long-form magazine picture editors
+
+spec:
+  subject: >-
+    A documentary observational frame of {{scene_subject}} located in
+    {{location}}. The image captures a real-world moment as a working
+    photojournalist might encounter it — neither posed for the camera
+    nor visibly aware of being photographed. One or two anonymized
+    figures may appear; their identities are not the story.
+  action: >-
+    Subjects continue their ordinary activity — working, walking,
+    waiting, talking, gesturing — in mid-action. No theatrical pose,
+    no performance for the lens, no eye-contact stare. The frame
+    catches an unforced gesture: a hand mid-reach, a glance toward
+    something off-frame, a pause between tasks.
+  scene: >-
+    The environment is {{location}} during {{time_of_day}}. Mood:
+    {{mood}}. Available light governs the exposure — overcast soft
+    daylight, low-angle window light, a fluorescent interior, or
+    streetlamp cast — whatever the location naturally provides.
+    Background detail is honest and unstaged; clutter, weathering,
+    and lived-in texture are kept rather than cleaned up.
+  composition: >-
+    Horizontal 3:2 frame following photojournalism's reportage grammar.
+    Subject sits slightly off-center along a strong third. Foreground
+    layered over midground over background to give depth without
+    contrivance. Modest negative space allows the eye to wander and
+    read the context. Slight handheld tilt is acceptable.
+  style: >-
+    Documentary photographic finish — natural color rendering, honest
+    skin tones across a range of subjects, fine ambient grain
+    consistent with handheld reportage. No HDR push, no fashion
+    grading, no clean studio lighting. Detail preserved in shadows
+    and highlights but never theatrically lifted. Reads as if shot
+    on a 35mm rangefinder under available light.
+  text_blocks:
+    - { slot: location_caption, text: '"{{location}}"' }
+  preserve: []
+  negative:
+    - real-celebrity likeness
+    - identifiable faces of named individuals
+    - HDR oversaturation
+    - studio fashion lighting
+    - plastic skin retouching
+    - lens flare halos
+    - watermarks
+    - news-network logo overlays
+    - stock-photo staging
+    - rainbow palette
+    - cinematic teal-orange grading
+    - intrusive caption banners
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

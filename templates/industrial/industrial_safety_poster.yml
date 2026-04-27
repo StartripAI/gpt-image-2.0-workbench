@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: industrial_safety_poster
+domain: industrial
+description: Vertical 9:16 factory-floor safety / hazard / PPE notice for posting at line entry points.
+
+artifact:
+  type: poster
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: line operators and visitors entering a controlled industrial work zone
+
+spec:
+  subject: >-
+    A vertical 9:16 factory-floor safety poster warning of a
+    {{hazard}} hazard. The composition stacks four registers top-to-
+    bottom: a bold warning header with a large safety-orange triangular
+    hazard glyph, the hazard description, two required actions, and a
+    contact strip at the foot. PPE iconography ({{ppe_required}})
+    appears as small flat pictograms beneath the action lines.
+  action: >-
+    The poster must read at a 6-meter glance — the eye registers the
+    yellow-and-black hazard band first, the hazard label second, the
+    required actions third, and the contact strip last. No photography,
+    no animation; this is a static OSHA-style line-side notice.
+  scene: >-
+    Document-grade flat field: a calibrated near-white safety-poster
+    background with bold black border bleeding ~3% inside the frame.
+    No factory environment behind the poster — it is rendered as the
+    poster artifact itself, ready for laminated mounting.
+  composition: >-
+    Vertical 9:16 frame. Top ~18% is a black-and-yellow striped warning
+    band carrying the warning title and a triangular hazard glyph.
+    Below ~22% holds the hazard label in heavy display type. Middle
+    ~36% lists action_required as two stacked imperatives, each
+    prefixed with a small flat pictogram. Bottom ~16% reserved for the
+    PPE icon row and the contact strip. 5% safety margin around all
+    edges.
+  style: >-
+    OSHA / ISO 7010-style safety-signage aesthetic. Palette strictly
+    limited to safety yellow (#FFD500), safety black, signal red, and
+    one neutral grey. Type system: heavy condensed sans-serif on the
+    warning header, regular sans-serif body. Pictograms are flat,
+    silhouette-only, no gradients. No photorealism, no decorative
+    drop shadows, no glossy chrome.
+  text_blocks:
+    - { slot: warning_title, text: '"WARNING: {{hazard}}"' }
+    - { slot: hazard_line,   text: '"Hazard: {{hazard}}"' }
+    - { slot: action1,       text: '"1. {{action_required}}"' }
+    - { slot: action2,       text: '"2. PPE required: {{ppe_required}}"' }
+    - { slot: contact,       text: '"Report to: {{contact}}"' }
+  preserve: []
+  negative:
+    - human models
+    - factory photography
+    - decorative gradients
+    - lens flare
+    - cartoon mascots
+    - rainbow palettes
+    - 3D extruded type
+    - glossy chrome
+    - emoji clutter
+    - watermarks
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

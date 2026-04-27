@@ -24,6 +24,32 @@ description: |
     web ChatGPT, the Skill compiles the prompt without making an API
     call.
 version: 0.2.0
+compatibility:
+  - runtime: claude_code
+    status: tested
+    manifest: manifests/claude.json
+  - runtime: codex
+    status: tested
+    manifest: manifests/codex.yml
+  - runtime: anthropic_skills
+    status: tested
+    manifest: manifests/claude.json
+  - runtime: langchain
+    status: shim_ready
+    manifest: manifests/langchain.py
+  - runtime: smolagents
+    status: shim_ready
+    manifest: manifests/smolagents.py
+  - runtime: openclaw
+    status: theoretical
+    manifest: manifests/openclaw.json
+  - runtime: hermes
+    status: theoretical
+    manifest: manifests/hermes.yml
+runtimes:
+  preferred: [claude_code, codex, anthropic_skills]
+  shimmed: [langchain, smolagents]
+  theoretical: [openclaw, hermes]
 ---
 
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->

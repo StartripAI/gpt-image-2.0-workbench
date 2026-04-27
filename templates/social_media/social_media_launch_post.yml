@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: social_media_launch_post
+domain: social_media
+description: 1:1 feed-friendly Instagram or X launch announcement post for a new product, with date and CTA.
+
+artifact:
+  type: poster
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: brand social managers, indie founders, freelance designers shipping a launch announcement to a feed
+
+spec:
+  subject: >-
+    A square 1:1 launch-announcement post made for an Instagram or X
+    feed, announcing the product {{product}}. The image must read
+    instantly in a thumb-scrolling context: an unmissable focal subject
+    riding a clean color block, headline copy stacked above secondary
+    info, and a small CTA chip near the lower edge.
+  action: >-
+    The image works as a single beat — no progression, no carousel
+    intent. The headline announces, the date confirms, and the CTA
+    invites a tap. Hierarchy must survive at thumbnail scale: even at
+    100px tall the announcement should be readable and the focal
+    subject should remain identifiable.
+  scene: >-
+    A flat designed surface, not a photograph. The background is a
+    saturated solid panel keyed to {{accent_color}} with one subtle
+    grain or paper-noise overlay for texture. No physical environment.
+    A single decorative shape (gradient orb, soft halftone, or angled
+    band) anchors the focal subject without competing.
+  composition: >-
+    1:1 frame with safe inner margins of 6%. Top half holds a confident
+    illustrative or product-style focal subject centered horizontally.
+    The lower half stacks: a large announcement headline, a date line
+    in smaller weight, and a pill-shaped CTA chip aligned bottom-right.
+    The grid favors a tight 4-column structure so type stays optically
+    aligned to the subject.
+  style: >-
+    Modern social-feed aesthetic — bold flat color, confident
+    sans-serif type system (one display weight + one body weight),
+    crisp shape language, subtle grain. Palette anchored on
+    {{accent_color}} plus a paper-white and one neutral ink. No
+    photographic backgrounds, no faux 3D bevels, no glossy reflections.
+  text_blocks:
+    - { slot: announcement, text: '"{{product}} is here."' }
+    - { slot: date,         text: '"Launching {{date}}"' }
+    - { slot: cta,          text: '"{{cta}}"' }
+  preserve:
+    - focal subject silhouette
+    - accent color block
+  negative:
+    - watermarks
+    - signatures
+    - real famous brand logos
+    - real-celebrity likeness
+    - rainbow palettes
+    - busy stock photography
+    - clip-art icons
+    - faux 3D bevels
+    - lens flare
+    - cluttered floating ornaments
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

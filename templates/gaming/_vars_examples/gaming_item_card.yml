@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo vars for templates/gaming/gaming_item_card.yml.
+# Renders a fictional legendary lantern collectible card.
+
+item_name: "Sunfire Lantern"
+rarity: "Legendary"
+stat1: "+18 Light radius"
+stat2: "+6 Resolve"
+lore_blurb: "Lit once at dawn; keeps burning until the wielder forgets why."

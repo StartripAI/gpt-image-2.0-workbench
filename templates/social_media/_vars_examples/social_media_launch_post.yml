@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo vars for templates/social_media/social_media_launch_post.yml.
+# Renders a 1:1 launch announcement for a fictional indie audio app.
+
+product: "Cove Notes"
+date: "May 14"
+cta: "Tap to listen"
+accent_color: "deep teal #0E7C7B with a warm cream type contrast"

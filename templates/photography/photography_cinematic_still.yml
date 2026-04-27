@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: photography_cinematic_still
+domain: photography
+description: Film-frame still — anamorphic cinematic look capturing a single narrative beat.
+
+artifact:
+  type: photo
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: cinematographers, screenwriters pitching tone, mood-board curators
+
+spec:
+  subject: >-
+    A single film-frame still extracted from a fictional feature, set
+    in {{setting}} during {{time_of_day}}. The frame captures a
+    self-contained narrative beat — {{action_beat}} — with one
+    foreground figure (or implied figure) carrying the dramatic
+    weight. The image must read as if grabbed from a reel, not staged
+    for a press kit.
+  action: >-
+    The composition pauses on the moment just before or after a
+    decision: a held look, a hand reaching for a door, a turn of the
+    head. Motion is implied through body posture and trailing micro-
+    blur on a hand or coat edge, not through theatrical flourish.
+  scene: >-
+    The environment is described by {{setting}} and the diegetic
+    light of {{time_of_day}}. Mood: {{mood}}. Atmosphere is loaded —
+    haze in the air, dust catching a window beam, neon bleeding onto
+    wet pavement, depending on the setting. Production design is
+    specific without being decorative.
+  composition: >-
+    16:9 anamorphic frame. Wide-aspect cinematic blocking with the
+    subject placed on a strong vertical third, headroom kept tight,
+    and the opposing third left empty for narrative breathing room.
+    Foreground silhouette darkening one edge, midground subject
+    rendered cleanly, background falling into soft atmospheric haze.
+  style: >-
+    Anamorphic cinematic finish on {{film_stock}} — gentle horizontal
+    lens distortion at the edges, oval out-of-focus highlights,
+    teal-and-amber tonal grading kept restrained, true cinematic
+    contrast (deep but not crushed shadows, controlled highlights).
+    Faint film grain, organic dust, no HDR, no AI-glossy plastic
+    surfaces. The image is meant to feel like a 35mm projection still.
+  text_blocks:
+    - { slot: scene_label, text: '"{{action_beat}}"' }
+  preserve: []
+  negative:
+    - real-celebrity likeness
+    - copyrighted film franchise references
+    - HDR oversaturation
+    - cartoonish color grading
+    - lens flare overload
+    - watermarks
+    - subtitle bars
+    - film-festival branding overlays
+    - stock-photo composition
+    - heavy beauty retouching
+    - rainbow palette
+    - clean digital plasticity
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: CC-BY-4.0
+process_name: "Lithium Cell Pack Assembly"
+step1: "Cell intake & barcode scan"
+step2: "Module stacking & welding"
+step3: "Pack inspection & test"
+step4: "Crate-out to staging bay"

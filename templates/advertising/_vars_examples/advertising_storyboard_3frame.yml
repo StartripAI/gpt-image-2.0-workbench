@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo vars for templates/advertising/advertising_storyboard_3frame.yml.
+# Renders a 30-second TVC storyboard for a fictional running-shoe brand.
+
+concept: "first run of the morning"
+panel1: "runner laces shoes on doorstep, sunrise spilling in"
+panel2: "wide shot of empty street, runner accelerates past camera"
+panel3: "close-up: runner smiles, fogged breath, shoe logo in focus"
+brand: "Northwind Athletics"

@@ -34,7 +34,23 @@ properties:
 
   domain:
     type: string
-    enum: [business, academic, uiux, anime, industrial, ecommerce]
+    enum:
+      - business
+      - academic
+      - uiux
+      - anime
+      - ecommerce
+      - industrial
+      - product
+      - advertising
+      - social_media
+      - gaming
+      - photography
+      - fashion
+      - food
+      - architecture
+      - interior
+      - travel
 
   description:
     type: string

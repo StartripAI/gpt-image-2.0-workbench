@@ -1,0 +1,74 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: fashion_lookbook_page
+domain: fashion
+description: Editorial lookbook page — single-look hero shot with brand caption and item credits.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: independent fashion houses, lookbook designers, e-commerce art directors
+
+spec:
+  subject: >-
+    A single-page editorial lookbook layout for {{brand}}, presenting
+    Look {{look_no}} from the {{season}} collection. The layout is
+    built around one full-figure hero photograph of a model wearing
+    {{item_descriptor}}. The figure occupies the dominant left two-
+    thirds of the page; a calm typographic margin runs down the right.
+  action: >-
+    The model holds a held, considered pose typical of a lookbook
+    plate — body angled three-quarters, weight on one leg, one hand
+    relaxed, the other resting near the garment. The intent is to
+    showcase silhouette, fabric drape, and styling detail rather than
+    to perform editorial drama. Eyes look just past the camera.
+  scene: >-
+    A controlled studio environment with a single seamless backdrop
+    in a warm chalk or putty tone, lit to render fabric texture
+    truthfully. No props, no decorative furniture, no audience.
+    Floor grades softly into the backdrop with no visible seam. The
+    air feels still; nothing distracts from the look.
+  composition: >-
+    Vertical 4:5 page. The hero photograph crops a few centimeters
+    above the head and at mid-calf, occupying the left two-thirds of
+    the canvas. The right third is a clean typographic column: the
+    brand wordmark sits high, the season tag below, the look number
+    is set in a large display numeral, and a single item-list paragraph
+    runs as the lowest text element. Generous outer page margins.
+  style: >-
+    Quiet contemporary lookbook aesthetic. Palette restrained to
+    paper, ink, and the natural colors of the garments themselves.
+    Type system: a refined modern serif for the brand wordmark and
+    an editorial sans-serif for season, look number, and item list.
+    Fabric must read as photographed cloth, not rendered cloth.
+    Soft, even key light with quiet falloff; no theatrical fashion
+    lighting, no neon, no gradient backdrops.
+  text_blocks:
+    - { slot: brand_name, text: '"{{brand}}"' }
+    - { slot: season,     text: '"{{season}}"' }
+    - { slot: look_no,    text: '"Look {{look_no}}"' }
+    - { slot: item_list,  text: '"{{item_descriptor}}"' }
+  preserve: []
+  negative:
+    - real-celebrity likeness
+    - real famous brand logos
+    - copyrighted house monograms
+    - HDR oversaturation
+    - rainbow palette
+    - busy printed backdrops
+    - lens flare
+    - watermarks
+    - photoshop-flattened fabric texture
+    - clip-art icons
+    - heavy beauty retouching
+    - cinematic teal-orange grading
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

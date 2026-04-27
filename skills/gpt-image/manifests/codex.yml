@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: CC-BY-4.0
+format: openai_codex_skill_v1
+spec_url: https://developers.openai.com/codex/skills
+skill_md: ../SKILL.md
+entrypoint:
+  kind: shell
+  command: python ../scripts/run_skill.py
+install_hint: >-
+  Place this directory under ~/.codex/skills/gpt-image/ or
+  <project>/.codex/skills/gpt-image/. Codex auto-discovers SKILL.md
+  via name + description; full body loads only on activation.
+discovery:
+  name_field: name
+  description_field: description
+  trigger: description-based progressive disclosure
+sidecar:
+  # Optional Codex-specific sidecar; we do not require it.
+  agents_openai_yaml: null
+license: CC-BY-4.0

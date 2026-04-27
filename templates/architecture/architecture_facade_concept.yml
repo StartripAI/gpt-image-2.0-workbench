@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: architecture_facade_concept
+domain: architecture
+description: Conceptual exterior facade rendering for an architecture studio's project poster.
+
+artifact:
+  type: poster
+  aspect: "3:2"
+  size: "1536x1024"
+  audience: architecture studio principals, planning-board reviewers, RFP submission readers
+
+spec:
+  subject: >-
+    A wide 3:2 conceptual exterior facade rendering of a building project
+    titled "{{project_name}}", sited in {{location}} and authored by
+    {{studio}}. The frame presents the primary public elevation as a
+    confident architectural portrait — the building reads as the single
+    hero subject, with site and sky kept restrained.
+  action: >-
+    The composition asserts the design intent at first glance: massing,
+    material rhythm, and fenestration pattern carry the read. There is no
+    pedestrian narrative, no interior glimpse, no construction process —
+    the building itself stands as a finished statement, photographed as if
+    on a calm overcast morning.
+  scene: >-
+    Generic civic surroundings appropriate to {{location}}: a low foreground
+    plinth of paving, a quiet adjacent street edge, distant blurred massing
+    suggesting urban context. Soft diffused daylight ({{era}} sensibility),
+    no bright sun, no theatrical sky, no flag of any nation, no recognisable
+    landmark.
+  composition: >-
+    Horizontal 3:2 frame. The facade occupies the central 70% of the image
+    width, top of the building landing near the upper third line. Ground
+    plane runs along the lower 18%. A small project title plate sits in
+    the lower-left margin and a studio credit line rests at the lower
+    right; both are part of the composition rather than overlay chrome.
+  style: >-
+    Architectural-rendering aesthetic — closer to a competition board
+    visualization than a magazine photograph. Material palette anchored on
+    {{material_palette}}, with restrained ambient shadows, crisp edge
+    lines, and subtle physical-camera lens character. No painterly
+    treatment, no neon, no film-grain stylisation.
+  text_blocks:
+    - { slot: project_name, text: '"{{project_name}}"' }
+    - { slot: location, text: '"{{location}}"' }
+    - { slot: studio_credit, text: '"{{studio}}"' }
+  preserve: []
+  negative:
+    - real famous buildings
+    - real-architect likeness
+    - identifiable city skylines
+    - recognisable national flags
+    - human models in fashion poses
+    - lens flare
+    - rainbow gradient skies
+    - HDR oversaturation
+    - watermarks
+    - signatures
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

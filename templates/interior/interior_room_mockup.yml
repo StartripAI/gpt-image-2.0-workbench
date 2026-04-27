@@ -1,0 +1,66 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: interior_room_mockup
+domain: interior
+description: Photoreal single-room interior mockup (bedroom / living / kitchen) with one labelled accent zone.
+
+artifact:
+  type: mockup
+  aspect: "3:2"
+  size: "1536x1024"
+  audience: interior designers, real-estate stagers, furniture brand mood-board reviewers
+
+spec:
+  subject: >-
+    A photoreal interior mockup of a single {{room_type}} styled in a
+    "{{style}}" idiom. The room is presented as a finished, unoccupied
+    interior — one consistent volume, one camera, one read. A single hero
+    object — {{hero_object}} — anchors the composition and is highlighted
+    by a small in-frame accent label.
+  action: >-
+    The image must read as a still interior photograph, not a lifestyle
+    moment. There are no people, no pets, no spilled drinks, no implied
+    activity. The eye lands on the hero object first, then surveys the
+    room's volume, materials, and palette in calm order.
+  scene: >-
+    Indoor {{room_type}} interior at {{light_source}}. Generic high-end
+    residential setting; no recognisable real building, no view of a real
+    city outside the window. Window light, where present, falls naturally
+    on key surfaces; fills are soft and ambient rather than theatrical.
+  composition: >-
+    Horizontal 3:2 frame, eye-level camera at roughly 1.55 m above the
+    floor. Two-thirds of the frame are interior volume; one-third is the
+    primary furnishing arrangement. The hero object sits near a rule-of-
+    thirds intersection. A small caption tag in the lower margin identifies
+    the room and the style keyword.
+  style: >-
+    Photoreal architectural-interiors aesthetic — a quiet magazine-spread
+    feel, not catalog gloss. Material palette anchored on {{palette}};
+    surfaces read as physical (matte plaster, woven textile, real wood).
+    Soft shadows, no HDR, no aggressive bloom, no fish-eye lens, no neon
+    rim lighting.
+  text_blocks:
+    - { slot: room_label, text: '"{{room_type}}"' }
+    - { slot: style_keyword, text: '"{{style}}"' }
+  preserve: []
+  negative:
+    - human models
+    - pets
+    - photo-real real homes by name
+    - identifiable real city views through windows
+    - HDR oversaturation
+    - lens flare
+    - fish-eye distortion
+    - rainbow gradients
+    - watermarks
+    - signatures
+    - clip-art furniture
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

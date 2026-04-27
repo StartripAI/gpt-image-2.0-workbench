@@ -25,7 +25,11 @@ section that failed.
 
 The workbench's seven-section DSL is one such structure. It is *opinionated*
 — there are other good ones — but it is the structure every template in
-this repo compiles down to.
+this repo compiles down to. In V0.3 the canonical domain set spans 16
+domains (business, academic, uiux, anime, ecommerce, industrial,
+product, advertising, social_media, gaming, photography, fashion, food,
+architecture, interior, travel) with a target of 52 executable
+templates; the same seven sections power every one of them.
 
 ## The seven sections
 

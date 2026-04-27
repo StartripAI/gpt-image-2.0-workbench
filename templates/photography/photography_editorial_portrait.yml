@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: photography_editorial_portrait
+domain: photography
+description: Magazine-style editorial portrait — single subject, deliberate light and lens choice.
+
+artifact:
+  type: photo
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: editorial photographers, magazine art directors, portfolio reviewers
+
+spec:
+  subject: >-
+    A single-subject editorial portrait of {{subject_descriptor}},
+    composed for a contemporary magazine feature in {{magazine_name}}.
+    The frame holds one person from chest up, occupying roughly the
+    center-right third, head turned just past the camera so the gaze
+    falls slightly off-axis. No second figure, no crowd, no audience.
+  action: >-
+    The subject holds a quiet, considered pose — a held breath rather
+    than a moment of motion. Hands rest naturally; shoulders are
+    relaxed; expression is composed rather than performative. The
+    portrait reads as intentionally directed, not candid, but never
+    stiff or theatrical.
+  scene: >-
+    A neutral studio-adjacent environment with controlled ambient
+    light. The mood is "{{mood}}". The backdrop is a single
+    desaturated tone — bone, slate, or warm graphite — with no props,
+    no logos, no decorative texture. Air feels still; nothing in the
+    frame competes with the face.
+  composition: >-
+    Vertical 4:5 frame following classic editorial portrait grammar.
+    Subject placed off-center along an internal third. Eye line sits
+    in the upper third. Generous negative space above and to one side
+    leaves room for a magazine masthead or pull-quote. Lens treatment:
+    {{lens}} — shallow depth of field, the iris razor-sharp while the
+    ear and shoulder fall into soft fall-off.
+  style: >-
+    Editorial photographic finish. Lighting: {{lighting}} — sculpted,
+    directional, with a single key source and a quiet fill. Skin tones
+    rendered honestly, with pores and fine texture preserved rather
+    than retouched into plastic. Color palette is muted and tonal,
+    leaning toward natural grading. No HDR, no beauty smoothing, no
+    AI-glossy rendering. The image must feel like a film-finished
+    editorial frame, not a stock photograph.
+  text_blocks:
+    - { slot: caption, text: '"{{magazine_name}}"' }
+  preserve: []
+  negative:
+    - real-celebrity likeness
+    - branded copyrighted logos
+    - HDR oversaturation
+    - plastic skin smoothing
+    - studio backdrop seams
+    - lens flare halos
+    - watermarks
+    - stock-photo staging
+    - heavy beauty retouching
+    - rainbow palette
+    - busy decorative backdrop
+    - text overlays beyond the masthead caption
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_sparse
+license: CC-BY-4.0

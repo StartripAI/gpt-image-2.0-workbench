@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: industrial_cutaway_view
+domain: industrial
+description: Isometric cutaway / exploded view of an industrial machine with four labeled internal components.
+
+artifact:
+  type: diagram
+  aspect: "3:2"
+  size: "1536x1024"
+  audience: maintenance technicians, service-manual authors, equipment-training reviewers
+
+spec:
+  subject: >-
+    A 3:2 isometric cutaway drawing of {{machine_name}}, with the outer
+    housing partially removed or split open to reveal four internal
+    components: {{component1}}, {{component2}}, {{component3}}, and
+    {{component4}}. Each component is annotated with a small numbered
+    callout circle connected to its label by a thin leader line.
+  action: >-
+    The diagram is static and pedagogical — the viewer is meant to
+    locate each numbered callout, follow its leader to the labeled
+    component, and build a mental map of the assembly. No motion lines,
+    no in-use animation, no operator hands; this is a service-manual
+    reference figure.
+  scene: >-
+    Document-grade flat field: a soft warm off-white background with no
+    drop shadow under the machine. Subtle ground line indicates
+    orientation but no environmental context. The cutaway interior
+    should appear naturally lit by even diffuse ambient lighting,
+    suitable for printed manuals.
+  composition: >-
+    Horizontal 3:2 frame. Machine occupies the central ~70% of the
+    frame, isometric viewpoint pitched ~30 degrees from horizontal. Two
+    callouts attach on the left side, two on the right, each leader
+    line ending in a small numbered circle above its short label. Title
+    band at top ~9% with the machine name. Each label kept under one
+    line; numbers (1-4) match callout circles for unambiguous mapping.
+  style: >-
+    Technical-illustration aesthetic, descended from mid-century
+    engineering manuals. Palette: muted steel greys for the housing,
+    two restrained accents (signal red and signal blue) reserved for
+    callouts and exposed inner components. Line weights graded —
+    heavier outer silhouette, thinner internal detail. Cross-hatching
+    permitted on cut surfaces; no photorealism, no glossy reflections,
+    no 3D rendered chrome.
+  text_blocks:
+    - { slot: machine_name, text: '"{{machine_name}}"' }
+    - { slot: label1,       text: '"1. {{component1}}"' }
+    - { slot: label2,       text: '"2. {{component2}}"' }
+    - { slot: label3,       text: '"3. {{component3}}"' }
+    - { slot: label4,       text: '"4. {{component4}}"' }
+  preserve: []
+  negative:
+    - human operators
+    - factory environment photography
+    - 3D rendered chrome reflections
+    - lens flare
+    - decorative gradients
+    - rainbow palettes
+    - cartoon mascots
+    - watermarks
+    - motion blur
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

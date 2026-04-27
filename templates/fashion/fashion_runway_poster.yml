@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: fashion_runway_poster
+domain: fashion
+description: Vertical runway / show poster — brutalist editorial fashion-week announcement.
+
+artifact:
+  type: poster
+  aspect: "9:16"
+  size: "1088x1920"
+  audience: independent fashion houses announcing runway shows, fashion-week PR teams
+
+spec:
+  subject: >-
+    A vertical runway-show poster announcing the {{brand}} {{season}}
+    presentation in {{city}} on {{date}}. The poster is conceived as
+    a brutalist editorial print: a single elongated figure silhouette
+    runs the full height of the canvas, the typography sits against
+    that figure as a hard counterweight, no decorative ornament.
+  action: >-
+    The poster is static. The depicted figure stands frontally,
+    cropped at the brow and mid-shin, draped in a single architectural
+    look from the collection. No motion, no walking pose, no
+    audience. The viewer's eye travels from the oversized brand
+    wordmark at the top, down the figure's silhouette, to the
+    location-and-date plate at the bottom.
+  scene: >-
+    A bare environment: a single tonal wall — concrete grey, ink
+    black, or chalk white — with no furniture, no scenography, no
+    secondary figures. Light comes from a single hard source camera-
+    top, casting a clean compressed shadow at the figure's feet.
+    The atmosphere is severe and architectural rather than romantic.
+  composition: >-
+    Vertical 9:16 frame. Title zone (~18%) at the top holds the brand
+    wordmark set very large with tight tracking. Figure zone (~64%)
+    in the middle holds the silhouette running full-bleed left to
+    right, occupying the central column. Footer zone (~12%) at the
+    bottom holds the season label and the location-date plate,
+    typeset small and in a contrasting weight. Generous outer
+    margins.
+  style: >-
+    Brutalist editorial fashion-poster aesthetic — Helmut Lang /
+    Margiela invitation card sensibility. Typographic treatment
+    dominates: a heavy condensed sans for the brand wordmark, a
+    plain sans-serif at small size for footer text. Palette is
+    severely restricted: a single ink color against a single paper
+    color, with at most one muted accent. No gradients, no neon,
+    no photographic flourish, no decorative ornament.
+  text_blocks:
+    - { slot: brand_name,    text: '"{{brand}}"' }
+    - { slot: season,        text: '"{{season}}"' }
+    - { slot: location_date, text: '"{{city}}, {{date}}"' }
+  preserve: []
+  negative:
+    - real famous brand logos
+    - copyrighted house monograms
+    - real-celebrity likeness
+    - HDR oversaturation
+    - rainbow palette
+    - lens flare
+    - watermarks
+    - decorative floral ornament
+    - busy stock-photo collage
+    - 3D rendered plastic
+    - heavy beauty retouching
+    - cinematic teal-orange grading
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

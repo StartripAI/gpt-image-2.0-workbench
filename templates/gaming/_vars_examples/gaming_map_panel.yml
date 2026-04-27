@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo vars for templates/gaming/gaming_map_panel.yml.
+# Renders a fictional fantasy continent quest map.
+
+world_name: "Realm of Veyrhold"
+region1: "Ashenmoor Highlands"
+region2: "Glasswind Coast"
+region3: "Sunken Reach"

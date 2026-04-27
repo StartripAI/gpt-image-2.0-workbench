@@ -16,7 +16,7 @@ import typer
 from rich.console import Console
 
 from ..catalog import index as catalog_index
-from ..compiler.loader import load_template, load_vars
+from ..compiler.loader import load_template, load_vars, resolve_demo_vars
 from ..compiler.renderer import render_both
 
 gallery_app = typer.Typer(
@@ -25,11 +25,13 @@ gallery_app = typer.Typer(
 )
 
 
-# Canonical template -> demo-vars map. Mirrors the source-of-truth in
-# ``tests/unit/test_all_templates_load.py``; kept inline here so the
-# command never depends on tests at runtime. New templates must be added
-# in both places.
-_DEMO_VARS_MAP: dict[str, str] = {
+# Legacy V1 template -> demo-vars overrides. New templates should follow
+# the ``<template_stem>.yml`` convention inside ``_vars_examples/``; entries
+# here cover the V1 templates whose demo filenames predate that convention.
+# Mirrors ``DEMO_VARS_MAP_LEGACY`` in
+# ``tests/unit/test_all_templates_load.py`` so the command never depends on
+# tests at runtime.
+_DEMO_VARS_MAP_LEGACY: dict[str, str] = {
     "business/swot_card": "business/_vars_examples/swot_acme.yml",
     "business/pitch_slide": "business/_vars_examples/pitch_demo.yml",
     "business/linkedin_carousel": "business/_vars_examples/linkedin_demo.yml",
@@ -67,13 +69,17 @@ To use these prompts:
 
 
 def _vars_path_for(template_path: Path, templates_root: Path) -> Path | None:
-    """Look up the demo-vars file for ``template_path`` from ``_DEMO_VARS_MAP``."""
-    rel = f"{template_path.parent.name}/{template_path.stem}"
-    mapped = _DEMO_VARS_MAP.get(rel)
-    if mapped is None:
-        return None
-    candidate = templates_root / mapped
-    return candidate if candidate.exists() else None
+    """Resolve the demo-vars file for ``template_path``.
+
+    Convention-over-config: tries ``_DEMO_VARS_MAP_LEGACY`` first (so V1
+    templates with non-conforming filenames keep working), then the
+    ``<stem>.yml`` / ``<stem>_demo.yml`` / single-file conventions inside
+    the sibling ``_vars_examples/`` directory. ``templates_root`` is
+    accepted for symmetry with callers but the resolver uses
+    ``template_path``'s grandparent internally.
+    """
+    del templates_root  # resolver derives templates_root from template_path
+    return resolve_demo_vars(template_path, override=_DEMO_VARS_MAP_LEGACY)
 
 
 def _render_template_section(
@@ -85,8 +91,9 @@ def _render_template_section(
     vars_path = _vars_path_for(template_path, templates_root)
     if vars_path is None:
         raise FileNotFoundError(
-            f"no demo-vars mapping for {template_path}; "
-            f"add an entry to gallery._DEMO_VARS_MAP"
+            f"no demo-vars file resolved for {template_path}; "
+            f"add a sibling _vars_examples/{template_path.stem}.yml or an entry "
+            f"to gallery._DEMO_VARS_MAP_LEGACY"
         )
     vars_ = load_vars(vars_path)
     rendered = render_both(spec, vars_)

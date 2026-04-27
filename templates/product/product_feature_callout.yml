@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: product_feature_callout
+domain: product
+description: Hero shot of one product with three feature callouts arranged around it on a horizontal canvas.
+
+artifact:
+  type: infographic
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: product-launch microsite hero, design-press feature spreads, internal launch decks
+
+spec:
+  subject: >-
+    A horizontal 16:9 product feature board centered on a single hero
+    unit of {{product_name}}, with three short feature callouts
+    arranged around it. Each callout pairs a small flat icon, a thin
+    leader line touching the relevant area of the product, and a
+    one-line label drawn from {{feature1}}, {{feature2}}, and
+    {{feature3}}.
+  action: >-
+    The eye locks onto the product first, then traces each leader line
+    outward to its callout in clockwise order. The composition reads
+    as a still hero, not as a kinetic launch animation — there are no
+    motion lines, no progressive reveal, just a quiet annotated
+    portrait.
+  scene: >-
+    Editorial studio backdrop in a quiet {{hero_color}}-tinted neutral,
+    with a soft floor-shadow grounding the product. No environment, no
+    in-use scenario, no model. Lighting is a single soft key from
+    upper-left, with very subtle ambient fill — no specular highlights,
+    no glamour rim.
+  composition: >-
+    Wide 16:9 frame. Product occupies the central ~46% width. Three
+    callouts sit at roughly 10 o'clock, 2 o'clock, and 5 o'clock
+    positions relative to the product, each with: a small flat icon,
+    a hairline leader line ending at the relevant product feature, and
+    a short label set in two lines max. Outer 5% safe margin. Product
+    name sits in a small caption at the top center (~7% top margin).
+  style: >-
+    Premium product-launch microsite aesthetic. Palette: {{hero_color}}
+    backdrop, charcoal type, one quiet metallic neutral on the icons,
+    no third color. Type system: geometric sans-serif at body weight,
+    title weight reserved for the product name. Materials feel
+    matte-precise — no glossy chrome, no glitter, no neon. Hairline
+    leader lines (~1.5px) end in a small dot at the product surface.
+  text_blocks:
+    - { slot: product_name, text: '"{{product_name}}"' }
+    - { slot: feature1,     text: '"1. {{feature1}}"' }
+    - { slot: feature2,     text: '"2. {{feature2}}"' }
+    - { slot: feature3,     text: '"3. {{feature3}}"' }
+  preserve: []
+  negative:
+    - human models
+    - lifestyle photography
+    - retail shelf context
+    - lens flare
+    - rainbow gradients
+    - 3D chrome reflections
+    - watermarks
+    - cartoon mascots
+    - glossy plastic specular highlights
+    - busy background patterns
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

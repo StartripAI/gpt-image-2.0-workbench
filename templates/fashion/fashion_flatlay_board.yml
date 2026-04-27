@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: fashion_flatlay_board
+domain: fashion
+description: Styled flatlay of garments and accessories arranged on a surface for editorial use.
+
+artifact:
+  type: infographic
+  aspect: "1:1"
+  size: "1024x1024"
+  audience: fashion stylists, e-commerce flatlay teams, editorial mood-board curators
+
+spec:
+  subject: >-
+    A square flatlay composition photographed straight down on
+    {{surface_type}}, themed around {{theme}}. Three styled
+    garment-and-accessory groupings are arranged across the surface,
+    each anchored by one of {{item1}}, {{item2}}, and {{item3}}.
+    The flatlay reads as deliberately styled rather than randomly
+    dropped, with breathing room between groupings.
+  action: >-
+    All items are static — flatlay is by definition a still life.
+    The arrangement guides the eye in a soft Z across the frame:
+    upper-left grouping leads the reader, the central grouping
+    anchors, the lower-right grouping releases. Folds, draping, and
+    object overlap are intentional, never tangled.
+  scene: >-
+    The styling surface is described by {{surface_type}}, lit by a
+    single soft overhead daylight source from camera-top so shadows
+    fall gently downward. Ambient light is even; no theatrical
+    spotlight, no colored gels. Around the edges, the surface
+    extends to the frame border with no visible studio context.
+  composition: >-
+    Square 1:1 top-down frame. The surface fills 100% of the canvas.
+    The three groupings sit on the corners of an internal triangle,
+    keeping the geometric center loose and visually quiet. A small
+    theme label sits flush against the top edge, and three discreet
+    item callouts sit near each grouping's outermost garment. Even
+    margins of approximately 4% on all sides.
+  style: >-
+    Contemporary editorial flatlay aesthetic — clean, considered,
+    tactile. Palette tied to the natural colors of the garments
+    against a calm surface tone. Type system uses a small-cap
+    editorial sans for theme and item labels, set in restrained
+    weight. Fabric texture, leather grain, and metal highlights
+    must read as photographed objects, not rendered ones. No HDR,
+    no neon, no gradient backdrops.
+  text_blocks:
+    - { slot: theme_label, text: '"{{theme}}"' }
+    - { slot: item1,       text: '"{{item1}}"' }
+    - { slot: item2,       text: '"{{item2}}"' }
+    - { slot: item3,       text: '"{{item3}}"' }
+  preserve: []
+  negative:
+    - real famous brand logos
+    - copyrighted designer monograms
+    - real-celebrity likeness
+    - HDR oversaturation
+    - rainbow palette
+    - lens flare
+    - watermarks
+    - cluttered arrangement
+    - 3D rendered plastic surfaces
+    - clip-art icons
+    - cinematic teal-orange grading
+    - busy patterned backdrops competing with garments
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

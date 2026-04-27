@@ -1,0 +1,67 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: ecommerce_product_hero
+domain: ecommerce
+description: Single-SKU hero card for a product detail page — large product silhouette, price tag, primary CTA.
+
+artifact:
+  type: poster
+  aspect: "4:5"
+  size: "1024x1280"
+  audience: D2C shoppers landing on a product detail page; performance-marketing creative
+
+spec:
+  subject: >-
+    A vertical 4:5 product hero card for {{product_name}}, presented as
+    a single confident e-commerce listing image. The product itself is
+    rendered large and centered, isolated cleanly against a flat color
+    backdrop tinted with {{brand_color}}, with a small price tag chip
+    and a high-contrast primary CTA button anchored at the bottom.
+  action: >-
+    The image must read instantly as "buy now": the eye lands on the
+    product silhouette, drops to the price chip, then to the CTA. No
+    motion suggestion, no in-use lifestyle scene — this is a pure listing
+    card optimized for conversion at a glance.
+  scene: >-
+    Studio-flat e-commerce stage: matte {{brand_color}} backdrop with a
+    very faint radial vignette behind the product to lift it from the
+    field. No shelves, no people, no ambient props. A subtle floor-shadow
+    grounds the product without implying a real environment.
+  composition: >-
+    Vertical 4:5 frame. Top ~10% margin. Product silhouette occupies the
+    central ~60% band, generously padded. Below the product, a small
+    pill-shaped price chip sits ~6% above a wide rounded-rectangle CTA
+    button (~80% frame width, ~9% frame height). Product name typeset
+    above the product in compact title case. Safe area generous on all
+    sides for marketplace edge-cropping.
+  style: >-
+    Modern D2C product-card aesthetic. Palette anchored on {{brand_color}}
+    with a single neutral (charcoal or warm white) for type and one
+    contrast accent on the CTA. Type system: a clean geometric sans-serif
+    (Inter / Söhne family). Surfaces feel matte and quiet — no glossy
+    chrome, no marketplace badges crowding the frame, no lens flare.
+  text_blocks:
+    - { slot: product_name, text: '"{{product_name}}"' }
+    - { slot: key_feature,  text: '"{{key_feature}}"' }
+    - { slot: price,        text: '"{{price_str}}"' }
+    - { slot: cta,          text: '"{{cta}}"' }
+  preserve: []
+  negative:
+    - lifestyle photography
+    - human models
+    - busy seasonal backgrounds
+    - watermarks
+    - retailer logos
+    - lens flare
+    - 3D extruded chrome buttons
+    - rainbow gradients
+    - cluttered marketplace badges
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: layout
+license: CC-BY-4.0

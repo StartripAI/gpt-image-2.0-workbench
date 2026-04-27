@@ -1,0 +1,75 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: gaming_hud_mockup
+domain: gaming
+description: Fictional video-game HUD mockup with health and mana bars, minimap, mission objective overlay.
+
+artifact:
+  type: mockup
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: indie game UI designers and concept artists exploring HUD layouts for a fictional fantasy or sci-fi RPG
+
+spec:
+  subject: >-
+    A 16:9 in-game heads-up-display mockup for the fictional title
+    {{game_title}}. The image must read as a single in-game frame
+    captured mid-play — a stylized environment view with the HUD
+    layered on top: a corner health and mana cluster, a circular
+    minimap, a slim mission-objective banner, and a top-bar with the
+    game-title overlay.
+  action: >-
+    The HUD must feel functional, not decorative. The health and mana
+    indicators show the value {{hp_pct}} on the health bar, the
+    minimap shows a stylized region pin for {{location}}, and the
+    objective banner names the current mission. The background
+    environment looks paused mid-play — no characters mid-action, no
+    fight effects.
+  scene: >-
+    A muted painterly fantasy or sci-fi environment evoking the
+    fictional location {{location}}. Foreground composition is
+    deliberately quiet so the HUD can sit on top without competing.
+    Lighting is even and atmospheric. No real-world buildings, no
+    real-world IP references, no recognizable game-franchise assets.
+  composition: >-
+    16:9 frame. The HUD lives in three reserved zones:
+    bottom-left holds a vertical stack of two value bars (red health
+    on top, blue mana below) plus a small portrait silhouette;
+    upper-right holds a circular minimap with cardinal markers;
+    upper-center holds a slim banner with the mission objective; the
+    very top edge holds a thin title overlay strip. The remaining
+    ~70% of canvas is environment.
+  style: >-
+    Stylized painterly game-art aesthetic with crisp UI on top.
+    Environment uses muted RPG palette (slate, moss, dust) with a
+    single signature accent. UI panels use a glass-and-metal frame
+    style — semi-translucent dark fills, hairline metallic borders,
+    legible game-display sans-serif. No platform watermark, no real
+    HUD elements from existing games.
+  text_blocks:
+    - { slot: title_overlay,    text: '"{{game_title}}"' }
+    - { slot: location_label,   text: '"{{location}}"' }
+    - { slot: mission_objective,text: '"Objective: {{objective}}"' }
+  preserve:
+    - HUD spatial zones (corner clusters, top banner)
+    - bar fill levels matching hp_pct
+  negative:
+    - watermarks
+    - signatures
+    - real famous game franchise logos or assets
+    - real platform HUD chrome (Xbox, PlayStation, Steam UI)
+    - real-celebrity likeness
+    - clip-art icons
+    - rainbow neon palette
+    - lens flare overload
+    - photographic real-world locations
+    - generic stock UI kits
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

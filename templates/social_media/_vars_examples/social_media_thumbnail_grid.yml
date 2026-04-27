@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# Demo vars for templates/social_media/social_media_thumbnail_grid.yml.
+# Renders a 3-up thumbnail review board for a fictional cooking channel.
+
+title_a: "I tried 5 ramen shops"
+title_b: "30-min weekday dinner"
+title_c: "The truth about salt"
+channel_name: "Saltlight Kitchen"

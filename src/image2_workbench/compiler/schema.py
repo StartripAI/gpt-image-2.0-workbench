@@ -38,8 +38,42 @@ from .validators import (
 
 ID_PATTERN = re.compile(r"^[a-z][a-z0-9_]+$")
 
-ALLOWED_DOMAINS = ("business", "academic", "uiux", "anime", "industrial", "ecommerce")
-Domain = Literal["business", "academic", "uiux", "anime", "industrial", "ecommerce"]
+ALLOWED_DOMAINS = (
+    "business",
+    "academic",
+    "uiux",
+    "anime",
+    "ecommerce",
+    "industrial",
+    "product",
+    "advertising",
+    "social_media",
+    "gaming",
+    "photography",
+    "fashion",
+    "food",
+    "architecture",
+    "interior",
+    "travel",
+)
+Domain = Literal[
+    "business",
+    "academic",
+    "uiux",
+    "anime",
+    "ecommerce",
+    "industrial",
+    "product",
+    "advertising",
+    "social_media",
+    "gaming",
+    "photography",
+    "fashion",
+    "food",
+    "architecture",
+    "interior",
+    "travel",
+]
 ArtifactType = Literal[
     "infographic",
     "poster",

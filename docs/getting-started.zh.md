@@ -83,7 +83,8 @@ i2w template list --domain business
 
 完全离线、瞬间出结果。它会扫描 `templates/business/*.yml`，按 V1 schema
 做校验，然后打印每个模板的 id 和一句话简介。去掉 `--domain` 即可看到
-全部四个领域。
+所有已发布的领域（V1 共 4 个：business、academic、uiux、anime；V0.3 将
+规范的领域集合扩展为 16 个）。
 
 ### 3. 把模板渲染成一份可粘贴的提示词
 
@@ -182,5 +183,6 @@ Settings → Organization 里做一次性验证。通常几分钟内通过；通
   的零安装路径。
 - [`licensing.md`](./licensing.md) — 分层的 Apache-2.0 + CC BY 4.0 协
   议在实际使用中怎么落地。
-- [`gallery/index.md`](./gallery/index.md) — 四个 V1 领域的双语提示词
-  图册。
+- [`gallery/index.md`](./gallery/index.md) — V1 四个领域（business、
+  academic、uiux、anime）的双语提示词图册；V0.3 将规范的领域集合扩展
+  为 16 个。

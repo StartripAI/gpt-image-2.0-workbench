@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: ecommerce_category_banner
+domain: ecommerce
+description: Wide 16:9 storefront category banner with a row of product silhouettes, headline, sub-text, and CTA.
+
+artifact:
+  type: poster
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: storefront landing-page visitors browsing seasonal category collections
+
+spec:
+  subject: >-
+    A wide 16:9 storefront category banner for the {{category_title}}
+    category, themed around {{season}}. The composition shows a relaxed
+    horizontal row of three to five product silhouettes from the
+    category, anchored on the left by a stacked headline / sub-text /
+    CTA group, against a backdrop pulling its tone from the
+    {{palette_keyword}} palette.
+  action: >-
+    The eye enters at the headline, scans rightward across the row of
+    products, and resolves on the CTA button. The banner must read as a
+    single still hero — no in-banner motion, no carousel arrows, no
+    "scroll right" affordance. It teases the category, it does not
+    transact.
+  scene: >-
+    Studio storefront stage: a soft graduated backdrop in the
+    {{palette_keyword}} family, with a quiet floor shadow under each
+    product silhouette. No human models, no real architecture, no
+    seasonal clutter; the {{season}} mood is conveyed through palette
+    and lighting alone.
+  composition: >-
+    Horizontal 16:9 frame. Left ~36% holds a vertical text stack: large
+    category headline at top, a single line of sub-text beneath, and a
+    rounded-rectangle CTA button below that. Right ~60% carries the
+    product silhouette row, products evenly spaced with consistent
+    floor-shadows and matched scale. A 4% gutter separates the text
+    column from the product row. Generous safe area top and bottom.
+  style: >-
+    Editorial storefront aesthetic — a step calmer than promotional
+    sale art. Palette anchored on {{palette_keyword}} with one warm
+    neutral and one charcoal for type. Type system: geometric sans-
+    serif headline (weight 700), lighter weight on the sub-text. Matte
+    materials, no gloss, no glitter, no neon. CTA carries a single
+    accent color drawn from the palette family.
+  text_blocks:
+    - { slot: category_title, text: '"{{category_title}}"' }
+    - { slot: sub_text,       text: '"{{sub_text}}"' }
+    - { slot: cta,            text: '"{{cta}}"' }
+  preserve: []
+  negative:
+    - human models
+    - lifestyle photography
+    - flash-sale price stickers
+    - watermarks
+    - lens flare
+    - rainbow gradients
+    - clip-art snowflakes or cartoon seasonal stickers
+    - 3D chrome lettering
+    - busy promotional badges
+
+quality_policy:
+  default: high
+  exploration: low
+
+api_mode: images_generate
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: text_fidelity_dense
+license: CC-BY-4.0

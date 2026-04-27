@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: CC-BY-4.0
+id: interior_before_after
+domain: interior
+description: Split-screen interior before/after edit; left panel preserves the original, right panel shows the renovation.
+
+artifact:
+  type: mockup
+  aspect: "16:9"
+  size: "1920x1088"
+  audience: renovation clients reviewing scope, real-estate stagers, design-studio case-study readers
+
+spec:
+  subject: >-
+    A 16:9 split-screen before/after presentation of a {{room_type}}
+    renovation. The left half shows the room in its original "{{before_descriptor}}"
+    state, the right half shows the same room transformed into its
+    "{{after_descriptor}}" finished state. A thin vertical divider runs
+    down the centre of the frame.
+  action: >-
+    This is an edit-mode pairing: change only the interior finishes,
+    furnishings, and lighting on the right-hand panel; preserve the
+    architectural shell — walls, windows, ceiling height, floor plan
+    geometry — exactly as it appears on the left, leaving the rest of
+    the room's bones unchanged. The viewer should read the key change at
+    a glance.
+  scene: >-
+    Indoor {{room_type}}, identical camera position on both halves so
+    the architectural shell aligns precisely across the divider. Light
+    quality on each half matches the panel's era: subdued daylight on
+    the left, warmer styled lighting on the right. No people, no pets,
+    no exterior view of any real city.
+  composition: >-
+    16:9 frame split 50/50 by a 4-pixel hairline divider running floor to
+    ceiling. Each half is captured at the same focal length, eye-level,
+    centred on the same wall. Small "BEFORE" and "AFTER" labels sit at
+    the top of their respective panels in small caps. A short single-
+    line caption naming the key change runs across the bottom margin.
+  style: >-
+    Editorial real-estate before/after aesthetic. Both halves are photoreal
+    interiors; the after-half carries slightly warmer light and the
+    refreshed material story. No HDR, no lens flare, no fish-eye, no
+    artificial colour grading beyond what natural light implies.
+  text_blocks:
+    - { slot: before_label, text: '"BEFORE — {{before_descriptor}}"' }
+    - { slot: after_label, text: '"AFTER — {{after_descriptor}}"' }
+    - { slot: key_change, text: '"Key change: {{key_change}}"' }
+  preserve:
+    - architectural shell of the room (walls, windows, ceiling)
+    - floor plan geometry and ceiling height
+    - camera framing and focal length on the left panel
+  negative:
+    - human models
+    - pets
+    - identifiable real city views
+    - photo-real real homes by name
+    - lens flare
+    - HDR oversaturation
+    - rainbow gradients
+    - watermarks
+    - signatures
+    - cartoon styling
+
+quality_policy:
+  default: high
+  exploration: medium
+
+api_mode: images_edit
+moderation: auto
+language_targets: [zh-CN, en]
+grader_profile: edit_locality
+license: CC-BY-4.0

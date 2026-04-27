@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 """Integration check: every V1 template must load, validate, and render bilingually.
 
-Demo var filenames don't follow a strict `<template_stem>_demo.yml` pattern across
-domains, so we maintain an explicit template -> demo-vars map below. New templates
-should add an entry to keep this regression test honest.
+V1 demo-var filenames are inconsistent (e.g. ``swot_acme.yml`` instead of
+``swot_card.yml``), so we keep ``DEMO_VARS_MAP_LEGACY`` as an explicit override
+for the convention-over-config resolver. New V0.3+ templates should follow the
+``<template_stem>.yml`` convention inside ``_vars_examples/`` and need NO entry
+in this map.
 """
 from pathlib import Path
 
@@ -11,7 +13,11 @@ import pytest
 import yaml
 from jinja2 import Environment, StrictUndefined
 
-from image2_workbench.compiler.loader import load_template, load_vars
+from image2_workbench.compiler.loader import (
+    load_template,
+    load_vars,
+    resolve_demo_vars,
+)
 from image2_workbench.compiler.renderer import render_both
 from image2_workbench.compiler.validators import TEXT_BLOCK_CHAR_LIMIT
 
@@ -21,7 +27,11 @@ TEMPLATES_DIR = REPO_ROOT / "templates"
 V1_DOMAINS = ["business", "academic", "uiux", "anime"]
 EXPECTED_PER_DOMAIN = 4
 
-DEMO_VARS_MAP: dict[str, str] = {
+# Legacy override map for V1 templates whose demo-vars filenames don't follow
+# the ``<template_stem>.yml`` convention. Passed to ``resolve_demo_vars`` as
+# the ``override`` arg. New templates should NOT add to this dict — they
+# should adopt the convention instead.
+DEMO_VARS_MAP_LEGACY: dict[str, str] = {
     "business/swot_card": "business/_vars_examples/swot_acme.yml",
     "business/pitch_slide": "business/_vars_examples/pitch_demo.yml",
     "business/linkedin_carousel": "business/_vars_examples/linkedin_demo.yml",
@@ -40,12 +50,20 @@ DEMO_VARS_MAP: dict[str, str] = {
     "anime/ccd_candid": "anime/_vars_examples/ccd_demo.yml",
 }
 
+# Backwards-compat alias for any external code that still imports the old
+# name. The resolver, not this dict, is the canonical lookup.
+DEMO_VARS_MAP = DEMO_VARS_MAP_LEGACY
+
 
 def _list_templates() -> list[Path]:
     paths: list[Path] = []
     for domain in V1_DOMAINS:
         paths.extend(sorted((TEMPLATES_DIR / domain).glob("*.yml")))
     return paths
+
+
+def _resolve_for(template_path: Path) -> Path | None:
+    return resolve_demo_vars(template_path, override=DEMO_VARS_MAP_LEGACY)
 
 
 def test_v1_template_count():
@@ -55,11 +73,25 @@ def test_v1_template_count():
     )
 
 
-def test_demo_vars_map_complete():
+def test_resolver_finds_demo_vars_for_every_v1_template():
+    """Every V1 template must resolve via legacy-override-then-convention."""
     templates = _list_templates()
-    rels = {f"{p.parent.name}/{p.stem}" for p in templates}
-    missing = rels - DEMO_VARS_MAP.keys()
-    assert not missing, f"DEMO_VARS_MAP missing entries for: {missing}"
+    missing: list[str] = []
+    for tp in templates:
+        resolved = _resolve_for(tp)
+        if resolved is None or not resolved.is_file():
+            missing.append(f"{tp.parent.name}/{tp.stem}")
+    assert not missing, f"resolver could not locate demo vars for: {missing}"
+
+
+def test_demo_vars_map_legacy_keys_match_real_templates():
+    """Each override key still corresponds to an existing V1 template."""
+    templates = _list_templates()
+    template_keys = {f"{p.parent.name}/{p.stem}" for p in templates}
+    stale = DEMO_VARS_MAP_LEGACY.keys() - template_keys
+    assert not stale, (
+        f"DEMO_VARS_MAP_LEGACY has stale entries (no template found): {stale}"
+    )
 
 
 @pytest.mark.parametrize(
@@ -72,10 +104,10 @@ def test_template_loads_and_renders(template_path: Path):
     assert spec.id
     assert spec.domain in V1_DOMAINS
 
-    rel = f"{template_path.parent.name}/{template_path.stem}"
-    vars_rel = DEMO_VARS_MAP[rel]
-    vars_path = TEMPLATES_DIR / vars_rel
-    assert vars_path.exists(), f"missing demo vars file {vars_path} for {rel}"
+    vars_path = _resolve_for(template_path)
+    assert vars_path is not None and vars_path.exists(), (
+        f"missing demo vars file for {template_path.parent.name}/{template_path.stem}"
+    )
 
     vars_ = load_vars(vars_path)
     rendered = render_both(spec, vars_)
@@ -91,8 +123,8 @@ def test_template_loads_and_renders(template_path: Path):
 )
 def test_demo_text_blocks_render_under_80_chars(template_path: Path):
     spec = load_template(template_path)
-    rel = f"{template_path.parent.name}/{template_path.stem}"
-    vars_path = TEMPLATES_DIR / DEMO_VARS_MAP[rel]
+    vars_path = _resolve_for(template_path)
+    assert vars_path is not None
     vars_ = load_vars(vars_path)
     env = Environment(undefined=StrictUndefined, autoescape=False)
 
@@ -113,3 +145,22 @@ def test_no_template_uses_transparent_or_low_moderation():
         artifact = raw.get("artifact", {})
         bg = artifact.get("background", "auto")
         assert bg != "transparent", f"{path}: transparent background not supported"
+
+
+def test_resolver_finds_convention_filename_without_override(tmp_path: Path):
+    """A future V0.3 template that follows ``<stem>.yml`` needs no override."""
+    domain_dir = tmp_path / "newdomain"
+    vars_dir = domain_dir / "_vars_examples"
+    vars_dir.mkdir(parents=True)
+    template_path = domain_dir / "future_template.yml"
+    template_path.write_text("id: newdomain.future_template\n", encoding="utf-8")
+    convention_vars = vars_dir / "future_template.yml"
+    convention_vars.write_text("title: hello\n", encoding="utf-8")
+
+    # No override needed — pure convention.
+    resolved = resolve_demo_vars(template_path)
+    assert resolved == convention_vars
+
+    # And it still works when an (empty/unrelated) override is supplied.
+    resolved_with_override = resolve_demo_vars(template_path, override={})
+    assert resolved_with_override == convention_vars
