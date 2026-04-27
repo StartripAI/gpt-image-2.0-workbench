@@ -1,68 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-labelledby="wf-title wf-desc" preserveAspectRatio="xMidYMid meet">
-  <title id="wf-title">image2-workbench workflow</title>
-  <desc id="wf-desc">Three-stage flow: spec yaml is rendered into a markdown prompt, sent to the Images API, and recorded in a ledger.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 480" role="img" aria-labelledby="workflow-title workflow-desc" preserveAspectRatio="xMidYMid meet">
+  <title id="workflow-title">image2-workbench workflow: spec to render to ledger</title>
+  <desc id="workflow-desc">Five-stage horizontal pipeline diagram. From left: a yaml spec card, the i2w template render command, a compiled prompt markdown card, the i2w render generate command with preflight and cost tags, and the rightmost output card showing a generated image and a ledger receipt.</desc>
   <defs>
     <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
       <stop offset="0" stop-color="#F8FAFC"/>
       <stop offset="1" stop-color="#E2E8F0"/>
     </linearGradient>
-    <marker id="arr" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto">
-      <path d="M0,0 L11,7 L0,14 z" fill="#1f6feb"/>
+    <linearGradient id="flow" x1="0" x2="1">
+      <stop offset="0" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#1f6feb"/>
+    </linearGradient>
+    <linearGradient id="img" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#14b8a6"/>
+      <stop offset="1" stop-color="#1f6feb"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#1f6feb" opacity="0.10"/>
+    </pattern>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#1f6feb"/>
     </marker>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="2" result="o"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
-  <rect width="1200" height="300" rx="20" fill="url(#bg)"/>
-  <text x="40" y="40" font-family="sans-serif" font-size="20" font-weight="800" fill="#0E2A4D">spec &#8594; render &#8594; output</text>
-  <text x="40" y="64" font-family="sans-serif" font-size="13" fill="#475569">A single yaml spec compiles to a bilingual prompt and drives the Images API.</text>
-  <g transform="translate(40 100)">
-    <rect width="260" height="160" rx="14" fill="#0E2A4D"/>
-    <text x="20" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#14b8a6">STAGE 1</text>
-    <text x="20" y="60" font-family="sans-serif" font-size="22" font-weight="800" fill="#F8FAFC">spec.yml</text>
-    <line x1="20" y1="74" x2="240" y2="74" stroke="#1f6feb" stroke-width="1" opacity="0.5"/>
-    <text x="20" y="94" font-family="sans-serif" font-size="12" fill="#94A3B8">subject:</text>
-    <text x="20" y="112" font-family="sans-serif" font-size="12" fill="#94A3B8">composition:</text>
-    <text x="20" y="130" font-family="sans-serif" font-size="12" fill="#94A3B8">text_blocks:</text>
-    <text x="20" y="148" font-family="sans-serif" font-size="12" fill="#94A3B8">quality_policy:</text>
+  <rect width="1400" height="480" fill="url(#bg)"/>
+  <rect width="1400" height="480" fill="url(#dots)"/>
+  <line x1="40" y1="384" x2="1360" y2="384" stroke="#CBD5E1" stroke-width="1" opacity="0.55"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, sans-serif">
+    <text x="40" y="44" font-size="14" letter-spacing="3" fill="#14b8a6" font-weight="700">PIPELINE</text>
+    <text x="40" y="74" font-size="22" font-weight="700" fill="#0E2A4D">spec &#8594; render &#8594; output</text>
   </g>
-  <g transform="translate(320 165)">
-    <line x1="0" y1="15" x2="80" y2="15" stroke="#1f6feb" stroke-width="3" marker-end="url(#arr)"/>
-    <text x="40" y="6" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#475569" font-weight="600">i2w template render</text>
+  <!-- Stage 1: spec.yml (navy card) -->
+  <g transform="translate(40 110)" filter="url(#sh)">
+    <rect width="232" height="248" rx="14" fill="#0E2A4D"/>
+    <text x="20" y="38" font-family="ui-sans-serif, system-ui, sans-serif" font-size="36" font-weight="700" fill="#F5EFE0">Spec</text>
+    <text x="20" y="62" font-family="ui-monospace, monospace" font-size="14" fill="#14b8a6">&lt;file&gt;.yml</text>
+    <line x1="20" y1="80" x2="212" y2="80" stroke="#1f6feb" stroke-width="1" opacity="0.5"/>
+    <text x="20" y="106" font-family="ui-monospace, monospace" font-size="13" fill="#94A3B8">subject:</text>
+    <rect x="98" y="98" width="110" height="3" fill="#475569"/>
+    <text x="20" y="134" font-family="ui-monospace, monospace" font-size="13" fill="#94A3B8">composition:</text>
+    <rect x="120" y="126" width="88" height="3" fill="#475569"/>
+    <text x="20" y="162" font-family="ui-monospace, monospace" font-size="13" fill="#94A3B8">text_blocks:</text>
+    <rect x="118" y="154" width="90" height="3" fill="#475569"/>
+    <text x="20" y="190" font-family="ui-monospace, monospace" font-size="13" fill="#94A3B8">quality_policy:</text>
+    <rect x="138" y="182" width="70" height="3" fill="#475569"/>
+    <text x="20" y="228" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-style="italic" fill="#64748B">compiler-input</text>
   </g>
-  <g transform="translate(420 100)">
-    <rect width="260" height="160" rx="14" fill="#F8FAFC" stroke="#1f6feb" stroke-width="2"/>
-    <text x="20" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#1f6feb">STAGE 2</text>
-    <text x="20" y="60" font-family="sans-serif" font-size="22" font-weight="800" fill="#0E2A4D">prompt.md</text>
-    <line x1="20" y1="74" x2="240" y2="74" stroke="#CBD5E1" stroke-width="1"/>
-    <rect x="20" y="86" width="80" height="8" rx="2" fill="#1f6feb"/>
-    <rect x="20" y="100" width="220" height="5" rx="2" fill="#CBD5E1"/>
-    <rect x="20" y="110" width="200" height="5" rx="2" fill="#CBD5E1"/>
-    <rect x="20" y="120" width="160" height="5" rx="2" fill="#CBD5E1"/>
-    <rect x="20" y="134" width="60" height="8" rx="2" fill="#14b8a6"/>
-    <rect x="20" y="148" width="220" height="5" rx="2" fill="#CBD5E1"/>
-    <text x="20" y="178" font-family="sans-serif" font-size="11" fill="#475569" font-style="italic">paste-ready · API-ready · bilingual</text>
+  <!-- Arrow 1 + i2w template render label -->
+  <g transform="translate(282 110)">
+    <rect width="178" height="92" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="89" y="34" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14" font-weight="700" fill="#0E2A4D">i2w template render</text>
+    <text x="89" y="56" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" fill="#475569">compile + bilingual</text>
+    <text x="89" y="76" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#94A3B8">EN + &#20013;&#25991; in one pass</text>
   </g>
-  <g transform="translate(700 165)">
-    <line x1="0" y1="15" x2="80" y2="15" stroke="#1f6feb" stroke-width="3" marker-end="url(#arr)"/>
-    <text x="40" y="6" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#475569" font-weight="600">i2w render generate</text>
-    <text x="40" y="36" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#475569">+ preflight + cost</text>
+  <g transform="translate(272 232)">
+    <text x="99" y="-6" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="600" fill="#475569">compile</text>
+    <path d="M0,4 L188,4" stroke="url(#flow)" stroke-width="3" marker-end="url(#ar)" fill="none"/>
   </g>
-  <g transform="translate(800 100)">
-    <rect width="180" height="160" rx="14" fill="#1f6feb"/>
-    <text x="16" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#14b8a6">STAGE 3a</text>
-    <text x="16" y="60" font-family="sans-serif" font-size="20" font-weight="800" fill="#F8FAFC">image.png</text>
-    <rect x="16" y="74" width="148" height="72" rx="8" fill="#0E2A4D"/>
-    <circle cx="90" cy="110" r="22" fill="#14b8a6"/>
-    <text x="90" y="115" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#0E2A4D">PNG</text>
+  <!-- Stage 2: prompt.md (cream card) -->
+  <g transform="translate(470 110)" filter="url(#sh)">
+    <rect width="232" height="248" rx="14" fill="#F5EFE0"/>
+    <rect width="232" height="34" rx="14" fill="#E2E8F0"/>
+    <circle cx="18" cy="17" r="4" fill="#EF4444"/>
+    <circle cx="34" cy="17" r="4" fill="#F59E0B"/>
+    <circle cx="50" cy="17" r="4" fill="#10B981"/>
+    <text x="116" y="22" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#475569">prompt</text>
+    <text x="20" y="78" font-family="ui-sans-serif, system-ui, sans-serif" font-size="36" font-weight="700" fill="#0E2A4D">Prompt</text>
+    <text x="20" y="102" font-family="ui-monospace, monospace" font-size="14" fill="#1f6feb">&lt;lang&gt;.md</text>
+    <rect x="20" y="124" width="60" height="6" rx="2" fill="#1f6feb"/>
+    <rect x="20" y="140" width="192" height="3" fill="#CBD5E1"/>
+    <rect x="20" y="150" width="172" height="3" fill="#CBD5E1"/>
+    <rect x="20" y="160" width="148" height="3" fill="#CBD5E1"/>
+    <rect x="20" y="178" width="50" height="6" rx="2" fill="#14b8a6"/>
+    <rect x="20" y="194" width="192" height="3" fill="#CBD5E1"/>
+    <rect x="20" y="204" width="160" height="3" fill="#CBD5E1"/>
+    <text x="20" y="228" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-style="italic" fill="#64748B">paste-ready</text>
   </g>
-  <g transform="translate(1000 100)">
-    <rect width="160" height="160" rx="14" fill="#0E2A4D" stroke="#14b8a6" stroke-width="2"/>
-    <text x="16" y="32" font-family="sans-serif" font-size="14" font-weight="700" fill="#14b8a6">STAGE 3b</text>
-    <text x="16" y="60" font-family="sans-serif" font-size="18" font-weight="800" fill="#F8FAFC">ledger</text>
-    <text x="16" y="84" font-family="sans-serif" font-size="11" fill="#94A3B8">success_rate</text>
-    <text x="16" y="102" font-family="sans-serif" font-size="11" fill="#94A3B8">p95_latency</text>
-    <text x="16" y="120" font-family="sans-serif" font-size="11" fill="#94A3B8">cost_usd</text>
-    <text x="16" y="138" font-family="sans-serif" font-size="11" fill="#94A3B8">snapshot_id</text>
+  <!-- Arrow 2 + i2w render generate label -->
+  <g transform="translate(712 110)">
+    <rect width="178" height="92" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="89" y="30" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14" font-weight="700" fill="#0E2A4D">i2w render generate</text>
+    <g transform="translate(20 46)">
+      <rect width="70" height="20" rx="10" fill="#14b8a6"/>
+      <text x="35" y="14" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="600" fill="#F8FAFC">preflight &#10003;</text>
+    </g>
+    <g transform="translate(96 46)">
+      <rect width="62" height="20" rx="10" fill="#475569"/>
+      <text x="31" y="14" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="600" fill="#F8FAFC">$0.05</text>
+    </g>
   </g>
-  <line x1="890" y1="180" x2="1000" y2="180" stroke="#14b8a6" stroke-width="2" marker-end="url(#arr)"/>
+  <g transform="translate(702 232)">
+    <text x="99" y="-6" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="600" fill="#475569">submit</text>
+    <path d="M0,4 L188,4" stroke="url(#flow)" stroke-width="3" marker-end="url(#ar)" fill="none"/>
+  </g>
+  <!-- Stage 3: image.png + ledger.jsonl combined output card -->
+  <g transform="translate(900 110)" filter="url(#sh)">
+    <rect width="460" height="248" rx="14" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+    <text x="20" y="34" font-family="ui-sans-serif, system-ui, sans-serif" font-size="36" font-weight="700" fill="#0E2A4D">Output</text>
+    <text x="20" y="58" font-family="ui-monospace, monospace" font-size="14" fill="#475569">image.png + ledger.jsonl</text>
+    <!-- image frame -->
+    <g transform="translate(20 72)">
+      <rect width="200" height="120" rx="8" fill="url(#img)"/>
+      <circle cx="100" cy="60" r="32" fill="#F8FAFC" opacity="0.85"/>
+      <text x="100" y="66" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="800" fill="#0E2A4D">PNG</text>
+      <rect x="0" y="100" width="200" height="20" rx="0" fill="#0E2A4D" opacity="0.3"/>
+      <text x="10" y="114" font-family="ui-monospace, monospace" font-size="10" fill="#F8FAFC">1536 &#215; 1024</text>
+    </g>
+    <!-- ledger entries -->
+    <g transform="translate(238 72)">
+      <rect width="202" height="36" rx="6" fill="#0E2A4D"/>
+      <circle cx="14" cy="18" r="3" fill="#14b8a6"/>
+      <rect x="26" y="11" width="80" height="3" fill="#94A3B8"/>
+      <rect x="26" y="20" width="160" height="3" fill="#475569"/>
+      <rect y="44" width="202" height="36" rx="6" fill="#0E2A4D"/>
+      <circle cx="14" cy="62" r="3" fill="#14b8a6"/>
+      <rect x="26" y="55" width="92" height="3" fill="#94A3B8"/>
+      <rect x="26" y="64" width="148" height="3" fill="#475569"/>
+      <rect y="88" width="202" height="36" rx="6" fill="#0E2A4D"/>
+      <circle cx="14" cy="106" r="3" fill="#14b8a6"/>
+      <rect x="26" y="99" width="70" height="3" fill="#94A3B8"/>
+      <rect x="26" y="108" width="170" height="3" fill="#475569"/>
+    </g>
+    <text x="20" y="220" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-style="italic" fill="#64748B">every render leaves a receipt</text>
+  </g>
+  <!-- footer caption -->
+  <g font-family="ui-sans-serif, system-ui, -apple-system, sans-serif">
+    <text x="40" y="424" font-size="13" fill="#475569">spec.yml &#8594; <tspan font-family="ui-monospace, monospace" fill="#0E2A4D" font-weight="600">i2w template render</tspan> &#8594; prompt.md &#8594; <tspan font-family="ui-monospace, monospace" fill="#0E2A4D" font-weight="600">i2w render generate</tspan> &#8594; image.png + ledger.jsonl</text>
+    <text x="40" y="448" font-size="12" fill="#64748B" font-style="italic">spec-first &#183; bilingual &#183; auditable</text>
+  </g>
 </svg>

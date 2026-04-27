@@ -1352,3 +1352,236 @@ v0.3.6 tag; all are worth picking up before v0.4.
 End of hand-off. After §4 is complete and the 30 bitmaps are
 committed, the v0.3.5 line is done. The trim-theater list in §6 picks
 up where this leaves off.
+
+---
+
+## 8. Featured banner + 4 category collage prompts (V0.3.6 README polish)
+
+The five prompts below are a **V0.3.6 README-polish addendum** authored
+after the audit pass on the post-v0.3.5 README. They are **not** part
+of the 30 atlas-domain showcases enumerated in §2 — those thirty are
+already defined, locked, and (per the §7 status row) referenced by
+both the EN and zh-CN READMEs as a 5×6 cell grid.
+
+The audit (agent A1) flagged that the Showcase section, while
+technically accurate, reads visually thin: thirty thumbnails of equal
+weight with no top-of-section anchor. Codex's V0.3.6 task is to render
+**one cinematic banner plus four 2-zone category collages** that the
+README will mount as a featured strip *above* the existing 30-cell
+grid. The thirty per-domain bitmaps stay where they are; this strip is
+purely additive.
+
+Codex saves them to:
+
+- `docs/assets/banner-featured.webp` — one 16:9 hero banner spanning
+  the full Showcase header
+- `docs/assets/collage-business-academic.webp` — pair-collage 1
+- `docs/assets/collage-uiux-anime.webp` — pair-collage 2
+- `docs/assets/collage-creative-lifestyle.webp` — pair-collage 3
+- `docs/assets/collage-spatial-systems.webp` — pair-collage 4
+
+Each collage is a **2-zone** composition (left half + right half of
+the same image) so a single bitmap doubles as a teaser for two
+domains at once — this lets the README compress 8 of the 30 domains
+into 4 hero plates above the grid. After codex commits the bitmaps,
+the README's Showcase section gets a featured strip that reads in
+under a second as "spec-first image workbench, full atlas below."
+
+Prompts follow the V1.5 prompt spec used in §2: literal text inside
+`""` double quotes, explicit composition guidance, an explicit
+forbidden list, and a preserve list (empty for fresh renders).
+Quality is set to `high` across the board — these five are the
+README's #1, #2, #3, #4, #5 visual anchors and are worth the extra
+render budget.
+
+### Featured 1 — banner-featured
+
+Save to: `docs/assets/banner-featured.webp`
+Size: `1920x1088` · aspect `~16:9` · quality `high`
+
+Prompt:
+> A single cinematic README banner image rendered at 1920×1088 (close
+> to 16:9) that telegraphs the identity of a 16-domain spec-first
+> image workbench. Composition is a soft-stitched mosaic of 6 to 8
+> visual zones occupying the full frame, gradient-bled at their edges
+> so the seams read as careful editorial layout rather than a hard
+> grid. Suggested zones, distributed across the banner so the eye
+> can sweep left-to-right: a four-quadrant SWOT card corner labeled
+> "STRATEGY"; a small SaaS dashboard fragment with a single emerald
+> line chart on off-white; a fashion silhouette in taupe linen
+> against bone cyc; a single black-line manga panel with a quiet
+> speech beat; a sprig of watercolor botanical with sepia leader
+> lines; a typography specimen reading "Atlas" in confident display
+> caps; a stylised vinyl-album quadrant with a centered label; and a
+> low-rise architectural facade fragment in warm limestone with dark
+> bronze mullions. All zones share a unified palette — cool navy and
+> slate cool side, warm cream and ochre warm side, with a single
+> oxidised-teal accent. Soft falloff between zones, no hard rules, no
+> drop shadows. Reads as one cohesive editorial tableau, not a
+> collage of stickers.
+
+Preserve list: (none — fresh render)
+Negative list: no watermarks, no real-brand logos (no Apple, no Adobe,
+no Linear, no Spotify), no real-celebrity faces, no recognizable
+franchise IP (no Ghibli, no Marvel, no Star Wars), no neon, no
+glassmorphism, no 3D-rendered look, no rainbow palette, no AI-art
+clichés (no glowing portals, no melting-clock surrealism), no
+text larger than the "Atlas" specimen.
+
+---
+
+### Featured 2 — collage-business-academic
+
+Save to: `docs/assets/collage-business-academic.webp`
+Size: `1536x1024` · aspect `16:9` · quality `high`
+
+Prompt:
+> A two-zone editorial collage rendered at 16:9 (1536×1024) that
+> pairs an executive briefing register with a natural-history
+> monograph register. The frame is split exactly down the middle by a
+> single thin vertical hairline rule on warm-grey paper field with
+> faint paper grain. Left half: a strict four-quadrant SWOT analysis
+> card occupying about 80 percent of the half, headed "STRATEGY BRIEF
+> — Q4 FY2026" in compact display caps. Each quadrant carries a
+> small-caps label ("Strengths" / "Weaknesses" / "Opportunities" /
+> "Threats") and three short typeset bullets in a humanist sans body
+> face; one quiet category icon top-left in each quadrant. Right
+> half: a museum-style ammonite specimen plate on aged cream paper
+> ground — a hand-drawn cross-section in sepia ink linework over
+> soft watercolor washes, five thin leader lines fanning out to
+> small filled circles beside lightweight humanist sans labels
+> ("aperture", "septum", "siphuncle", "umbilicus", "growth lines").
+> Across the top of the right half, a slim title band sets "FIELD
+> GUIDE — INVERTEBRATA". Both halves share an editorial corporate
+> palette anchored on deep navy, slate, warm cream paper, and a
+> single oxidised-teal accent. Reads in 1.5 seconds as "executive
+> briefing meets natural-history monograph".
+
+Preserve list: (none — fresh render)
+Negative list: no watermarks, no real-brand logos, no real-museum
+logos, no specific recognizable people, no stock-photo executives,
+no rainbow palette, no neon, no glassmorphism, no 3D rendering, no
+clip-art icons, no busy ornamentation, no photorealistic specimens.
+
+---
+
+### Featured 3 — collage-uiux-anime
+
+Save to: `docs/assets/collage-uiux-anime.webp`
+Size: `1536x1024` · aspect `16:9` · quality `high`
+
+Prompt:
+> A two-zone editorial collage rendered at 16:9 (1536×1024) that
+> pairs a product-surface register with a creative-character
+> register, separated by a minimal whitespace gutter (no hard rule).
+> Left half (#F7F8FA off-white field): a pixel-perfect B2B SaaS
+> dashboard mockup — left rail at about 14 percent of the half-width
+> carrying a wordmark "Lumen" and four nav rows ("Overview",
+> "Pipeline", "Cohorts", "Reports") with tiny leading icons; above
+> the content area a 64-pixel header strip holds "Pipeline health"
+> at left and a date pill "Last 30 days" at right; below it a single
+> emerald-accented line chart panel and one compact KPI row reading
+> "MRR / Active accounts / Net retention". Linear / Vercel / Tailwind
+> UI cut, white cards on off-white, 1-pixel slate-200 hairlines,
+> 12-pixel corner radii, Inter typography. Right half (pure white
+> #FFFFFF reference-sheet ground): a clean concept-art character
+> reference sheet for an original anime/manga scout-archetype
+> character "Kiri" — three-quarter front-view, long teal coat,
+> brass-rimmed lens bandolier, windswept silver braid. Confident
+> ink-and-pencil cel-shaded line art, faint construction lines under
+> the figure. A slim banner across the top of the right half sets
+> "KIRI — scout, world: Driftshore". Both halves unified by clean
+> editorial whitespace; no shared border treatment.
+
+Preserve list: (none — fresh render)
+Negative list: no watermarks, no real-brand logos (no Linear, no
+Stripe, no Vercel, no Notion), no real-customer names, no real-
+celebrity likeness, no copyrighted franchise IP (no Ghibli, no
+Pokémon, no Genshin), no photorealistic skin, no glassmorphism, no
+fake browser chrome, no neon gradients, no rainbow palette, no
+3D-rendered look.
+
+---
+
+### Featured 4 — collage-creative-lifestyle
+
+Save to: `docs/assets/collage-creative-lifestyle.webp`
+Size: `1536x1024` · aspect `16:9` · quality `high`
+
+Prompt:
+> A two-zone editorial collage rendered at 16:9 (1536×1024) on a
+> shared warm-paper field background that ties both halves together,
+> pairing a fashion-lookbook register with a vintage-tattoo-flash
+> register. Left half: a single-look fashion lookbook plate on bone
+> cyclorama — a model styled in a taupe linen overshirt over a
+> slate-blue tunic, calm three-quarter pose, soft northern daylight,
+> minimal grading; a brutalist brand wordmark "Lautre" sits in
+> compact uppercase display caps in the upper-left margin, and a
+> small caption below the figure reads "Look 03 · Linen overshirt /
+> Tunic, slate". Editorial fashion-house aesthetic, warm-neutral
+> palette, generous negative space. Right half: a vintage-traditional
+> American-style tattoo flash sheet on aged warm-paper ground with
+> faint foxing — six classic motifs arranged in a tidy 2×3 grid:
+> a swallow with a banner, an anchor with a rope wrap, a five-petal
+> rose, a three-mast clipper ship, a pair of dice on a banner reading
+> "LUCK", and a heart wrapped in a banner reading "MOTHER". Bold
+> black ink linework, tight color fills (rose red, navy, mustard,
+> bottle green), heavy outlines, no shading gradients. Both halves
+> share the same paper field — no hard divider — so the eye reads
+> them as one editorial spread.
+
+Preserve list: (none — fresh render)
+Negative list: no watermarks, no real-brand logos (no Acne, no
+Margiela, no Sailor Jerry mark, no Ed Hardy mark), no real-celebrity
+faces, no real-tattoo-artist signatures, no recognizable
+copyrighted designs, no neon, no glassmorphism, no photorealistic
+3D, no offensive imagery, no real-flag iconography, no tribal-
+appropriation motifs.
+
+---
+
+### Featured 5 — collage-spatial-systems
+
+Save to: `docs/assets/collage-spatial-systems.webp`
+Size: `1536x1024` · aspect `16:9` · quality `high`
+
+Prompt:
+> A two-zone editorial collage rendered at 16:9 (1536×1024) that
+> pairs an architectural register with an analytics register,
+> anchored on a calm warm-neutral palette and numerical-architectural
+> restraint. The frame is split down the middle by a thin warm-grey
+> hairline rule. Left half: a conceptual mid-rise civic facade at
+> golden hour — a warm-cream limestone base on the lower three
+> floors, a dark-oxide bronze mullion grid on the middle band, a
+> board-formed concrete setback on the upper level, and a wide
+> cantilevered canopy throwing a long soft shadow across the street
+> elevation. Late-afternoon raking light, calm sky, no people, no
+> cars, no signage. Editorial architectural-photography crop, slight
+> two-point perspective, generous negative sky. Right half: an
+> editorial four-panel data dashboard headed "Reading Analytics —
+> Week 17 / 2026" set on a paper-grade off-white field. The four
+> panels arranged in a tidy 2×2 grid: a line chart of daily reading
+> minutes, a bar chart of session counts by weekday, a scatter
+> plot of pages-per-session vs. session-length with a thin trend
+> line, and a small stat card reading "Avg session 14m · 7-day Δ
+> +9 percent". Slate body text, single oxidised-teal accent, 1-
+> pixel hairlines, no drop shadows. Both halves anchor on warm
+> cream + slate + oxidised teal so the spread reads as one
+> editorial brief.
+
+Preserve list: (none — fresh render)
+Negative list: no watermarks, no real-brand logos, no real-
+architect signatures, no recognizable real buildings (no
+Guggenheim, no Seagram, no specific landmark), no real-product
+mock data sources, no people, no cars, no neon, no
+glassmorphism, no photorealistic-render-style 3D, no rainbow
+palette, no clip-art icons, no fake browser chrome.
+
+---
+
+End of §8. After codex renders these five bitmaps to
+`docs/assets/banner-featured.webp` and the four
+`docs/assets/collage-*.webp` paths, the README polish pass mounts the
+banner above the Showcase header and the four collages as a featured
+strip directly under the banner — the existing 30-cell grid follows
+unchanged.

@@ -216,6 +216,72 @@ _WHITESPACE_RE = re.compile(r"\s+")
 # Number of cards per row in the responsive HTML table.
 _CARDS_PER_ROW = 3
 
+# Per-domain emoji glyph for the atlas section headings. Each glyph is
+# visually distinct so a reader scanning the README can pick out a domain
+# at a glance instead of squinting at text. ``social_media`` uses 🗯️ to
+# avoid colliding with ``uiux`` (📱).
+_DOMAIN_EMOJI: dict[str, str] = {
+    "business": "📊",
+    "academic": "🎓",
+    "uiux": "📱",
+    "anime": "🎌",
+    "ecommerce": "🛍️",
+    "industrial": "🏭",
+    "product": "📦",
+    "advertising": "📢",
+    "social_media": "🗯️",
+    "gaming": "🎮",
+    "photography": "📷",
+    "fashion": "👗",
+    "food": "🍽️",
+    "architecture": "🏛️",
+    "interior": "🛋️",
+    "travel": "✈️",
+    "typography": "🔤",
+    "beauty": "💄",
+    "events": "🎫",
+    "tattoo": "🪡",
+    "watercolor_illustration": "🎨",
+    "isometric_illustration": "🧊",
+    "comic_book": "💥",
+    "music": "🎵",
+    "science_fiction_concept": "🚀",
+    "infographic_data": "📈",
+    "kids_illustration": "🧸",
+    "automotive": "🚗",
+    "pet": "🐾",
+    "streetwear": "👟",
+}
+
+
+def _domain_emoji(domain: str) -> str:
+    """Return the registered glyph for ``domain`` (or ``📁`` if unknown)."""
+    return _DOMAIN_EMOJI.get(domain, "📁")
+
+
+def _domain_anchor(domain: str) -> str:
+    """Stable HTML anchor id for the domain card heading.
+
+    We emit an explicit ``<a id="domain-<name>"></a>`` next to each heading
+    so the bottom-of-section nav row doesn't depend on GitHub's emoji-
+    sensitive slug algorithm — anchors are precise and predictable.
+    """
+    return f"domain-{domain}"
+
+
+def _has_domain_card(domain: str) -> bool:
+    """Return True when ``templates/<domain>/DOMAIN_CARD.md`` exists.
+
+    The V1 domains (business / academic / uiux / anime) ship without a
+    DOMAIN_CARD; V0.3 and V0.3.5 domains all have one. The footer links
+    to the card only when present, so we don't emit dead links.
+    """
+    try:
+        templates_root = catalog_index._resolve_templates_dir()  # noqa: SLF001 — internal helper
+    except Exception:  # pragma: no cover — defensive; never observed in tests
+        return False
+    return (templates_root / domain / "DOMAIN_CARD.md").is_file()
+
 
 def _excerpt(spec_obj: object, max_chars: int = 60) -> str:
     """Return a one-line, Jinja-stripped, length-capped use-case teaser.
@@ -247,18 +313,57 @@ def _domain_card(
     lang: str,
     max_excerpt_chars: int,
 ) -> str:
-    """Render the markdown card for one domain (heading + sub-table + footer)."""
-    count = len(template_paths)
-    if lang == "zh-CN":
-        heading = f"### {domain} · {count} 条"
-        cols = ("模板", "尺寸", "评测")
-        footer = f"[**查看 {domain} 全部 →**](docs/gallery/{domain}.md)"
-    else:
-        heading = f"### {domain} · {count}"
-        cols = ("template", "size", "grader")
-        footer = f"[**View all {domain} →**](docs/gallery/{domain}.md)"
+    """Render the markdown card for one domain.
 
-    lines: list[str] = [heading, ""]
+    Layout (per V0.3.5 polish pass):
+        * stable ``<a id="domain-<name>"></a>`` anchor for the bottom nav
+        * ``### <emoji> <domain> · <N> templates`` heading with a
+          right-floated 60×40 thumbnail link to the full domain gallery
+        * sub-table of templates (template / size / grader)
+        * ``<sub>``-styled footer with "View all" + (when present) a link
+          to ``templates/<domain>/DOMAIN_CARD.md``
+    """
+    count = len(template_paths)
+    emoji = _domain_emoji(domain)
+    anchor = _domain_anchor(domain)
+    thumb = (
+        f'<a href="docs/gallery/{domain}.md">'
+        f'<img src="docs/assets/showcase-{domain}.webp" '
+        f'width="60" height="40" align="right" alt=""/></a>'
+    )
+    has_card = _has_domain_card(domain)
+
+    if lang == "zh-CN":
+        heading_text = f"{emoji} {domain} · {count} 个模板"
+        cols = ("模板", "尺寸", "评测")
+        footer_main = (
+            f'<a href="docs/gallery/{domain}.md">'
+            f"<strong>查看 {count} 条 →</strong></a>"
+        )
+        footer_card = (
+            f'<a href="templates/{domain}/DOMAIN_CARD.md">域卡</a>'
+        )
+    else:
+        heading_text = f"{emoji} {domain} · {count} templates"
+        cols = ("template", "size", "grader")
+        footer_main = (
+            f'<a href="docs/gallery/{domain}.md">'
+            f"<strong>View all {count} →</strong></a>"
+        )
+        footer_card = (
+            f'<a href="templates/{domain}/DOMAIN_CARD.md">Domain card</a>'
+        )
+
+    if has_card:
+        footer = f"<sub>{footer_main} &nbsp;·&nbsp; {footer_card}</sub>"
+    else:
+        footer = f"<sub>{footer_main}</sub>"
+
+    lines: list[str] = [
+        f'<a id="{anchor}"></a>',
+        f"### {heading_text} &nbsp; {thumb}",
+        "",
+    ]
     lines.append(f"| {cols[0]} | {cols[1]} | {cols[2]} |")
     lines.append("|---|---|---|")
     for tp in sorted(template_paths, key=lambda p: p.stem):
@@ -297,7 +402,10 @@ def _generate_section(
         compose_summary = "<strong>Compose your own (CLI / Skill / web ChatGPT)</strong>"
 
     parts: list[str] = [README_BEGIN_FULL, "", header, ""]
-    parts.append("<table>")
+    # ``cellpadding="12"`` gives each card visible breathing room on
+    # GitHub's HTML table renderer; ``cellspacing="0"`` keeps adjacent
+    # cards flush without an extra inter-cell gap.
+    parts.append('<table cellpadding="12" cellspacing="0">')
 
     sorted_domains = sorted(by_domain.items())
     width_pct = 100 // _CARDS_PER_ROW
@@ -323,6 +431,29 @@ def _generate_section(
         parts.append("</tr>")
 
     parts.append("</table>")
+    parts.append("")
+
+    # Bottom-of-section navigation row — one anchor link per domain so a
+    # reader can jump directly into a card without scrolling.
+    if lang == "zh-CN":
+        nav_label = "按领域浏览："
+        toc_label = "↑ 返回目录"
+        toc_href = "#目录"
+    else:
+        nav_label = "Browse by category:"
+        toc_label = "↑ TOC"
+        toc_href = "#table-of-contents"
+    nav_links: list[str] = []
+    for dom, _paths in sorted_domains:
+        emoji = _domain_emoji(dom)
+        nav_links.append(
+            f'<a href="#{_domain_anchor(dom)}">{emoji} {dom}</a>'
+        )
+    nav_body = " · ".join(nav_links)
+    parts.append(
+        f'<p align="center"><strong>{nav_label}</strong> '
+        f'{nav_body} · <a href="{toc_href}">{toc_label}</a></p>'
+    )
     parts.append("")
 
     parts.append("<details>")
@@ -420,7 +551,7 @@ def readme(
     max_excerpt_chars: Annotated[
         int,
         typer.Option("--max-excerpt-chars", help="Max chars of prompt excerpt per card"),
-    ] = 220,
+    ] = 150,
 ) -> None:
     """Generate the inline-atlas section for README.{md,zh.md}."""
     console = Console()

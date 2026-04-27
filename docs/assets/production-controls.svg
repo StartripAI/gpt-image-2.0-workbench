@@ -1,77 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="pc-title pc-desc" preserveAspectRatio="xMidYMid meet">
-  <title id="pc-title">production controls capability matrix</title>
-  <desc id="pc-desc">Bar chart for four pillars (cost, preflight, batch, ledger) across three tiers (manual, opt-in, shipped); image2-workbench ships all four.</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="#F8FAFC"/>
-      <stop offset="1" stop-color="#E2E8F0"/>
-    </linearGradient>
-    <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="#14b8a6"/>
-      <stop offset="1" stop-color="#0d9488"/>
-    </linearGradient>
-    <linearGradient id="g2" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="#1f6feb"/>
-      <stop offset="1" stop-color="#1d4ed8"/>
-    </linearGradient>
-    <linearGradient id="g3" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="#94A3B8"/>
-      <stop offset="1" stop-color="#64748B"/>
-    </linearGradient>
-  </defs>
-  <rect width="1200" height="360" rx="20" fill="url(#bg)"/>
-  <text x="40" y="40" font-family="sans-serif" font-size="20" font-weight="800" fill="#0E2A4D">Production controls &#8212; capability matrix</text>
-  <text x="40" y="62" font-family="sans-serif" font-size="13" fill="#475569">Four pillars, three tiers. Bars stack: manual at the base, opt-in in the middle, shipped on top.</text>
-  <g font-family="sans-serif">
-    <line x1="40" y1="320" x2="1160" y2="320" stroke="#94A3B8"/>
-    <line x1="40" y1="100" x2="40" y2="320" stroke="#94A3B8"/>
-    <text x="32" y="324" text-anchor="end" font-size="10" fill="#475569">0</text>
-    <text x="32" y="247" text-anchor="end" font-size="10" fill="#475569">manual</text>
-    <text x="32" y="178" text-anchor="end" font-size="10" fill="#475569">opt-in</text>
-    <text x="32" y="108" text-anchor="end" font-size="10" fill="#475569">shipped</text>
-  </g>
-  <g font-family="sans-serif">
-    <g transform="translate(140 100)">
-      <rect y="180" width="120" height="40" rx="4" fill="url(#g3)"/>
-      <rect y="100" width="120" height="80" rx="4" fill="url(#g2)"/>
-      <rect width="120" height="100" rx="4" fill="url(#g1)"/>
-      <text x="60" y="56" text-anchor="middle" font-size="13" font-weight="800" fill="#0E2A4D">SHIPPED</text>
-      <text x="60" y="240" text-anchor="middle" font-size="14" font-weight="800" fill="#0E2A4D">Cost</text>
-      <text x="60" y="256" text-anchor="middle" font-size="11" fill="#475569">i2w cost compare</text>
-    </g>
-    <g transform="translate(380 100)">
-      <rect y="180" width="120" height="40" rx="4" fill="url(#g3)"/>
-      <rect y="100" width="120" height="80" rx="4" fill="url(#g2)"/>
-      <rect width="120" height="100" rx="4" fill="url(#g1)"/>
-      <text x="60" y="56" text-anchor="middle" font-size="13" font-weight="800" fill="#0E2A4D">SHIPPED</text>
-      <text x="60" y="240" text-anchor="middle" font-size="14" font-weight="800" fill="#0E2A4D">Preflight</text>
-      <text x="60" y="256" text-anchor="middle" font-size="11" fill="#475569">i2w preflight</text>
-    </g>
-    <g transform="translate(620 100)">
-      <rect y="180" width="120" height="40" rx="4" fill="url(#g3)"/>
-      <rect y="100" width="120" height="80" rx="4" fill="url(#g2)"/>
-      <rect width="120" height="100" rx="4" fill="url(#g1)"/>
-      <text x="60" y="56" text-anchor="middle" font-size="13" font-weight="800" fill="#0E2A4D">SHIPPED</text>
-      <text x="60" y="240" text-anchor="middle" font-size="14" font-weight="800" fill="#0E2A4D">Batch</text>
-      <text x="60" y="256" text-anchor="middle" font-size="11" fill="#475569">i2w batch sweep</text>
-    </g>
-    <g transform="translate(860 100)">
-      <rect y="180" width="120" height="40" rx="4" fill="url(#g3)"/>
-      <rect y="100" width="120" height="80" rx="4" fill="url(#g2)"/>
-      <rect width="120" height="100" rx="4" fill="url(#g1)"/>
-      <text x="60" y="56" text-anchor="middle" font-size="13" font-weight="800" fill="#0E2A4D">SHIPPED</text>
-      <text x="60" y="240" text-anchor="middle" font-size="14" font-weight="800" fill="#0E2A4D">Ledger</text>
-      <text x="60" y="256" text-anchor="middle" font-size="11" fill="#475569">i2w ledger query</text>
-    </g>
-  </g>
-  <g transform="translate(40 290)" font-family="sans-serif">
-    <rect width="14" height="14" rx="2" fill="url(#g1)"/>
-    <text x="22" y="11" font-size="11" fill="#0E2A4D" font-weight="600">shipped today</text>
-    <rect x="140" width="14" height="14" rx="2" fill="url(#g2)"/>
-    <text x="162" y="11" font-size="11" fill="#0E2A4D" font-weight="600">opt-in flag</text>
-    <rect x="260" width="14" height="14" rx="2" fill="url(#g3)"/>
-    <text x="282" y="11" font-size="11" fill="#0E2A4D" font-weight="600">manual / external</text>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 600" role="img" aria-labelledby="ctrl-title ctrl-desc" preserveAspectRatio="xMidYMid meet" font-family="ui-sans-serif, system-ui, -apple-system, sans-serif">
+<title id="ctrl-title">image2-workbench production controls</title>
+<desc id="ctrl-desc">A four-pillar capability matrix. Each pillar — Cost, Preflight, Batch, Ledger — is a stacked bar showing how much is manual, opt-in, or shipped, with capability bullets anchored to each tier.</desc>
+<defs>
+<linearGradient id="bg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#F8FAFC"/><stop offset="1" stop-color="#E2E8F0"/></linearGradient>
+<linearGradient id="t" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#14b8a6"/><stop offset="1" stop-color="#0d9488"/></linearGradient>
+<linearGradient id="o" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1f6feb"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient>
+<linearGradient id="m" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#94A3B8"/><stop offset="1" stop-color="#64748B"/></linearGradient>
+<filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="3"/><feOffset dx="0" dy="3" result="o"/><feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="cT"><rect x="0" y="0" width="90" height="380" rx="10"/></clipPath>
+</defs>
+<rect width="1400" height="600" fill="url(#bg)"/>
+
+<!-- Title strip -->
+<text x="66" y="50" font-size="28" font-weight="700" fill="#0E2A4D">Production controls</text>
+<text x="66" y="74" font-size="14" fill="#475569">What the workbench ships at every tier</text>
+
+<!-- Legend -->
+<g transform="translate(820 36)" font-size="12" fill="#0E2A4D" font-weight="600">
+<rect width="16" height="16" rx="3" fill="url(#m)"/><text x="22" y="13">MANUAL</text>
+<rect x="120" width="16" height="16" rx="3" fill="url(#o)"/><text x="142" y="13">OPT-IN</text>
+<rect x="232" width="16" height="16" rx="3" fill="url(#t)"/><text x="254" y="13">SHIPPED</text>
+</g>
+<line x1="66" y1="98" x2="1334" y2="98" stroke="#94A3B8" stroke-width="0.8" opacity="0.55"/>
+
+<!-- Pillar template: 90px bar + bullets. Pillar block 308px wide. -->
+<!-- 1 Cost: m=10% (38), o=15% (57), s=75% (285). bar y=140..520 -->
+<g transform="translate(66 140)">
+<g filter="url(#sh)" clip-path="url(#cT)">
+<rect width="90" height="38" y="342" fill="url(#m)"/>
+<rect width="90" height="57" y="285" fill="url(#o)"/>
+<rect width="90" height="285" fill="url(#t)"/>
+<line x1="0" x2="90" y1="285" y2="285" stroke="#fff" stroke-width="1"/>
+<line x1="0" x2="90" y1="342" y2="342" stroke="#fff" stroke-width="1"/>
+</g>
+<text x="45" y="20" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">&#10003;</text>
+<text x="45" y="160" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" letter-spacing="2">SHIPPED</text>
+<text x="45" y="319" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" letter-spacing="1">OPT-IN</text>
+<text x="45" y="366" text-anchor="middle" font-size="10" font-weight="700" fill="#0E2A4D" letter-spacing="1">MANUAL</text>
+<text x="0" y="412" font-size="24" font-weight="700" fill="#0E2A4D">Cost</text>
+<g font-size="12" fill="#334155">
+<line x1="92" y1="142" x2="108" y2="142" stroke="#14b8a6" stroke-width="1.2"/>
+<text x="114" y="138">i2w cost compare/estimate/budget</text>
+<text x="114" y="153">Batch API 50% off lane</text>
+<line x1="92" y1="313" x2="108" y2="313" stroke="#1f6feb" stroke-width="1.2"/>
+<text x="114" y="317">--token-estimate flag</text>
+<line x1="92" y1="361" x2="108" y2="361" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="114" y="365" fill="#64748B">(none — fully shipped)</text>
+</g>
+</g>
+
+<!-- 2 Preflight: m=5% (19), o=30% (114), s=65% (247) -->
+<g transform="translate(386 140)">
+<g filter="url(#sh)" clip-path="url(#cT)">
+<rect width="90" height="19" y="361" fill="url(#m)"/>
+<rect width="90" height="114" y="247" fill="url(#o)"/>
+<rect width="90" height="247" fill="url(#t)"/>
+<line x1="0" x2="90" y1="247" y2="247" stroke="#fff" stroke-width="1"/>
+<line x1="0" x2="90" y1="361" y2="361" stroke="#fff" stroke-width="1"/>
+</g>
+<text x="45" y="20" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">&#10003;</text>
+<text x="45" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" letter-spacing="2">SHIPPED</text>
+<text x="45" y="310" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" letter-spacing="1">OPT-IN</text>
+<text x="45" y="375" text-anchor="middle" font-size="9" font-weight="700" fill="#0E2A4D">M</text>
+<text x="0" y="412" font-size="24" font-weight="700" fill="#0E2A4D">Preflight</text>
+<g font-size="12" fill="#334155">
+<line x1="92" y1="123" x2="108" y2="123" stroke="#14b8a6" stroke-width="1.2"/>
+<text x="114" y="119">local size validation</text>
+<text x="114" y="134">parameter compatibility</text>
+<text x="114" y="149">i2w doctor capabilities</text>
+<line x1="92" y1="304" x2="108" y2="304" stroke="#1f6feb" stroke-width="1.2"/>
+<text x="114" y="300">/v1/moderations check</text>
+<text x="114" y="315" fill="#64748B" font-size="11">(opt-in via flag)</text>
+<line x1="92" y1="370" x2="108" y2="370" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="114" y="374" fill="#64748B" font-size="11">manual eyeballing</text>
+</g>
+</g>
+
+<!-- 3 Batch: m=5% (19), o=0, s=95% (361) -->
+<g transform="translate(706 140)">
+<g filter="url(#sh)" clip-path="url(#cT)">
+<rect width="90" height="19" y="361" fill="url(#m)"/>
+<rect width="90" height="361" fill="url(#t)"/>
+<line x1="0" x2="90" y1="361" y2="361" stroke="#fff" stroke-width="1"/>
+</g>
+<text x="45" y="20" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">&#10003;</text>
+<text x="45" y="190" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" letter-spacing="2">SHIPPED</text>
+<text x="45" y="375" text-anchor="middle" font-size="9" font-weight="700" fill="#0E2A4D">M</text>
+<text x="0" y="412" font-size="24" font-weight="700" fill="#0E2A4D">Batch</text>
+<g font-size="12" fill="#334155">
+<line x1="92" y1="120" x2="108" y2="120" stroke="#14b8a6" stroke-width="1.2"/>
+<text x="114" y="116">i2w batch sweep --route batch-api</text>
+<text x="114" y="131">dry-run preview</text>
+<text x="114" y="146">status / fetch lifecycle</text>
+<line x1="92" y1="370" x2="108" y2="370" stroke="#94A3B8" stroke-width="1.2"/>
+<text x="114" y="374" fill="#64748B" font-size="11">(none — handled by sweep)</text>
+</g>
+</g>
+
+<!-- 4 Ledger: m=0, o=10% (38), s=90% (342) -->
+<g transform="translate(1026 140)">
+<g filter="url(#sh)" clip-path="url(#cT)">
+<rect width="90" height="38" y="342" fill="url(#o)"/>
+<rect width="90" height="342" fill="url(#t)"/>
+<line x1="0" x2="90" y1="342" y2="342" stroke="#fff" stroke-width="1"/>
+</g>
+<text x="45" y="20" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">&#10003;</text>
+<text x="45" y="180" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" letter-spacing="2">SHIPPED</text>
+<text x="45" y="366" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" letter-spacing="1">OPT-IN</text>
+<text x="0" y="412" font-size="24" font-weight="700" fill="#0E2A4D">Ledger</text>
+<g font-size="12" fill="#334155">
+<line x1="92" y1="120" x2="108" y2="120" stroke="#14b8a6" stroke-width="1.2"/>
+<text x="114" y="116">auto-append on every render</text>
+<text x="114" y="131">query / top-failures / drift</text>
+<text x="114" y="146">export to CSV / JSON</text>
+<line x1="92" y1="361" x2="108" y2="361" stroke="#1f6feb" stroke-width="1.2"/>
+<text x="114" y="365">IMAGE2_LEDGER_PATH override</text>
+</g>
+</g>
+
+<!-- Baseline rule under pillars where labels sit -->
+<line x1="66" y1="556" x2="1334" y2="556" stroke="#94A3B8" stroke-width="0.8" opacity="0.5"/>
+<text x="700" y="582" text-anchor="middle" font-size="11" fill="#64748B" letter-spacing="1.5">spec.yml &#8594; preflight &#8594; render &#8594; ledger.jsonl</text>
 </svg>

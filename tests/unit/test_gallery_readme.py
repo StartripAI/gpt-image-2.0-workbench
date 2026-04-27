@@ -75,7 +75,10 @@ def test_excerpt_returns_empty_string_when_both_blank() -> None:
 
 def test_section_contains_table_count_and_v1_template() -> None:
     section = _generate_section(lang="en", max_excerpt_chars=60)
-    assert "<table>" in section
+    # ``<table cellpadding="12" cellspacing="0">`` post-V0.3.5 polish; we
+    # match the open-tag prefix so the assertion stays robust to attribute
+    # tweaks while still locking in that a top-level ``<table>`` exists.
+    assert "<table " in section
     assert "</table>" in section
     assert "80 templates" in section
     assert "30 domains" in section
