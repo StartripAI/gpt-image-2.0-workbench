@@ -1,15 +1,17 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 <p align="center">
-  <a href="./README.md">English</a> &nbsp;&middot;&nbsp; <a href="./README.zh.md">中文</a>
+  <a href="./README.md"><img alt="English" src="https://img.shields.io/badge/lang-English-1f6feb?style=for-the-badge"></a>
+  &nbsp;
+  <a href="./README.zh.md"><img alt="中文" src="https://img.shields.io/badge/%E8%AF%AD%E8%A8%80-%E4%B8%AD%E6%96%87-d4380d?style=for-the-badge"></a>
 </p>
 
 <h1 align="center">image2-workbench</h1>
 
-<p align="center"><strong>A spec-first production workbench for OpenAI gpt-image-2.</strong><br/>52 executable templates &middot; 16 domains &middot; bilingual prompts &middot; cost / preflight / batch / ledger controls.</p>
+<p align="center"><strong>A spec-first production workbench for OpenAI gpt-image-2.</strong><br/>80 executable templates &middot; 30 domains &middot; bilingual prompts &middot; cost / preflight / batch / ledger controls.</p>
 
 <p align="center">
-  <img src="docs/assets/hero.svg" alt="image2-workbench atlas hero" width="900" />
+  <img src="docs/assets/hero-meme.webp" alt="image2-workbench meme hero" width="900" />
 </p>
 
 <p align="center">
@@ -27,7 +29,7 @@
 </p>
 
 <p align="center">
-  <a href="#atlas--16-domains-52-templates"><strong>Explore Atlas &rarr;</strong></a>
+  <a href="#atlas--30-domains-80-templates"><strong>Explore Atlas &rarr;</strong></a>
   &nbsp;&middot;&nbsp;
   <a href="#quick-start"><strong>Quick Start &rarr;</strong></a>
   &nbsp;&middot;&nbsp;
@@ -44,7 +46,7 @@
 
 - [Why a workbench?](#why-a-workbench)
 - [Quick start](#quick-start)
-- [Atlas &mdash; 16 domains, 52 templates](#atlas--16-domains-52-templates)
+- [Atlas &mdash; 30 domains, 80 templates](#atlas--30-domains-80-templates)
 - [Showcase](#showcase)
 - [Capabilities](#capabilities)
 - [Workflow](#workflow)
@@ -845,9 +847,9 @@ Not for the L3 path. `i2w template render` produces paste-ready markdown for web
 </details>
 
 <details>
-<summary><strong>Why 16 domains and not "everything"?</strong></summary>
+<summary><strong>Why 30 domains and not "everything"?</strong></summary>
 
-Each domain ships with a `DOMAIN_CARD.md` (FOR / NOT FOR / Key axes) so neighbouring domains stay distinct. We add a domain only when we can name 3 axes that no existing domain covers. Twelve cards live today; the remaining four ship as we publish more cross-cut workflows.
+Each domain ships with a `DOMAIN_CARD.md` (FOR / NOT FOR / Key axes) so neighbouring domains stay distinct. We add a domain only when we can name 3 axes that no existing domain covers. Thirty cards live today, with 80 templates spread across the atlas.
 
 </details>
 

@@ -1,15 +1,17 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
 <p align="center">
-  <a href="./README.md">English</a> &nbsp;&middot;&nbsp; <a href="./README.zh.md">中文</a>
+  <a href="./README.md"><img alt="English" src="https://img.shields.io/badge/lang-English-1f6feb?style=for-the-badge"></a>
+  &nbsp;
+  <a href="./README.zh.md"><img alt="中文" src="https://img.shields.io/badge/%E8%AF%AD%E8%A8%80-%E4%B8%AD%E6%96%87-d4380d?style=for-the-badge"></a>
 </p>
 
 <h1 align="center">image2-workbench</h1>
 
-<p align="center"><strong>面向 OpenAI gpt-image-2 的规格先行（spec-first）生产工作台。</strong><br/>52 个可执行模板 &middot; 16 个领域 &middot; 双语 prompt &middot; 成本 / 预检 / 批量 / 审计四大控制面。</p>
+<p align="center"><strong>面向 OpenAI gpt-image-2 的规格先行（spec-first）生产工作台。</strong><br/>80 个可执行模板 &middot; 30 个领域 &middot; 双语 prompt &middot; 成本 / 预检 / 批量 / 审计四大控制面。</p>
 
 <p align="center">
-  <img src="docs/assets/hero.svg" alt="image2-workbench atlas hero" width="900" />
+  <img src="docs/assets/hero-meme.webp" alt="image2-workbench meme hero" width="900" />
 </p>
 
 <p align="center">
@@ -27,7 +29,7 @@
 </p>
 
 <p align="center">
-  <a href="#atlas--16-个领域52-个模板"><strong>浏览 Atlas &rarr;</strong></a>
+  <a href="#模板图册--30-个领域80-个模板"><strong>浏览模板图册 &rarr;</strong></a>
   &nbsp;&middot;&nbsp;
   <a href="#快速开始"><strong>快速开始 &rarr;</strong></a>
   &nbsp;&middot;&nbsp;
@@ -44,7 +46,7 @@
 
 - [为什么需要工作台？](#为什么需要工作台)
 - [快速开始](#快速开始)
-- [Atlas — 16 个领域，52 个模板](#atlas--16-个领域52-个模板)
+- [模板图册 — 30 个领域，80 个模板](#模板图册--30-个领域80-个模板)
 - [样图](#样图)
 - [能力清单](#能力清单)
 - [工作流](#工作流)
@@ -845,9 +847,9 @@ L3 路径不要。`i2w template render` 编译出的 markdown 直接粘到网页
 </details>
 
 <details>
-<summary><strong>为什么是 16 个领域，不是“万物皆可”？</strong></summary>
+<summary><strong>为什么是 30 个领域，不是“万物皆可”？</strong></summary>
 
-每个领域都附 `DOMAIN_CARD.md`（FOR / NOT FOR / 关键轴），相邻领域才不会黏在一起。我们只在能写出 3 条已有领域不覆盖的关键轴时，才新增一个领域。目前 12 张卡已就位，剩下 4 张会随交叉工作流的发布陆续补齐。
+每个领域都附 `DOMAIN_CARD.md`（FOR / NOT FOR / 关键轴），相邻领域才不会黏在一起。我们只在能写出 3 条已有领域不覆盖的关键轴时，才新增一个领域。目前 30 张领域卡已就位，模板图册覆盖 80 个模板。
 
 </details>
 
