@@ -4,7 +4,7 @@
 
 <h1 align="center">image2-workbench</h1>
 
-<p align="center"><strong>面向 OpenAI gpt-image-2 的规格先行生产工作台。</strong><br/>80 个可执行模板 &middot; 30 个领域 &middot; 双语提示词 &middot; 成本 / 预检 / 批处理 / 审计日志一体化。</p>
+<p align="center"><strong>跑 gpt-image-2 老撞运气、烧钱还出不来想要的？我做了个工作台。</strong><br/>30 个域 · 80 条 yaml 模板 · 中英双语自动双出 · 调用前 preflight 拦坏请求 · 每张图写一行 ledger 留痕。</p>
 
 <p align="center"><img src="docs/assets/hero-meme.webp" alt="image2-workbench：30 个领域 80 个规格先行模板" width="900" /></p>
 
@@ -42,54 +42,59 @@
 ---
 
 <a id="-概览"></a>
-## ✨ 概览
+## ✨ 一眼看懂
 
-| 项目 | 数据 |
+| 看哪 | 是啥 |
 |---|---|
-| 覆盖领域 | **30** 个（business · academic · uiux · anime · ecommerce · industrial · product · advertising · social_media · gaming · photography · fashion · food · architecture · interior · travel · typography · beauty · events · tattoo · watercolor · isometric · comic_book · music · sci-fi · dataviz · kids · automotive · pet · streetwear） |
-| 可执行模板 | **80** 个规格先行的 YAML 文件,全部通过 schema 校验,全部双语 |
-| 样图 | **30** 张由 gpt-image-2 渲染并提交至 `docs/assets/` |
-| CLI 命令 | **11** 个动词（catalog · template · render · batch · cost · preflight · ledger · doctor · gallery · eval · version） |
-| Skill 运行时 | **7** 个（Claude Code · Codex · Anthropic API · LangChain · smolagents · OpenClaw · Hermes） |
-| 许可 | **Apache-2.0**（代码）+ **CC BY 4.0**（模板/文档） |
-| 最后更新 | 2026-04-27 |
+| 覆盖了哪些图 | **30 个域**：商业 / 学术 / UI/UX / 动漫 / 电商 / 工业 / 产品 / 广告 / 社交 / 游戏 / 摄影 / 时尚 / 餐饮 / 建筑 / 室内 / 旅行 / 字体 / 美妆 / 活动 / 纹身 / 水彩 / 等距 / 美漫 / 音乐 / 科幻 / 数据图 / 童书 / 汽车 / 宠物 / 潮牌 |
+| 几条模板能直接跑 | **80 条**，全部 yaml 写好、全部 schema 校验过、全部双语 |
+| 样图够不够看 | **30 张** 1536×1024 大图（不是缩略图）已经全部渲好 commit 在 `docs/assets/` |
+| 命令一共几个 | **11 个**（catalog · template · render · batch · cost · preflight · ledger · doctor · gallery · eval · version），按钱 / 校验 / 观测分了组 |
+| 接进 agent 容不容易 | **7 个 runtime** 已配 manifest（Claude Code · Codex · Anthropic · LangChain · smolagents · OpenClaw · Hermes），抄一份就能跑 |
+| 用了不爽能不能改 | 代码 **Apache-2.0** 随便 fork；模板/文档 **CC BY 4.0** 拿去用记得 attribute 一下 |
+| 最近一次动 | 2026-04-28 |
 
 ---
 
 <a id="-为什么需要工作台"></a>
-## 🧰 为什么需要工作台?
+## 🧰 为什么不只是 prompt 清单？
 
-精选提示词清单适合找灵感。但当你需要在多个模板、多种尺寸、多种成本、多个模型快照之间得到<strong>可复现的结果</strong>,并且半年后模型快照换了还能溯源时,清单就吃力了。
+清单适合找灵感。真用起来就翻车——
 
-本仓库把提示词包装成可审计、可执行、可批处理的工作流,围绕三大支柱:
+- 同一个 SWOT 中英两版要写两遍（还得保证不漂移）
+- 还没付钱不知道这张图烧多少 token
+- 翻车了 OpenAI 甩你一个 `400`，到底哪步错的？
+- 半年后模型升级，回头根本搜不到当时是怎么跑的
+
+所以我把 prompt 写成 yaml 配方，剩下的交给 CLI 接住：
 
 <table cellpadding="14" cellspacing="0">
 <tr>
 <td width="33%" valign="top">
-  <h3>💰 成本可预测</h3>
-  <p>双轨成本模型:官方 <code>(尺寸, 质量)</code> 表 + 像素面积启发式 + token 级估算 + Batch API <strong>5 折</strong>路径。</p>
-  <p><sub><strong>CLI:</strong> <code>i2w cost compare</code> · <code>i2w cost estimate</code> · <code>i2w cost budget</code> · <code>i2w batch sweep</code></sub></p>
+  <h3>💰 钱花在哪一目了然</h3>
+  <p>调用前先告诉你这张多少钱。官方价目表 + 像素估算双轨，图多了走 <strong>Batch API 五折</strong>通道，预算超了 <code>cost budget</code> 直接挡，不让你深夜醒来看到一千刀账单。</p>
+  <p><sub><code>i2w cost compare</code> · <code>cost estimate</code> · <code>cost budget</code> · <code>batch sweep</code></sub></p>
 </td>
 <td width="33%" valign="top">
-  <h3>🛡️ 错误细分</h3>
-  <p>七个退出码（<code>OK</code>、<code>AUTH</code>、<code>RATE_LIMIT</code>、<code>MODERATION_BLOCKED</code>、<code>VALIDATION</code>、<code>API_OTHER</code>、<code>INTERNAL</code>），加本地校验与预审。</p>
-  <p><sub><strong>CLI:</strong> <code>i2w preflight</code> · <code>i2w doctor capabilities</code></sub></p>
+  <h3>🛡️ 错了告诉你为啥错</h3>
+  <p>不是甩一个『失败』就完事。<strong>7 档退出码</strong>（鉴权 / 限流 / 内容审核 / 参数错 / API 报错 / 内部 bug / OK），shell 脚本可以分流。本地校验就能拦的（透明背景、<code>input_fidelity</code>），绝不让你烧 token 才发现。</p>
+  <p><sub><code>i2w preflight</code> · <code>doctor capabilities</code></sub></p>
 </td>
 <td width="33%" valign="top">
-  <h3>📊 可观测性</h3>
-  <p>仅追加的 JSONL 审计日志（ledger）；记录成功率、p50/p95 延迟、单产出成本、快照漂移、Top 失败项。</p>
-  <p><sub><strong>CLI:</strong> <code>i2w ledger query</code> · <code>i2w ledger top-failures</code> · <code>i2w ledger drift</code> · <code>i2w ledger export</code></sub></p>
+  <h3>📊 跑过的图都有迹可循</h3>
+  <p>每张图都给你写一行 <code>ledger.jsonl</code>。回头按模板看成功率、按 snapshot 找翻车点、看哪条模板烧钱最多 —— 不用你自己记账，出问题也能溯源。</p>
+  <p><sub><code>i2w ledger query</code> · <code>top-failures</code> · <code>drift</code> · <code>export</code></sub></p>
 </td>
 </tr></table>
 
-<p align="right"><sub><a href="docs/positioning.md">完整定位论述 →</a></sub></p>
+<p align="right"><sub><a href="docs/positioning.md">完整立场和理由 →</a></sub></p>
 
 ---
 
 <a id="-精选"></a>
-## ✨ 精选
+## ✨ 精选合集
 
-<p align="center"><sub>模板图册一目了然 —— 五张代表性合成图自 30 个领域中拼成。每张图都用 gpt-image-2 对仓库内的规格 yaml 渲染而成。</sub></p>
+<p align="center"><sub>5 张拼图，把 30 个域的味道一次说完。每张都是 gpt-image-2 真跑出来的（仓库里有对应的 yaml 配方），点进去看完整图册。</sub></p>
 
 <p align="center"><a href="#atlas--30-domains-80-templates"><img src="docs/assets/banner-featured.webp" alt="image2-workbench 模板图册 — 30 个领域 × 80 个模板" width="100%" /></a></p>
 
@@ -127,76 +132,76 @@
 ## 🚀 快速开始
 
 <details open>
-<summary><strong>安装（约 30 秒）</strong></summary>
+<summary><strong>📦 装一下（30 秒搞定）</strong></summary>
 
 ```bash
-# fork 之后克隆,或直接基于本地 checkout 工作:
+# fork 自己一份，或者直接 clone 这个仓库:
 git clone https://github.com/StartripAI/gpt-image-2.0-workbench.git
 cd gpt-image-2.0-workbench
 
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
-i2w --help                  # 11 个命令
-i2w doctor capabilities     # 探测参数兼容性（无需 API key）
-pytest -q                   # 工作台自检（1017+ 通过）
+i2w --help                  # 看一眼 11 个命令
+i2w doctor capabilities     # 这一步不要 API key 也能跑
+pytest -q                   # 工作台自己测自己（1017+ 通过）
 ```
 
 </details>
 
 <details>
-<summary><strong>渲染你的第一条提示词（无需 API key）</strong></summary>
+<summary><strong>✨ 不要 API key 也能用（最香的路径）</strong></summary>
 
 ```bash
 i2w template render business_swot_card --lang zh-CN \
   --vars templates/business/_vars_examples/swot_acme.yml \
   --out out/swot.zh.md
-cat out/swot.zh.md   # 复制到网页 ChatGPT 即可
+cat out/swot.zh.md   # 这个 markdown 直接复制
 ```
 
-把 markdown 粘进 ChatGPT 的图片对话,下载图片即可。这是 L3 路径 —— 纯网页、零花费、零 API key。
+把 markdown 粘进网页 ChatGPT 的图片对话框，按发送，下载图。**全程零 token 零 API key**，L3 路径，hobbyist / 学生 / 没充钱的设计师都能跑。
 
 </details>
 
 <details>
-<summary><strong>通过 API 渲染（需要 <code>OPENAI_API_KEY</code>）</strong></summary>
+<summary><strong>🔑 上 API（要 <code>OPENAI_API_KEY</code>）</strong></summary>
 
 ```bash
 export OPENAI_API_KEY=sk-...
 
-# 在花钱前先在本地拦截坏请求:
+# 先本地校验，把烧 token 之前能拦的拦了:
 i2w preflight out/swot.zh.md --template-id business_swot_card
 
-# 提交前对比不同 (尺寸, 质量) 的成本:
+# 看不同尺寸 / 质量分别多少钱（不下单）:
 i2w cost compare --size 1024x1024,1536x1024 --quality low,medium,high
 
-# 渲染并写入一行审计日志:
+# 真出图，一行 ledger 跟着写:
 i2w render generate --prompt-file out/swot.zh.md \
   --template-id business_swot_card \
   --size 1536x1024 --quality medium --out out/swot.png
 
-# 查看刚刚发生了什么:
+# 翻看刚才发生了啥:
 i2w ledger query --template business_swot_card
 ```
 
 </details>
 
 <details>
-<summary><strong>跑一次 Batch API 扫描（5 折优惠）</strong></summary>
+<summary><strong>💸 批量任务走 Batch API（直接五折）</strong></summary>
 
 ```bash
 i2w batch sweep \
   --template business_swot_card \
   --vars templates/business/_vars_examples/swot_acme.yml \
   --route batch-api \
-  --dry-run                                # 预览 JSONL 载荷,不花钱
+  --dry-run                                # 先预览 JSONL，0 花费
 
-i2w batch sweep ... --route batch-api      # 准备好后再正式提交
+i2w batch sweep ... --route batch-api      # 看清楚再正式提交
 ```
 
 </details>
 
-<p><sub><a href="docs/getting-started.zh.md">完整入门 →</a> &nbsp;·&nbsp; <a href="docs/cost-modeling.md">成本建模 →</a> &nbsp;·&nbsp; <a href="docs/error-codes.md">错误码 →</a></sub></p>
+<p><sub><a href="docs/getting-started.zh.md">完整教程 →</a> &nbsp;·&nbsp; <a href="docs/cost-modeling.md">成本怎么算 →</a> &nbsp;·&nbsp; <a href="docs/error-codes.md">错误码长啥样 →</a></sub></p>
 
 ---
 
@@ -661,7 +666,7 @@ i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium
 <a id="-样图展示"></a>
 ## 🖼️ 样图展示 — 30 个领域，30 张代表渲染
 
-<p align="center"><sub>每个领域一张代表样图，由 gpt-image-2 对应 <a href="templates/"><code>templates/&lt;domain&gt;/</code></a> 下的规格 yaml 渲染。每行两张大图，看清原图不需要点缩略图；卡片直接跳到对应领域的全套图册。</sub></p>
+<p align="center"><sub>30 个域，每个域 1 张代表样图。每行 2 张大图，看清直接看，不用点缩略图。卡片点进去就是对应域的全套模板图册。</sub></p>
 
 ### 🏢 企业 · 品牌 · 数据
 
@@ -918,7 +923,7 @@ i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium
 </tr>
 </table>
 
-<p align="center"><sub>↑ <a href="#-精选">回到精选</a> &nbsp;·&nbsp; ↓ <a href="#atlas--30-domains-80-templates">模板图册细节</a> &nbsp;·&nbsp; <a href="#目录">↑ 返回目录</a></sub></p>
+<p align="center"><sub>↑ <a href="#-精选">回精选</a> &nbsp;·&nbsp; ↓ <a href="#atlas--30-domains-80-templates">看每条模板细节</a> &nbsp;·&nbsp; <a href="#目录">↑ 回目录</a></sub></p>
 
 ---
 
@@ -950,14 +955,14 @@ i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium
 <p align="center"><img src="docs/assets/hero.svg" alt="image2-workbench — 规格先行的生产工作台" width="100%" /></p>
 <p align="center"><img src="docs/assets/workflow.svg" alt="image2-workbench 工作流：规格 → 编译 → 渲染 → 审计日志" width="100%" /></p>
 
-<p align="center"><sub>同一份规格驱动三条路径 —— 网页 ChatGPT 可直接粘贴的 prompt、Images API 渲染、Batch API 扫描 —— 每次渲染都会写入一行 ledger。</sub></p>
+<p align="center"><sub>一份 yaml 配方，三条路出图：粘到网页 ChatGPT、走 Images API、批量走 Batch API。每张图都跟一行 ledger，跑完不会黑箱。</sub></p>
 
 ---
 
 <a id="-cli-命令面"></a>
 ## 💻 CLI 命令面
 
-11 个动词,1 个入口（`i2w`）。按支柱分组,无需 `--help` 也能扫读。
+11 个动词，1 个入口（`i2w`）。按"组装 / 钱 / 校验 / 观测"分组，扫一眼就知道每个干啥。
 
 | 分组 | 命令 | 用途 |
 |---|---|---|
@@ -978,7 +983,7 @@ i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium
 <a id="-skill-生态"></a>
 ## 🤖 Skill 生态
 
-`image2-workbench` 在 [`skills/gpt-image/`](skills/gpt-image/) 提供一套可移植的 Skill 技能包,可放入任何加载 `SKILL.md` 类清单的 agent 运行时。
+同一个 Skill 包（在 [`skills/gpt-image/`](skills/gpt-image/)），不动一行代码塞进 7 个不同 agent 运行时都能跑。Claude Code、Codex、Anthropic 三家亲测过，剩下四家备好了对应的 manifest，抄过去就行。
 
 | 运行时 | 状态 | 清单 |
 |---|---|---|
@@ -998,51 +1003,81 @@ i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium
 ## ❓ 常见问题
 
 <details>
-<summary><strong>🤔 这跟一份精选 prompt 清单有什么不同?</strong></summary>
+<summary><strong>🤔 跟那些 prompt 收藏夹仓库有啥不同？</strong></summary>
 
-清单是 markdown,我们这是编译器。模板是经过 pydantic 校验的 YAML;输出可审计;同一个模板既能产出双语提示词,<em>也能</em>直接驱动 API。完整论述见 [`docs/positioning.md`](docs/positioning.md)。
+收藏夹是 markdown，写好就摆那；这边 prompt 是 yaml 配方。
 
-</details>
+每条都过了 pydantic 校验，每个文字块跑了 80 字检查，**同一份配方自动出双语**，能粘 ChatGPT 也能直接 drive Images API。还有 ledger 跟着写。
 
-<details>
-<summary><strong>🤔 我必须有 OpenAI API key 吗?</strong></summary>
-
-L3 路径不需要。`i2w template render` 会生成可直接粘贴到网页 ChatGPT 的 markdown(无需 API key)。L2 路径(`i2w render generate`)需要 `OPENAI_API_KEY` 与已通过 verification 的 org。`doctor capabilities`、`cost`、`preflight`、`template`、`gallery`、`catalog` 全部可离线运行。
+完整立场见 [`docs/positioning.md`](docs/positioning.md)。
 
 </details>
 
 <details>
-<summary><strong>🤔 为什么是 30 个领域而不是"全都要"?</strong></summary>
+<summary><strong>🤔 一定要有 OpenAI API key 才能用吗？</strong></summary>
 
-每个领域都附带一份 `DOMAIN_CARD.md`(FOR / NOT FOR / Key axes),让相邻领域之间界限清晰。只有当我们能列出 3 条现有领域不覆盖的轴时,才会新增一个领域。今天有 30 张域卡,80 个模板分布在整张图册上。
+完全不需要。
 
-</details>
+`i2w template render` 编出来的 markdown 复制到网页 ChatGPT 就出图（L3 路径，0 元）。`doctor`、`cost`、`preflight`、`template`、`gallery`、`catalog` 全部能**离线跑**。
 
-<details>
-<summary><strong>🤔 中文支持得怎么样?</strong></summary>
-
-非常好。全部 80 个模板都支持双语渲染;demo 变量在合适的位置加入 CJK 内容。编译器是语言感知的(CJK 标点、断行、字形密度),不是简单的字符串替换。中文入门见 [`docs/getting-started.zh.md`](docs/getting-started.zh.md),英文版 README 在 [`README.md`](README.md)。
+只有真要走 API（`i2w render generate`）才需要 `OPENAI_API_KEY` + 验证过的 org。
 
 </details>
 
 <details>
-<summary><strong>🤔 安全与审核呢?</strong></summary>
+<summary><strong>🤔 为啥是 30 个域不是"啥都给我"？</strong></summary>
 
-`i2w preflight` 会做本地校验(尺寸、背景、质量、不支持的参数),并可选地在计费前过一遍 Moderation API。`MODERATION_BLOCKED` 有自己独立的退出码(5),CI 可以基于它做分支处理。我们不会默认 `moderation: low`;需要时再显式开启。
+不想凑数。
 
-</details>
+每加一个新域，自己得说出"3 个老域不覆盖的视觉轴"才放进来。所以 30 个域不是叠 buff，是把常见 prompt 集合的分类拆完一遍 + 加 14 个独立维度（字体 / 等距 / 童书 / 美漫 / 科幻 / 数据图……）。
 
-<details>
-<summary><strong>🤔 为什么是三大支柱(成本 / 预检 / 审计日志)?</strong></summary>
-
-工作台必须能回答 prompt 清单回答不了的三个问题:<em>"这要花多少钱?"</em>、<em>"在我付钱之前这条能跑通吗?"</em>、<em>"过去一千次跑发生了什么?"</em>。每条支柱都对应一条 CLI 命令面、一类退出码、一段 JSONL ledger。
+每个域都有一份 `DOMAIN_CARD.md`（FOR / NOT FOR / Key axes），写明白这域是干嘛的、不是干嘛的。
 
 </details>
 
 <details>
-<summary><strong>🤔 内容是怎么授权的?</strong></summary>
+<summary><strong>🤔 中文到底好不好用？</strong></summary>
 
-代码是 Apache-2.0。模板、文档、README 文件以及 Skill 的 `SKILL.md` 是 CC BY 4.0。语料记录按来源逐条声明(参见 [`source_registry.yml`](corpus/manifests/source_registry.yml))。详见下面的[许可](#-许可)章节。
+亲测，比英文版还顺手（doge）。
+
+80 条模板**全部双语**，demo 变量在该 CJK 的位置就是 CJK（小红书封面、CCD 自拍、城市海报这些原生中文场景都有）。编译器认 CJK 标点、断行、字形密度，不是 Google Translate 派的。
+
+中文入门：[`docs/getting-started.zh.md`](docs/getting-started.zh.md)。
+
+</details>
+
+<details>
+<summary><strong>🤔 内容审核 / 安全这块怎么搞？</strong></summary>
+
+调用前 `i2w preflight` 先把不支持的参数（透明背景、`input_fidelity`）拦了。想稳一点开 `--check-moderation`，让 OpenAI Moderation API 先跑一遍。
+
+被审核拦了走**独立退出码 3**（不是 1），CI 想分流想停都行。
+
+`moderation: low` 默认绝对不开 —— 想绕审核请自己写 flag，我不替你做这个决定。
+
+</details>
+
+<details>
+<summary><strong>🤔 为啥非得三件事一起做（成本 + 预检 + 审计）？</strong></summary>
+
+因为 prompt 清单回答不了这仨问题：
+
+- **"这次烧多少钱？"** → 成本预测
+- **"还没付钱之前能不能告诉我会不会翻车？"** → 预检
+- **"上周跑那 200 张到底发生了什么？"** → ledger
+
+三件事各自一条命令面、一组退出码、一段 JSONL。少一个就不叫工作台。
+
+</details>
+
+<details>
+<summary><strong>🤔 这个仓库我能拿去做项目吗？</strong></summary>
+
+代码 **Apache-2.0**，fork 随便用，加个 patent grant 还更安全。
+
+模板和文档 **CC BY 4.0**，拿去做项目记得 attribute 一下（写一行『模板基于 image2-workbench』就行）。
+
+第三方语料按来源逐条声明，没标 `clear` 的默认是 metadata-only，**不允许全文转发**。详见 [许可](#-许可)。
 
 </details>
 
@@ -1079,11 +1114,11 @@ image2-workbench/
 ---
 
 <a id="-贡献"></a>
-## 🙋 贡献
+## 🙋 一起搞
 
-请阅读 [`AGENTS.md`](AGENTS.md) —— 文件归属、反模式（默认不要 `transparent` 背景、不要 `input_fidelity`、不要 `moderation: low` 默认值）、V1 完工定义。
+来之前先看一眼 [`AGENTS.md`](AGENTS.md) —— 写明白哪个文件归谁、几条不能踩的坑（默认不开 `transparent` 背景、不传 `input_fidelity`、`moderation: low` 自己显式开，不允许默认）、什么算 V1 完工。
 
-安全披露 → [`SECURITY.md`](SECURITY.md)。
+发现安全问题别公开 issue，走 [`SECURITY.md`](SECURITY.md) 流程。
 
 ---
 
