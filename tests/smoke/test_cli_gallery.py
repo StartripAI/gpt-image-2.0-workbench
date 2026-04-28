@@ -108,11 +108,15 @@ def test_gallery_readme_out_en_writes_section(tmp_path: Path) -> None:
     body = target.read_text(encoding="utf-8")
     assert "30 domains" in body
     assert "80 templates" in body
-    # At least one V1 template id from each V1 domain must appear.
-    assert "business_swot_card" in body
-    assert "academic_scientific_diagram" in body
+    assert "| Domain | Templates | Good for | Representative templates | Open |" in body
+    assert '<a href="docs/gallery/business.md">Gallery</a>' in body
+    assert '<a href="templates/business/">Templates</a>' in body
+    assert "Compose your own" not in body
+    # At least one representative template id from key domains must appear.
+    assert "business_data_dashboard" in body
+    assert "academic_chalkboard_proof" in body
     assert "uiux_ios_app_mockup" in body
-    assert "anime_character_sheet" in body
+    assert "anime_ccd_candid" in body
     assert _BEGIN_MARKER in body
     assert _END_MARKER in body
 
@@ -127,8 +131,9 @@ def test_gallery_readme_out_zh_contains_chinese_chars(tmp_path: Path) -> None:
     body = target.read_text(encoding="utf-8")
     # Localised heading and sub-table headers must be present.
     assert "模板图册" in body
-    assert "| 模板 | 尺寸 | 评测 |" in body
+    assert "| 领域 | 模板数 | 适合做什么 | 代表模板 | 入口 |" in body
     assert "30 个领域" in body
+    assert '<a href="docs/gallery/business.md">图册</a>' in body
 
 
 def test_gallery_readme_inject_replaces_section_between_markers(tmp_path: Path) -> None:

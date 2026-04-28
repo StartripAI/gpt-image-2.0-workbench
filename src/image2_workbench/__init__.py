@@ -8,7 +8,7 @@ Three form factors share a single Python core:
        without any runtime
 """
 
-__version__ = "0.2.0"
+__version__ = "0.3.5"
 
 try:
     from .compiler.schema import TemplateSpec  # noqa: F401  re-export when ready

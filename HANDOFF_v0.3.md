@@ -2,6 +2,12 @@
 
 # image2-workbench v0.3 — Handoff
 
+> **Historical snapshot.** This handoff is retained for audit context only.
+> It describes the earlier v0.3 expansion state and is not the current source
+> of truth for README layout, asset availability, template counts, or release
+> status. Use `README.md`, `docs/gallery/index.md`, and `i2w gallery readme`
+> for the current repo surface.
+
 This is the agent-to-agent handoff packet that ships with the v0.3 cut of
 `image2-workbench`. Everything you need to bring the GitHub-facing first
 fold up to ship-quality is contained in this document.

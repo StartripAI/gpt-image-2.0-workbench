@@ -14,6 +14,7 @@ that ships with `image2-workbench v0.3`:
     * dimensional rules (``validate_size``) pass for every artifact
     * READMEs are gallery-drift-free in both languages
     * READMEs reference all 30 ``docs/assets/showcase-<domain>.webp`` paths
+      as single-column showcase sections, not two-up HTML tables
     * README local ``href`` / ``src`` / markdown image targets resolve
     * READMEs do not mention competitor names
     * the three SVG hero/workflow/production-controls assets are well-formed
@@ -94,8 +95,8 @@ V03_DOMAINS = [
     "travel",
 ]
 
-# README showcase strip references all 30 domains as user-visible cards on
-# the GitHub first-fold.
+# README showcase references all 30 domains as user-visible sections on
+# GitHub.
 SHOWCASE_DOMAINS = [
     "business",
     "academic",
@@ -451,19 +452,30 @@ def test_readme_no_competitor_mentions(readme_path: Path, needle: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
-# 14 — README references all 30 showcase webp paths (file presence is NOT
-# asserted here; the local-target check below covers README link integrity).
+# 14 — gallery-forward READMEs reference all 30 showcase webp paths, and the
+# assets exist locally.
 # --------------------------------------------------------------------------- #
 
 
 @pytest.mark.parametrize("domain", SHOWCASE_DOMAINS)
-def test_showcase_image_paths_referenced_in_readme(domain: str) -> None:
+def test_showcase_image_assets_are_referenced_in_readmes(domain: str) -> None:
     expected = f"docs/assets/showcase-{domain}.webp"
+    assert (REPO_ROOT / expected).is_file(), f"missing showcase asset {expected!r}"
     body_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
     body_zh = (REPO_ROOT / "README.zh.md").read_text(encoding="utf-8")
     assert expected in body_en, f"README.md is missing {expected!r}"
-    # zh-CN README should also reference the same showcase asset paths.
     assert expected in body_zh, f"README.zh.md is missing {expected!r}"
+
+
+@pytest.mark.parametrize(
+    "readme_path",
+    [REPO_ROOT / "README.md", REPO_ROOT / "README.zh.md"],
+    ids=lambda p: p.name,
+)
+def test_showcase_is_single_column_large_images(readme_path: Path) -> None:
+    body = readme_path.read_text(encoding="utf-8")
+    assert '<td width="50%"' not in body
+    assert '<table width="100%" cellpadding="12" cellspacing="0">' not in body
 
 
 # --------------------------------------------------------------------------- #
