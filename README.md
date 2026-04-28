@@ -242,6 +242,130 @@ Pet-focused designs for adoption flyers and food packaging. The prompts keep the
 
 Streetwear launch imagery for drop lookbooks and sneaker hero plates. The templates emphasize silhouette, date, collection name, and retail energy. [Gallery](docs/gallery/streetwear.md) · [Templates](templates/streetwear/)
 
+## Template Proof Set — 20 more renders
+
+These are template-level examples generated in-session from the existing atlas. The 30 images above show domain coverage; the 20 images below show concrete template behaviors: dense UI, real placements, vertical posters, product boards, story sequences, and text-heavy layouts.
+
+### business / data dashboard
+
+<p align="center"><a href="docs/gallery/business.md"><img src="docs/assets/example-business_data_dashboard-revenue-ops.webp" alt="business data dashboard revenue ops example" width="100%"/></a></p>
+
+Revenue operations dashboard with KPI cards, charts, pipeline rows, and an executive-ready layout. [Gallery](docs/gallery/business.md) · [Template](templates/business/data_dashboard.yml)
+
+### business / pitch slide
+
+<p align="center"><a href="docs/gallery/business.md"><img src="docs/assets/example-business_pitch_slide-climate-risk.webp" alt="business pitch slide climate risk example" width="100%"/></a></p>
+
+Investor-style climate-risk title slide with a strong headline, metric cards, and a data-map visual. [Gallery](docs/gallery/business.md) · [Template](templates/business/pitch_slide.yml)
+
+### academic / journal poster
+
+<p align="center"><a href="docs/gallery/academic.md"><img src="docs/assets/example-academic_journal_poster-bioinformatics.webp" alt="academic journal poster bioinformatics example" width="64%"/></a></p>
+
+Three-column scientific conference poster proving the atlas can handle dense academic hierarchy and figure blocks. [Gallery](docs/gallery/academic.md) · [Template](templates/academic/journal_poster.yml)
+
+### academic / multilingual education poster
+
+<p align="center"><a href="docs/gallery/academic.md"><img src="docs/assets/example-academic_multilingual_eduposter-japanese-water-cycle.webp" alt="Japanese water-cycle education poster example" width="100%"/></a></p>
+
+Japanese classroom science poster with diagram arrows and labeled stages, useful for multilingual education assets. [Gallery](docs/gallery/academic.md) · [Template](templates/academic/multilingual_eduposter.yml)
+
+### uiux / iOS app mockup
+
+<p align="center"><a href="docs/gallery/uiux.md"><img src="docs/assets/example-uiux_ios_app_mockup-finance.webp" alt="iOS finance app mockup example" width="56%"/></a></p>
+
+Native-style personal finance app screen with balance cards, budget chart, and transaction list. [Gallery](docs/gallery/uiux.md) · [Template](templates/uiux/ios_app_mockup.yml)
+
+### uiux / web dashboard
+
+<p align="center"><a href="docs/gallery/uiux.md"><img src="docs/assets/example-uiux_web_dashboard-security.webp" alt="security web dashboard example" width="100%"/></a></p>
+
+Enterprise security dashboard with alerts, maps, incident metrics, and table density. [Gallery](docs/gallery/uiux.md) · [Template](templates/uiux/web_dashboard.yml)
+
+### product / feature callout
+
+<p align="center"><a href="docs/gallery/product.md"><img src="docs/assets/example-product_feature_callout-smart-bottle.webp" alt="smart bottle product feature callout example" width="100%"/></a></p>
+
+Studio product plate with callouts for cap, insulation, and base features. [Gallery](docs/gallery/product.md) · [Template](templates/product/product_feature_callout.yml)
+
+### product / comparison board
+
+<p align="center"><a href="docs/gallery/product.md"><img src="docs/assets/example-product_comparison_board-headphones.webp" alt="headphones product comparison board example" width="62%"/></a></p>
+
+Three-variant headphone comparison board with feature checks and pricing hierarchy. [Gallery](docs/gallery/product.md) · [Template](templates/product/product_comparison_board.yml)
+
+### advertising / billboard mockup
+
+<p align="center"><a href="docs/gallery/advertising.md"><img src="docs/assets/example-advertising_billboard_mockup-night-transit.webp" alt="night transit billboard mockup example" width="100%"/></a></p>
+
+Night transit-station placement mockup showing how a campaign key visual sits in a real environment. [Gallery](docs/gallery/advertising.md) · [Template](templates/advertising/advertising_billboard_mockup.yml)
+
+### advertising / storyboard
+
+<p align="center"><a href="docs/gallery/advertising.md"><img src="docs/assets/example-advertising_storyboard_3frame-coffee-launch.webp" alt="three-frame coffee launch storyboard example" width="100%"/></a></p>
+
+Three-frame launch storyboard with scene continuity, captions, and a campaign strip. [Gallery](docs/gallery/advertising.md) · [Template](templates/advertising/advertising_storyboard_3frame.yml)
+
+### ecommerce / product hero
+
+<p align="center"><a href="docs/gallery/ecommerce.md"><img src="docs/assets/example-ecommerce_product_hero-skincare.webp" alt="skincare ecommerce product hero example" width="66%"/></a></p>
+
+Product-detail hero for a skincare serum with price, benefit chips, rating, and add-to-cart affordance. [Gallery](docs/gallery/ecommerce.md) · [Template](templates/ecommerce/ecommerce_product_hero.yml)
+
+### ecommerce / category banner
+
+<p align="center"><a href="docs/gallery/ecommerce.md"><img src="docs/assets/example-ecommerce_category_banner-home-office.webp" alt="home office ecommerce category banner example" width="100%"/></a></p>
+
+Wide retail banner for a home-office collection, balancing product silhouettes, headline, and CTA. [Gallery](docs/gallery/ecommerce.md) · [Template](templates/ecommerce/ecommerce_category_banner.yml)
+
+### social_media / story sequence
+
+<p align="center"><a href="docs/gallery/social_media.md"><img src="docs/assets/example-social_media_story_sequence-stretch.webp" alt="morning stretch social story sequence example" width="56%"/></a></p>
+
+Vertical three-card wellness story sequence with progress cues and creator-friendly captions. [Gallery](docs/gallery/social_media.md) · [Template](templates/social_media/social_media_story_sequence.yml)
+
+### social_media / thumbnail grid
+
+<p align="center"><a href="docs/gallery/social_media.md"><img src="docs/assets/example-social_media_thumbnail_grid-tech-review.webp" alt="tech review thumbnail grid example" width="78%"/></a></p>
+
+Three thumbnail concepts for a tech-review video, demonstrating punchy small-screen composition. [Gallery](docs/gallery/social_media.md) · [Template](templates/social_media/social_media_thumbnail_grid.yml)
+
+### gaming / HUD mockup
+
+<p align="center"><a href="docs/gallery/gaming.md"><img src="docs/assets/example-gaming_hud_mockup-sci-fi-shooter.webp" alt="sci-fi shooter HUD mockup example" width="100%"/></a></p>
+
+Playable-feeling sci-fi HUD with objective, minimap, health, ammo, and edge-aligned interface layers. [Gallery](docs/gallery/gaming.md) · [Template](templates/gaming/gaming_hud_mockup.yml)
+
+### gaming / item card
+
+<p align="center"><a href="docs/gallery/gaming.md"><img src="docs/assets/example-gaming_item_card-frost-relic.webp" alt="frost relic game item card example" width="78%"/></a></p>
+
+Collectible item card with rarity ribbon, stats, icon, and readable fantasy UI hierarchy. [Gallery](docs/gallery/gaming.md) · [Template](templates/gaming/gaming_item_card.yml)
+
+### interior / before-after
+
+<p align="center"><a href="docs/gallery/interior.md"><img src="docs/assets/example-interior_before_after-bathroom.webp" alt="bathroom interior before after example" width="100%"/></a></p>
+
+Split-screen bathroom renovation board, useful for before/after edits and material communication. [Gallery](docs/gallery/interior.md) · [Template](templates/interior/interior_before_after.yml)
+
+### architecture / presentation board
+
+<p align="center"><a href="docs/gallery/architecture.md"><img src="docs/assets/example-architecture_presentation_board-library.webp" alt="architecture library presentation board example" width="100%"/></a></p>
+
+Architecture board combining exterior render, plan, section, site diagram, and material swatches. [Gallery](docs/gallery/architecture.md) · [Template](templates/architecture/architecture_presentation_board.yml)
+
+### photography / editorial portrait
+
+<p align="center"><a href="docs/gallery/photography.md"><img src="docs/assets/example-photography_editorial_portrait-founder.webp" alt="editorial founder portrait example" width="66%"/></a></p>
+
+Controlled editorial portrait showing the photography templates can produce believable human-centered imagery. [Gallery](docs/gallery/photography.md) · [Template](templates/photography/photography_editorial_portrait.yml)
+
+### typography / specimen poster
+
+<p align="center"><a href="docs/gallery/typography.md"><img src="docs/assets/example-typography_specimen_poster-serif.webp" alt="serif typography specimen poster example" width="64%"/></a></p>
+
+Text-first specimen poster with glyph grid, numerals, weights, and a large display composition. [Gallery](docs/gallery/typography.md) · [Template](templates/typography/typography_specimen_poster.yml)
+
 <!-- BEGIN GALLERY (auto-generated by `i2w gallery readme`; do not edit by hand) -->
 
 <a id="atlas--30-domains-80-templates"></a>

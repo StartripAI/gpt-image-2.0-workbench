@@ -241,6 +241,130 @@ i2w ledger query --template business_swot_card
 
 街头服饰发布视觉：drop lookbook、sneaker hero plate。重点是廓形、发售日期、系列名和零售氛围。 [图册](docs/gallery/streetwear.md) · [模板](templates/streetwear/)
 
+## 模板证明图 — 20 张新增渲染
+
+这些是用现有模板在当前会话里生成的模板级样图。上面的 30 张证明领域覆盖；下面这 20 张证明具体能力：密集 UI、真实投放场景、竖版海报、产品对比板、story sequence 和文字密集版式。
+
+### business / data dashboard
+
+<p align="center"><a href="docs/gallery/business.md"><img src="docs/assets/example-business_data_dashboard-revenue-ops.webp" alt="business data dashboard revenue ops example" width="100%"/></a></p>
+
+收入运营数据看板，包含 KPI 卡片、图表、pipeline 表格和管理层能直接扫读的层级。 [图册](docs/gallery/business.md) · [模板](templates/business/data_dashboard.yml)
+
+### business / pitch slide
+
+<p align="center"><a href="docs/gallery/business.md"><img src="docs/assets/example-business_pitch_slide-climate-risk.webp" alt="business pitch slide climate risk example" width="100%"/></a></p>
+
+气候风险产品的融资标题页，包含强标题、指标卡和数据地图式视觉。 [图册](docs/gallery/business.md) · [模板](templates/business/pitch_slide.yml)
+
+### academic / journal poster
+
+<p align="center"><a href="docs/gallery/academic.md"><img src="docs/assets/example-academic_journal_poster-bioinformatics.webp" alt="academic journal poster bioinformatics example" width="64%"/></a></p>
+
+三栏学术会议海报，用来证明长文、图表、分区标题和学术层级都能放进同一张图。 [图册](docs/gallery/academic.md) · [模板](templates/academic/journal_poster.yml)
+
+### academic / multilingual education poster
+
+<p align="center"><a href="docs/gallery/academic.md"><img src="docs/assets/example-academic_multilingual_eduposter-japanese-water-cycle.webp" alt="Japanese water-cycle education poster example" width="100%"/></a></p>
+
+日文水循环课堂海报，展示多语言标签、箭头图解和教育信息图版式。 [图册](docs/gallery/academic.md) · [模板](templates/academic/multilingual_eduposter.yml)
+
+### uiux / iOS app mockup
+
+<p align="center"><a href="docs/gallery/uiux.md"><img src="docs/assets/example-uiux_ios_app_mockup-finance.webp" alt="iOS finance app mockup example" width="56%"/></a></p>
+
+个人理财 App mockup，包含余额卡、预算图、交易列表和移动端界面层级。 [图册](docs/gallery/uiux.md) · [模板](templates/uiux/ios_app_mockup.yml)
+
+### uiux / web dashboard
+
+<p align="center"><a href="docs/gallery/uiux.md"><img src="docs/assets/example-uiux_web_dashboard-security.webp" alt="security web dashboard example" width="100%"/></a></p>
+
+企业安全监控 dashboard，展示告警、地图、事件指标和高密度表格。 [图册](docs/gallery/uiux.md) · [模板](templates/uiux/web_dashboard.yml)
+
+### product / feature callout
+
+<p align="center"><a href="docs/gallery/product.md"><img src="docs/assets/example-product_feature_callout-smart-bottle.webp" alt="smart bottle product feature callout example" width="100%"/></a></p>
+
+智能保温瓶功能说明板，用 callout 展示瓶盖、保温结构和底座卖点。 [图册](docs/gallery/product.md) · [模板](templates/product/product_feature_callout.yml)
+
+### product / comparison board
+
+<p align="center"><a href="docs/gallery/product.md"><img src="docs/assets/example-product_comparison_board-headphones.webp" alt="headphones product comparison board example" width="62%"/></a></p>
+
+三款耳机横向对比板，适合展示功能勾选、价格层级和产品差异。 [图册](docs/gallery/product.md) · [模板](templates/product/product_comparison_board.yml)
+
+### advertising / billboard mockup
+
+<p align="center"><a href="docs/gallery/advertising.md"><img src="docs/assets/example-advertising_billboard_mockup-night-transit.webp" alt="night transit billboard mockup example" width="100%"/></a></p>
+
+夜间交通站点 billboard mockup，展示广告主视觉放进真实环境后的光线和场景效果。 [图册](docs/gallery/advertising.md) · [模板](templates/advertising/advertising_billboard_mockup.yml)
+
+### advertising / storyboard
+
+<p align="center"><a href="docs/gallery/advertising.md"><img src="docs/assets/example-advertising_storyboard_3frame-coffee-launch.webp" alt="three-frame coffee launch storyboard example" width="100%"/></a></p>
+
+三帧咖啡新品 storyboard，展示镜头连续性、字幕条和 campaign 结构。 [图册](docs/gallery/advertising.md) · [模板](templates/advertising/advertising_storyboard_3frame.yml)
+
+### ecommerce / product hero
+
+<p align="center"><a href="docs/gallery/ecommerce.md"><img src="docs/assets/example-ecommerce_product_hero-skincare.webp" alt="skincare ecommerce product hero example" width="66%"/></a></p>
+
+护肤精华 PDP 首屏图，包含价格、卖点、评分和加入购物车信息。 [图册](docs/gallery/ecommerce.md) · [模板](templates/ecommerce/ecommerce_product_hero.yml)
+
+### ecommerce / category banner
+
+<p align="center"><a href="docs/gallery/ecommerce.md"><img src="docs/assets/example-ecommerce_category_banner-home-office.webp" alt="home office ecommerce category banner example" width="100%"/></a></p>
+
+家居办公 collection 横幅，平衡商品轮廓、主标题和 CTA。 [图册](docs/gallery/ecommerce.md) · [模板](templates/ecommerce/ecommerce_category_banner.yml)
+
+### social_media / story sequence
+
+<p align="center"><a href="docs/gallery/social_media.md"><img src="docs/assets/example-social_media_story_sequence-stretch.webp" alt="morning stretch social story sequence example" width="56%"/></a></p>
+
+竖版三段式晨间拉伸 story sequence，适合创作者内容和步骤型社媒图。 [图册](docs/gallery/social_media.md) · [模板](templates/social_media/social_media_story_sequence.yml)
+
+### social_media / thumbnail grid
+
+<p align="center"><a href="docs/gallery/social_media.md"><img src="docs/assets/example-social_media_thumbnail_grid-tech-review.webp" alt="tech review thumbnail grid example" width="78%"/></a></p>
+
+科技评测三宫格缩略图，展示小屏强标题和不同构图方向。 [图册](docs/gallery/social_media.md) · [模板](templates/social_media/social_media_thumbnail_grid.yml)
+
+### gaming / HUD mockup
+
+<p align="center"><a href="docs/gallery/gaming.md"><img src="docs/assets/example-gaming_hud_mockup-sci-fi-shooter.webp" alt="sci-fi shooter HUD mockup example" width="100%"/></a></p>
+
+科幻射击 HUD mockup，包含 objective、minimap、health、ammo 和边缘 UI 层。 [图册](docs/gallery/gaming.md) · [模板](templates/gaming/gaming_hud_mockup.yml)
+
+### gaming / item card
+
+<p align="center"><a href="docs/gallery/gaming.md"><img src="docs/assets/example-gaming_item_card-frost-relic.webp" alt="frost relic game item card example" width="78%"/></a></p>
+
+游戏道具卡，包含稀有度、属性、图标和可读的 fantasy UI 层级。 [图册](docs/gallery/gaming.md) · [模板](templates/gaming/gaming_item_card.yml)
+
+### interior / before-after
+
+<p align="center"><a href="docs/gallery/interior.md"><img src="docs/assets/example-interior_before_after-bathroom.webp" alt="bathroom interior before after example" width="100%"/></a></p>
+
+浴室改造 before/after 分屏板，适合证明局部改造、材质选择和空间表达。 [图册](docs/gallery/interior.md) · [模板](templates/interior/interior_before_after.yml)
+
+### architecture / presentation board
+
+<p align="center"><a href="docs/gallery/architecture.md"><img src="docs/assets/example-architecture_presentation_board-library.webp" alt="architecture library presentation board example" width="100%"/></a></p>
+
+建筑 presentation board，同时放入外观渲染、平面、剖面、site diagram 和材料色板。 [图册](docs/gallery/architecture.md) · [模板](templates/architecture/architecture_presentation_board.yml)
+
+### photography / editorial portrait
+
+<p align="center"><a href="docs/gallery/photography.md"><img src="docs/assets/example-photography_editorial_portrait-founder.webp" alt="editorial founder portrait example" width="66%"/></a></p>
+
+创始人杂志感肖像，用来展示摄影模板的人像、光线和真实质感。 [图册](docs/gallery/photography.md) · [模板](templates/photography/photography_editorial_portrait.yml)
+
+### typography / specimen poster
+
+<p align="center"><a href="docs/gallery/typography.md"><img src="docs/assets/example-typography_specimen_poster-serif.webp" alt="serif typography specimen poster example" width="64%"/></a></p>
+
+字体 specimen poster，包含 glyph grid、数字、字重和大字母构图，证明文字是画面主体时也能展示。 [图册](docs/gallery/typography.md) · [模板](templates/typography/typography_specimen_poster.yml)
+
 <!-- BEGIN GALLERY (auto-generated by `i2w gallery readme`; do not edit by hand) -->
 
 <a id="atlas--30-domains-80-templates"></a>
