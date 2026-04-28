@@ -947,7 +947,7 @@ i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium
 <a id="-workflow"></a>
 ## 🔁 Workflow
 
-<p align="center"><img src="docs/assets/hero.svg" alt="image2-workbench — spec-first production workbench" width="100%" /></p>
+<p align="center"><img src="docs/assets/hero-meme.webp" alt="image2-workbench — spec-first production workbench" width="100%" /></p>
 <p align="center"><img src="docs/assets/workflow.svg" alt="image2-workbench workflow: spec → compile → render → ledger" width="100%" /></p>
 
 <p align="center"><sub>One spec drives all three paths — paste-ready prompt for web ChatGPT, Images API render, or Batch API sweep — and every render writes one ledger row.</sub></p>

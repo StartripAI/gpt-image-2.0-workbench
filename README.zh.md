@@ -952,7 +952,7 @@ i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium
 <a id="-工作流"></a>
 ## 🔁 工作流
 
-<p align="center"><img src="docs/assets/hero.svg" alt="image2-workbench — 规格先行的生产工作台" width="100%" /></p>
+<p align="center"><img src="docs/assets/hero-meme.webp" alt="image2-workbench — 规格先行的生产工作台" width="100%" /></p>
 <p align="center"><img src="docs/assets/workflow.svg" alt="image2-workbench 工作流：规格 → 编译 → 渲染 → 审计日志" width="100%" /></p>
 
 <p align="center"><sub>一份 yaml 配方，三条路出图：粘到网页 ChatGPT、走 Images API、批量走 Batch API。每张图都跟一行 ledger，跑完不会黑箱。</sub></p>
