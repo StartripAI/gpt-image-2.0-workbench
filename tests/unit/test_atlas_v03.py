@@ -15,6 +15,7 @@ that ships with `image2-workbench v0.3`:
     * READMEs are gallery-drift-free in both languages
     * READMEs reference all 30 ``docs/assets/showcase-<domain>.webp`` paths
       as single-column showcase sections, not two-up HTML tables
+    * READMEs keep the homepage ``hero-meme.webp`` banner above the fold
     * README local ``href`` / ``src`` / markdown image targets resolve
     * READMEs do not mention competitor names
     * the three SVG hero/workflow/production-controls assets are well-formed
@@ -476,6 +477,16 @@ def test_showcase_is_single_column_large_images(readme_path: Path) -> None:
     body = readme_path.read_text(encoding="utf-8")
     assert '<td width="50%"' not in body
     assert '<table width="100%" cellpadding="12" cellspacing="0">' not in body
+
+
+@pytest.mark.parametrize(
+    "readme_path",
+    [REPO_ROOT / "README.md", REPO_ROOT / "README.zh.md"],
+    ids=lambda p: p.name,
+)
+def test_readme_homepage_banner_is_present(readme_path: Path) -> None:
+    body = readme_path.read_text(encoding="utf-8")
+    assert 'src="docs/assets/hero-meme.webp"' in body
 
 
 # --------------------------------------------------------------------------- #

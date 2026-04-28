@@ -6,6 +6,8 @@
 
 <p align="center"><strong>Executable gpt-image-2 prompt templates for people who need repeatable images, not another prompt dump.</strong><br/>30 domains · 80 YAML templates · bilingual output · CLI / Skill / web ChatGPT paths.</p>
 
+<p align="center"><img src="docs/assets/hero-meme.webp" alt="image2-workbench: 80 executable templates across 30 domains" width="100%" /></p>
+
 <p align="center"><img alt="version" src="https://img.shields.io/badge/version-v0.3.5-ea580c"> <img alt="tests" src="https://img.shields.io/badge/tests-passing-15803d"> <img alt="Python" src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white"> <img alt="License" src="https://img.shields.io/badge/code-Apache--2.0-blue"> <img alt="Content license" src="https://img.shields.io/badge/templates%2Fdocs-CC%20BY%204.0-lightgrey"></p>
 
 <p align="center"><a href="#quick-start"><strong>Quick start</strong></a> · <a href="#showcase"><strong>Showcase</strong></a> · <a href="#atlas--30-domains-80-templates"><strong>Atlas</strong></a> · <a href="skills/gpt-image/"><strong>Skill bundle</strong></a></p>

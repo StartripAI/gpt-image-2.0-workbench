@@ -6,6 +6,8 @@
 
 <p align="center"><strong>给 gpt-image-2 用的可执行 prompt 工作台，不是再堆一份 prompt 清单。</strong><br/>30 个领域 · 80 条 YAML 模板 · 中英双语输出 · CLI / Skill / 网页 ChatGPT 三条路径。</p>
 
+<p align="center"><img src="docs/assets/hero-meme.webp" alt="image2-workbench：30 个领域 80 条可执行模板" width="100%" /></p>
+
 <p align="center"><img alt="version" src="https://img.shields.io/badge/version-v0.3.5-ea580c"> <img alt="tests" src="https://img.shields.io/badge/tests-passing-15803d"> <img alt="Python" src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white"> <img alt="License" src="https://img.shields.io/badge/code-Apache--2.0-blue"> <img alt="Content license" src="https://img.shields.io/badge/templates%2Fdocs-CC%20BY%204.0-lightgrey"></p>
 
 <p align="center"><a href="#快速开始"><strong>快速开始</strong></a> · <a href="#样图展示"><strong>样图展示</strong></a> · <a href="#atlas--30-domains-80-templates"><strong>模板图册</strong></a> · <a href="skills/gpt-image/"><strong>Skill 包</strong></a></p>
