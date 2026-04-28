@@ -15,6 +15,8 @@ that ships with `image2-workbench v0.3`:
     * READMEs are gallery-drift-free in both languages
     * READMEs reference all 30 ``docs/assets/showcase-<domain>.webp`` paths
       as single-column showcase sections, not two-up HTML tables
+    * READMEs reference at least 20 ``docs/assets/example-*.webp`` template
+      proof images, with no orphaned example assets
     * READMEs keep the homepage ``hero-meme.webp`` banner above the fold
     * README local ``href`` / ``src`` / markdown image targets resolve
     * READMEs do not mention competitor names
@@ -477,6 +479,28 @@ def test_showcase_is_single_column_large_images(readme_path: Path) -> None:
     body = readme_path.read_text(encoding="utf-8")
     assert '<td width="50%"' not in body
     assert '<table width="100%" cellpadding="12" cellspacing="0">' not in body
+
+
+def test_template_proof_images_are_referenced_in_readmes() -> None:
+    example_assets = sorted(DOCS_ASSETS.glob("example-*.webp"))
+    assert len(example_assets) >= 20
+    body_en = (REPO_ROOT / "README.md").read_text(encoding="utf-8")
+    body_zh = (REPO_ROOT / "README.zh.md").read_text(encoding="utf-8")
+    missing_en: list[str] = []
+    missing_zh: list[str] = []
+    oversized: list[str] = []
+    for asset in example_assets:
+        rel = f"docs/assets/{asset.name}"
+        if rel not in body_en:
+            missing_en.append(rel)
+        if rel not in body_zh:
+            missing_zh.append(rel)
+        if asset.stat().st_size > 500_000:
+            oversized.append(rel)
+
+    assert not missing_en, f"README.md is missing example assets: {missing_en}"
+    assert not missing_zh, f"README.zh.md is missing example assets: {missing_zh}"
+    assert not oversized, f"example assets exceed 500KB: {oversized}"
 
 
 @pytest.mark.parametrize(
