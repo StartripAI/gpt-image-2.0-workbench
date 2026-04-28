@@ -213,12 +213,7 @@ README_BEGIN_FULL = (
 _JINJA_PLACEHOLDER_RE = re.compile(r"\{\{[^}]+\}\}")
 _WHITESPACE_RE = re.compile(r"\s+")
 
-# Number of cards per row in the responsive HTML table.
-_CARDS_PER_ROW = 3
-
-# Per-domain emoji glyph for the atlas section headings. Each glyph is
-# visually distinct so a reader scanning the README can pick out a domain
-# at a glance instead of squinting at text. ``social_media`` uses 🗯️ to
+# Per-domain emoji glyph for compact atlas rows. ``social_media`` uses 🗯️ to
 # avoid colliding with ``uiux`` (📱).
 _DOMAIN_EMOJI: dict[str, str] = {
     "business": "📊",
@@ -259,30 +254,6 @@ def _domain_emoji(domain: str) -> str:
     return _DOMAIN_EMOJI.get(domain, "📁")
 
 
-def _domain_anchor(domain: str) -> str:
-    """Stable HTML anchor id for the domain card heading.
-
-    We emit an explicit ``<a id="domain-<name>"></a>`` next to each heading
-    so the bottom-of-section nav row doesn't depend on GitHub's emoji-
-    sensitive slug algorithm — anchors are precise and predictable.
-    """
-    return f"domain-{domain}"
-
-
-def _has_domain_card(domain: str) -> bool:
-    """Return True when ``templates/<domain>/DOMAIN_CARD.md`` exists.
-
-    The V1 domains (business / academic / uiux / anime) ship without a
-    DOMAIN_CARD; V0.3 and V0.3.5 domains all have one. The footer links
-    to the card only when present, so we don't emit dead links.
-    """
-    try:
-        templates_root = catalog_index._resolve_templates_dir()  # noqa: SLF001 — internal helper
-    except Exception:  # pragma: no cover — defensive; never observed in tests
-        return False
-    return (templates_root / domain / "DOMAIN_CARD.md").is_file()
-
-
 def _excerpt(spec_obj: object, max_chars: int = 60) -> str:
     """Return a one-line, Jinja-stripped, length-capped use-case teaser.
 
@@ -306,86 +277,12 @@ def _excerpt(spec_obj: object, max_chars: int = 60) -> str:
     return raw
 
 
-def _domain_card(
-    domain: str,
-    template_paths: list[Path],
-    *,
-    lang: str,
-    max_excerpt_chars: int,
-) -> str:
-    """Render the markdown card for one domain.
-
-    Layout (per V0.3.5 polish pass):
-        * stable ``<a id="domain-<name>"></a>`` anchor for the bottom nav
-        * ``### <emoji> <domain> · <N> templates`` heading with a
-          right-floated 60×40 thumbnail link to the full hero render
-        * sub-table of templates (template / size / grader)
-        * ``<sub>``-styled footer with "View templates" + (when present) a link
-          to ``templates/<domain>/DOMAIN_CARD.md``
-    """
-    count = len(template_paths)
-    emoji = _domain_emoji(domain)
-    anchor = _domain_anchor(domain)
-    thumb = (
-        f'<a href="docs/assets/showcase-{domain}.webp">'
-        f'<img src="docs/assets/showcase-{domain}.webp" '
-        f'width="60" height="40" align="right" alt=""/></a>'
-    )
-    has_card = _has_domain_card(domain)
-
-    if lang == "zh-CN":
-        heading_text = f"{emoji} {domain} · {count} 个模板"
-        cols = ("模板", "尺寸", "评测")
-        footer_main = (
-            f'<a href="templates/{domain}/">'
-            f"<strong>查看 {count} 个模板 →</strong></a>"
-        )
-        footer_card = (
-            f'<a href="templates/{domain}/DOMAIN_CARD.md">域卡</a>'
-        )
-    else:
-        heading_text = f"{emoji} {domain} · {count} templates"
-        cols = ("template", "size", "grader")
-        footer_main = (
-            f'<a href="templates/{domain}/">'
-            f"<strong>View {count} templates →</strong></a>"
-        )
-        footer_card = (
-            f'<a href="templates/{domain}/DOMAIN_CARD.md">Domain card</a>'
-        )
-
-    if has_card:
-        footer = f"<sub>{footer_main} &nbsp;·&nbsp; {footer_card}</sub>"
-    else:
-        footer = f"<sub>{footer_main}</sub>"
-
-    lines: list[str] = [
-        f'<a id="{anchor}"></a>',
-        f"### {heading_text} &nbsp; {thumb}",
-        "",
-    ]
-    lines.append(f"| {cols[0]} | {cols[1]} | {cols[2]} |")
-    lines.append("|---|---|---|")
-    for tp in sorted(template_paths, key=lambda p: p.stem):
-        spec = load_template(tp)
-        excerpt = _excerpt(spec, max_chars=max_excerpt_chars)
-        size = spec.artifact.size
-        grader = spec.grader_profile
-        # Use <strong> + <br/> so the cell renders both lines under GitHub's
-        # markdown table renderer (raw newlines inside a cell would break it).
-        cell = f"<strong>{spec.id}</strong><br/>{excerpt}"
-        lines.append(f"| {cell} | {size} | {grader} |")
-    lines.append("")
-    lines.append(footer)
-    return "\n".join(lines)
-
-
 def _generate_section(
     *,
     lang: str,
     max_excerpt_chars: int,
 ) -> str:
-    """Build the full inline-atlas section (markers included)."""
+    """Build the compact inline-atlas section (markers included)."""
     entries = catalog_index.list_templates()
     by_domain: dict[str, list[Path]] = {}
     for entry in entries:
@@ -396,10 +293,35 @@ def _generate_section(
 
     if lang == "zh-CN":
         header = f"## 模板图册 — {domain_count} 个领域，{template_count} 个模板"
-        compose_summary = "**自己组装一条（CLI / Skill / 网页 ChatGPT）**"
+        intro = (
+            f"当前扩展图册覆盖 {domain_count} 个领域；每个领域都有一页可复制的双语 prompt "
+            "gallery，也能从同一份 YAML 模板走 CLI / Skill / API。"
+        )
+        cols = ("领域", "模板数", "适合做什么", "代表模板", "入口")
+        gallery_label = "图册"
+        templates_label = "模板"
+        docs_label = "继续看："
+        docs_links = (
+            '<a href="docs/getting-started.zh.md">快速上手</a> · '
+            '<a href="docs/chatgpt-web-mode.md">网页 ChatGPT 用法</a> · '
+            '<a href="docs/cost-modeling.md">成本模型</a>'
+        )
     else:
         header = f"## Atlas — {domain_count} domains, {template_count} templates"
-        compose_summary = "<strong>Compose your own (CLI / Skill / web ChatGPT)</strong>"
+        intro = (
+            f"The current extended atlas covers {domain_count} domains. Each domain has a "
+            "copy-ready bilingual gallery page, and the same YAML templates drive "
+            "CLI, Skill, and API workflows."
+        )
+        cols = ("Domain", "Templates", "Good for", "Representative templates", "Open")
+        gallery_label = "Gallery"
+        templates_label = "Templates"
+        docs_label = "Read next:"
+        docs_links = (
+            '<a href="docs/getting-started.en.md">Getting started</a> · '
+            '<a href="docs/chatgpt-web-mode.md">Web ChatGPT mode</a> · '
+            '<a href="docs/cost-modeling.md">Cost modeling</a>'
+        )
 
     parts: list[str] = [
         README_BEGIN_FULL,
@@ -407,90 +329,30 @@ def _generate_section(
         '<a id="atlas--30-domains-80-templates"></a>',
         header,
         "",
+        intro,
+        "",
     ]
-    # ``cellpadding="12"`` gives each card visible breathing room on
-    # GitHub's HTML table renderer; ``cellspacing="0"`` keeps adjacent
-    # cards flush without an extra inter-cell gap.
-    parts.append('<table cellpadding="12" cellspacing="0">')
+    parts.append(f"| {cols[0]} | {cols[1]} | {cols[2]} | {cols[3]} | {cols[4]} |")
+    parts.append("|---|---:|---|---|---|")
 
     sorted_domains = sorted(by_domain.items())
-    width_pct = 100 // _CARDS_PER_ROW
-    for row_start in range(0, len(sorted_domains), _CARDS_PER_ROW):
-        row = sorted_domains[row_start : row_start + _CARDS_PER_ROW]
-        parts.append("<tr>")
-        for dom, paths in row:
-            parts.append(f'<td width="{width_pct}%" valign="top">')
-            parts.append("")
-            parts.append(
-                _domain_card(
-                    dom,
-                    paths,
-                    lang=lang,
-                    max_excerpt_chars=max_excerpt_chars,
-                )
-            )
-            parts.append("")
-            parts.append("</td>")
-        # Pad short rows with empty cells so the table layout stays clean.
-        for _ in range(_CARDS_PER_ROW - len(row)):
-            parts.append(f'<td width="{width_pct}%" valign="top"></td>')
-        parts.append("</tr>")
-
-    parts.append("</table>")
-    parts.append("")
-
-    # Bottom-of-section navigation row — one anchor link per domain so a
-    # reader can jump directly into a card without scrolling.
-    if lang == "zh-CN":
-        nav_label = "按领域浏览："
-        toc_label = "↑ 返回目录"
-        toc_href = "#目录"
-    else:
-        nav_label = "Browse by category:"
-        toc_label = "↑ TOC"
-        toc_href = "#table-of-contents"
-    nav_links: list[str] = []
-    for dom, _paths in sorted_domains:
-        emoji = _domain_emoji(dom)
-        nav_links.append(
-            f'<a href="#{_domain_anchor(dom)}">{emoji} {dom}</a>'
+    for dom, paths in sorted_domains:
+        sorted_paths = sorted(paths, key=lambda p: p.stem)
+        specs = [load_template(path) for path in sorted_paths[:2]]
+        excerpt_source = specs[0] if specs else load_template(sorted_paths[0])
+        excerpt = _excerpt(excerpt_source, max_chars=max_excerpt_chars)
+        excerpt = excerpt.replace("|", "\\|")
+        reps = " · ".join(f"`{spec.id}`" for spec in specs)
+        domain_label = f"{_domain_emoji(dom)} `{dom}`"
+        links = (
+            f'<a href="docs/gallery/{dom}.md">{gallery_label}</a> · '
+            f'<a href="templates/{dom}/">{templates_label}</a>'
         )
-    nav_body = " · ".join(nav_links)
-    parts.append(
-        f'<p align="center"><strong>{nav_label}</strong> '
-        f'{nav_body} · <a href="{toc_href}">{toc_label}</a></p>'
-    )
-    parts.append("")
-
-    parts.append("<details>")
-    parts.append(f"<summary>{compose_summary}</summary>")
-    parts.append("")
-    parts.append("```bash")
-    if lang == "zh-CN":
-        parts.append("# 本地组装提示词，复制到网页 ChatGPT(无需 API key)")
         parts.append(
-            "i2w template render <id> --lang zh-CN --vars <vars.yml> --out prompt.md"
+            f"| {domain_label} | {len(paths)} | {excerpt} | {reps} | {links} |"
         )
-        parts.append("cat prompt.md  # 直接粘贴")
-        parts.append("")
-        parts.append("# 通过 API 直接渲染(需要 OPENAI_API_KEY)")
-        parts.append(
-            "i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium"
-        )
-    else:
-        parts.append("# Compose a prompt locally and paste into web ChatGPT (no API key needed)")
-        parts.append(
-            "i2w template render <id> --lang en --vars <vars.yml> --out prompt.md"
-        )
-        parts.append("cat prompt.md  # ready to paste")
-        parts.append("")
-        parts.append("# Render directly through the API (requires OPENAI_API_KEY)")
-        parts.append(
-            "i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium"
-        )
-    parts.append("```")
     parts.append("")
-    parts.append("</details>")
+    parts.append(f"<p><strong>{docs_label}</strong> {docs_links}</p>")
     parts.append("")
     parts.append(README_END_MARKER)
 
@@ -557,7 +419,7 @@ def readme(
     max_excerpt_chars: Annotated[
         int,
         typer.Option("--max-excerpt-chars", help="Max chars of prompt excerpt per card"),
-    ] = 150,
+    ] = 90,
 ) -> None:
     """Generate the inline-atlas section for README.{md,zh.md}."""
     console = Console()

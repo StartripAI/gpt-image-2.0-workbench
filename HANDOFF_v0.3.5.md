@@ -2,6 +2,11 @@
 
 # image2-workbench v0.3.5 — Handoff
 
+> **Historical snapshot.** This handoff is retained for audit context only.
+> The v0.3.5 template and showcase expansion has since been committed, and the
+> homepage README has been compacted. Use `README.md`, `docs/gallery/index.md`,
+> and `i2w gallery readme` for the current repo surface.
+
 This is the agent-to-agent handoff packet that ships with the v0.3.5
 expansion of `image2-workbench`. v0.3.5 widens the atlas from 16
 domains / 52 templates to **30 domains / 80 templates**, locks the

@@ -75,21 +75,19 @@ def test_excerpt_returns_empty_string_when_both_blank() -> None:
 
 def test_section_contains_table_count_and_v1_template() -> None:
     section = _generate_section(lang="en", max_excerpt_chars=60)
-    # ``<table cellpadding="12" cellspacing="0">`` post-V0.3.5 polish; we
-    # match the open-tag prefix so the assertion stays robust to attribute
-    # tweaks while still locking in that a top-level ``<table>`` exists.
-    assert "<table " in section
-    assert "</table>" in section
+    assert "| Domain | Templates | Good for | Representative templates | Open |" in section
+    assert "<table " not in section
     assert "80 templates" in section
     assert "30 domains" in section
-    # At least one V1 template id from each V1 domain must appear.
+    # At least one representative id from key V1 domains must appear.
     for tid in (
-        "business_swot_card",
-        "academic_scientific_diagram",
+        "business_data_dashboard",
+        "academic_chalkboard_proof",
         "uiux_ios_app_mockup",
         "anime_character_sheet",
     ):
         assert tid in section, f"missing V1 template id {tid!r}"
+    assert '<a href="docs/gallery/business.md">Gallery</a>' in section
 
 
 def test_section_en_and_zh_have_different_headings() -> None:
@@ -99,9 +97,9 @@ def test_section_en_and_zh_have_different_headings() -> None:
     assert "## 模板图册" in zh_section
     assert "30 个领域" in zh_section
     assert "80 个模板" in zh_section
-    # Sub-table headers must localise too.
-    assert "| template | size | grader |" in en_section
-    assert "| 模板 | 尺寸 | 评测 |" in zh_section
+    # Compact table headers must localise too.
+    assert "| Domain | Templates | Good for | Representative templates | Open |" in en_section
+    assert "| 领域 | 模板数 | 适合做什么 | 代表模板 | 入口 |" in zh_section
 
 
 def test_section_total_length_is_sane() -> None:
