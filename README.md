@@ -661,73 +661,262 @@ i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium
 <a id="-showcase"></a>
 ## 🖼️ Showcase — 30 domains, 30 hero renders
 
-<p align="center"><sub>One render per domain, generated via gpt-image-2 against the spec yaml in <a href="templates/"><code>templates/&lt;domain&gt;/</code></a>. Click any card to open the full hero render. Categories are alphabetised within each row for predictable scanning.</sub></p>
+<p align="center"><sub>One render per domain, generated via gpt-image-2 against the spec yaml in <a href="templates/"><code>templates/&lt;domain&gt;/</code></a>. Two large cards per row — every image is reading-size, no thumbnail-clicking required. Each card links into the full atlas page for that domain.</sub></p>
 
-### Enterprise & Knowledge
+### 🏢 Enterprise · Brand · Data
 
-<table cellpadding="8" cellspacing="0">
+<table width="100%" cellpadding="14" cellspacing="0">
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-business.webp"><img src="docs/assets/showcase-business.webp" width="100%" alt="business showcase"/></a><br/><sub><strong>📊 business</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-academic.webp"><img src="docs/assets/showcase-academic.webp" width="100%" alt="academic showcase"/></a><br/><sub><strong>🎓 academic</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-uiux.webp"><img src="docs/assets/showcase-uiux.webp" width="100%" alt="uiux showcase"/></a><br/><sub><strong>📱 uiux</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-social_media.webp"><img src="docs/assets/showcase-social_media.webp" width="100%" alt="social media showcase"/></a><br/><sub><strong>🗯️ social_media</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-infographic_data.webp"><img src="docs/assets/showcase-infographic_data.webp" width="100%" alt="dataviz showcase"/></a><br/><sub><strong>📈 infographic_data</strong></sub></td>
-</tr></table>
-
-### Commerce & Brand
-
-<table cellpadding="8" cellspacing="0">
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/business.md"><img src="docs/assets/showcase-business.webp" alt="business showcase" width="100%"/></a>
+<br/><br/>
+<strong>📊 business</strong> &middot; <sub>4 templates</sub>
+<br/>
+<sub>SWOT cards · pitch slides · LinkedIn carousels · data dashboards</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/academic.md"><img src="docs/assets/showcase-academic.webp" alt="academic showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎓 academic</strong> &middot; <sub>4 templates</sub>
+<br/>
+<sub>scientific diagrams · chalkboard proofs · multilingual posters · journal posters</sub>
+</td>
+</tr>
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-ecommerce.webp"><img src="docs/assets/showcase-ecommerce.webp" width="100%" alt="ecommerce showcase"/></a><br/><sub><strong>🛍️ ecommerce</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-product.webp"><img src="docs/assets/showcase-product.webp" width="100%" alt="product showcase"/></a><br/><sub><strong>📦 product</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-advertising.webp"><img src="docs/assets/showcase-advertising.webp" width="100%" alt="advertising showcase"/></a><br/><sub><strong>📢 advertising</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-streetwear.webp"><img src="docs/assets/showcase-streetwear.webp" width="100%" alt="streetwear showcase"/></a><br/><sub><strong>👟 streetwear</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-automotive.webp"><img src="docs/assets/showcase-automotive.webp" width="100%" alt="automotive showcase"/></a><br/><sub><strong>🚗 automotive</strong></sub></td>
-</tr></table>
-
-### Creative & Story
-
-<table cellpadding="8" cellspacing="0">
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/uiux.md"><img src="docs/assets/showcase-uiux.webp" alt="uiux showcase" width="100%"/></a>
+<br/><br/>
+<strong>📱 uiux</strong> &middot; <sub>4 templates</sub>
+<br/>
+<sub>iOS app mockups · web dashboards · design system cards · social covers</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/social_media.md"><img src="docs/assets/showcase-social_media.webp" alt="social media showcase" width="100%"/></a>
+<br/><br/>
+<strong>🗯️ social_media</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>launch post · story sequence · thumbnail grid</sub>
+</td>
+</tr>
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-anime.webp"><img src="docs/assets/showcase-anime.webp" width="100%" alt="anime showcase"/></a><br/><sub><strong>🎌 anime</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-comic_book.webp"><img src="docs/assets/showcase-comic_book.webp" width="100%" alt="comic_book showcase"/></a><br/><sub><strong>💥 comic_book</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-gaming.webp"><img src="docs/assets/showcase-gaming.webp" width="100%" alt="gaming showcase"/></a><br/><sub><strong>🎮 gaming</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-science_fiction_concept.webp"><img src="docs/assets/showcase-science_fiction_concept.webp" width="100%" alt="science_fiction_concept showcase"/></a><br/><sub><strong>🚀 science_fiction_concept</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-kids_illustration.webp"><img src="docs/assets/showcase-kids_illustration.webp" width="100%" alt="kids_illustration showcase"/></a><br/><sub><strong>🧸 kids_illustration</strong></sub></td>
-</tr></table>
-
-### Lifestyle & Aesthetics
-
-<table cellpadding="8" cellspacing="0">
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/infographic_data.md"><img src="docs/assets/showcase-infographic_data.webp" alt="infographic_data showcase" width="100%"/></a>
+<br/><br/>
+<strong>📈 infographic_data</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>editorial dashboards · chart explainers</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/ecommerce.md"><img src="docs/assets/showcase-ecommerce.webp" alt="ecommerce showcase" width="100%"/></a>
+<br/><br/>
+<strong>🛍️ ecommerce</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>product hero · marketplace card · category banner</sub>
+</td>
+</tr>
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-fashion.webp"><img src="docs/assets/showcase-fashion.webp" width="100%" alt="fashion showcase"/></a><br/><sub><strong>👗 fashion</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-beauty.webp"><img src="docs/assets/showcase-beauty.webp" width="100%" alt="beauty showcase"/></a><br/><sub><strong>💄 beauty</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-photography.webp"><img src="docs/assets/showcase-photography.webp" width="100%" alt="photography showcase"/></a><br/><sub><strong>📷 photography</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-tattoo.webp"><img src="docs/assets/showcase-tattoo.webp" width="100%" alt="tattoo showcase"/></a><br/><sub><strong>🪡 tattoo</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-watercolor_illustration.webp"><img src="docs/assets/showcase-watercolor_illustration.webp" width="100%" alt="watercolor_illustration showcase"/></a><br/><sub><strong>🎨 watercolor_illustration</strong></sub></td>
-</tr></table>
-
-### Spatial & Systems
-
-<table cellpadding="8" cellspacing="0">
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/product.md"><img src="docs/assets/showcase-product.webp" alt="product showcase" width="100%"/></a>
+<br/><br/>
+<strong>📦 product</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>packaging concept · feature callout · comparison board</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/advertising.md"><img src="docs/assets/showcase-advertising.webp" alt="advertising showcase" width="100%"/></a>
+<br/><br/>
+<strong>📢 advertising</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>campaign key visual · billboard mockup · 3-frame storyboard</sub>
+</td>
+</tr>
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-architecture.webp"><img src="docs/assets/showcase-architecture.webp" width="100%" alt="architecture showcase"/></a><br/><sub><strong>🏛️ architecture</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-interior.webp"><img src="docs/assets/showcase-interior.webp" width="100%" alt="interior showcase"/></a><br/><sub><strong>🛋️ interior</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-industrial.webp"><img src="docs/assets/showcase-industrial.webp" width="100%" alt="industrial showcase"/></a><br/><sub><strong>🏭 industrial</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-isometric_illustration.webp"><img src="docs/assets/showcase-isometric_illustration.webp" width="100%" alt="isometric_illustration showcase"/></a><br/><sub><strong>🧊 isometric_illustration</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-typography.webp"><img src="docs/assets/showcase-typography.webp" width="100%" alt="typography showcase"/></a><br/><sub><strong>🔤 typography</strong></sub></td>
-</tr></table>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/streetwear.md"><img src="docs/assets/showcase-streetwear.webp" alt="streetwear showcase" width="100%"/></a>
+<br/><br/>
+<strong>👟 streetwear</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>lookbook drop · sneaker hero</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/automotive.md"><img src="docs/assets/showcase-automotive.webp" alt="automotive showcase" width="100%"/></a>
+<br/><br/>
+<strong>🚗 automotive</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>hero ad · dealership poster</sub>
+</td>
+</tr>
+</table>
 
-### Culture & Moments
+### 🎨 Creative · Story · Aesthetics
 
-<table cellpadding="8" cellspacing="0">
+<table width="100%" cellpadding="14" cellspacing="0">
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-events.webp"><img src="docs/assets/showcase-events.webp" width="100%" alt="events showcase"/></a><br/><sub><strong>🎫 events</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-music.webp"><img src="docs/assets/showcase-music.webp" width="100%" alt="music showcase"/></a><br/><sub><strong>🎵 music</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-food.webp"><img src="docs/assets/showcase-food.webp" width="100%" alt="food showcase"/></a><br/><sub><strong>🍽️ food</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-pet.webp"><img src="docs/assets/showcase-pet.webp" width="100%" alt="pet showcase"/></a><br/><sub><strong>🐾 pet</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-travel.webp"><img src="docs/assets/showcase-travel.webp" width="100%" alt="travel showcase"/></a><br/><sub><strong>✈️ travel</strong></sub></td>
-</tr></table>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/anime.md"><img src="docs/assets/showcase-anime.webp" alt="anime showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎌 anime</strong> &middot; <sub>4 templates</sub>
+<br/>
+<sub>character sheets · 8-panel comics · city posters · CCD candid</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/comic_book.md"><img src="docs/assets/showcase-comic_book.webp" alt="comic_book showcase" width="100%"/></a>
+<br/><br/>
+<strong>💥 comic_book</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>variant cover · panel page</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/gaming.md"><img src="docs/assets/showcase-gaming.webp" alt="gaming showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎮 gaming</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>HUD mockup · item card · map panel</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/science_fiction_concept.md"><img src="docs/assets/showcase-science_fiction_concept.webp" alt="science_fiction_concept showcase" width="100%"/></a>
+<br/><br/>
+<strong>🚀 science_fiction_concept</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>matte-painting keyframe · vehicle hero</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/kids_illustration.md"><img src="docs/assets/showcase-kids_illustration.webp" alt="kids_illustration showcase" width="100%"/></a>
+<br/><br/>
+<strong>🧸 kids_illustration</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>storybook spread · workbook page</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/fashion.md"><img src="docs/assets/showcase-fashion.webp" alt="fashion showcase" width="100%"/></a>
+<br/><br/>
+<strong>👗 fashion</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>lookbook page · flatlay board · runway poster</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/beauty.md"><img src="docs/assets/showcase-beauty.webp" alt="beauty showcase" width="100%"/></a>
+<br/><br/>
+<strong>💄 beauty</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>skincare packaging · editorial layout</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/photography.md"><img src="docs/assets/showcase-photography.webp" alt="photography showcase" width="100%"/></a>
+<br/><br/>
+<strong>📷 photography</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>editorial portrait · cinematic still · documentary scene</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/tattoo.md"><img src="docs/assets/showcase-tattoo.webp" alt="tattoo showcase" width="100%"/></a>
+<br/><br/>
+<strong>🪡 tattoo</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>flash sheet · minimal design</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/watercolor_illustration.md"><img src="docs/assets/showcase-watercolor_illustration.webp" alt="watercolor_illustration showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎨 watercolor_illustration</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>botanical study · character portrait</sub>
+</td>
+</tr>
+</table>
+
+### 🏛️ Spatial · Systems · Moments
+
+<table width="100%" cellpadding="14" cellspacing="0">
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/architecture.md"><img src="docs/assets/showcase-architecture.webp" alt="architecture showcase" width="100%"/></a>
+<br/><br/>
+<strong>🏛️ architecture</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>facade concept · site diagram · presentation board</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/interior.md"><img src="docs/assets/showcase-interior.webp" alt="interior showcase" width="100%"/></a>
+<br/><br/>
+<strong>🛋️ interior</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>room mockup · material board · before / after</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/industrial.md"><img src="docs/assets/showcase-industrial.webp" alt="industrial showcase" width="100%"/></a>
+<br/><br/>
+<strong>🏭 industrial</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>process diagram · cutaway view · safety poster</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/isometric_illustration.md"><img src="docs/assets/showcase-isometric_illustration.webp" alt="isometric_illustration showcase" width="100%"/></a>
+<br/><br/>
+<strong>🧊 isometric_illustration</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>city block · workspace scene</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/typography.md"><img src="docs/assets/showcase-typography.webp" alt="typography showcase" width="100%"/></a>
+<br/><br/>
+<strong>🔤 typography</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>specimen poster · lettering art</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/events.md"><img src="docs/assets/showcase-events.webp" alt="events showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎫 events</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>concert poster · wedding invite</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/music.md"><img src="docs/assets/showcase-music.webp" alt="music showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎵 music</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>album cover · concert poster</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/food.md"><img src="docs/assets/showcase-food.webp" alt="food showcase" width="100%"/></a>
+<br/><br/>
+<strong>🍽️ food</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>menu poster · packaging label · recipe card</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/pet.md"><img src="docs/assets/showcase-pet.webp" alt="pet showcase" width="100%"/></a>
+<br/><br/>
+<strong>🐾 pet</strong> &middot; <sub>2 templates</sub>
+<br/>
+<sub>adoption flyer · food packaging</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/travel.md"><img src="docs/assets/showcase-travel.webp" alt="travel showcase" width="100%"/></a>
+<br/><br/>
+<strong>✈️ travel</strong> &middot; <sub>3 templates</sub>
+<br/>
+<sub>destination poster · itinerary card · map guide</sub>
+</td>
+</tr>
+</table>
 
 <p align="center"><sub>↑ <a href="#-featured">Back to Featured</a> &nbsp;·&nbsp; ↓ <a href="#atlas--30-domains-80-templates">Atlas detail</a> &nbsp;·&nbsp; <a href="#table-of-contents">↑ TOC</a></sub></p>
 

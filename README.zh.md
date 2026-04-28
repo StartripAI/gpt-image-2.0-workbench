@@ -661,73 +661,262 @@ i2w render generate --prompt-file prompt.md --size 1024x1024 --quality medium
 <a id="-样图展示"></a>
 ## 🖼️ 样图展示 — 30 个领域，30 张代表渲染
 
-<p align="center"><sub>每个领域一张代表样图,由 gpt-image-2 对应 <a href="templates/"><code>templates/&lt;domain&gt;/</code></a> 下的规格 yaml 渲染。点击任意卡片可打开完整代表图。同一组内按字母顺序排列,便于扫读。</sub></p>
+<p align="center"><sub>每个领域一张代表样图，由 gpt-image-2 对应 <a href="templates/"><code>templates/&lt;domain&gt;/</code></a> 下的规格 yaml 渲染。每行两张大图，看清原图不需要点缩略图；卡片直接跳到对应领域的全套图册。</sub></p>
 
-### 企业与知识
+### 🏢 企业 · 品牌 · 数据
 
-<table cellpadding="8" cellspacing="0">
+<table width="100%" cellpadding="14" cellspacing="0">
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-business.webp"><img src="docs/assets/showcase-business.webp" width="100%" alt="business showcase"/></a><br/><sub><strong>📊 商业 (business)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-academic.webp"><img src="docs/assets/showcase-academic.webp" width="100%" alt="academic showcase"/></a><br/><sub><strong>🎓 学术 (academic)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-uiux.webp"><img src="docs/assets/showcase-uiux.webp" width="100%" alt="uiux showcase"/></a><br/><sub><strong>📱 UI/UX (uiux)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-social_media.webp"><img src="docs/assets/showcase-social_media.webp" width="100%" alt="social media showcase"/></a><br/><sub><strong>🗯️ 社交媒体 (social_media)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-infographic_data.webp"><img src="docs/assets/showcase-infographic_data.webp" width="100%" alt="dataviz showcase"/></a><br/><sub><strong>📈 数据图表 (infographic_data)</strong></sub></td>
-</tr></table>
-
-### 商业与品牌
-
-<table cellpadding="8" cellspacing="0">
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/business.md"><img src="docs/assets/showcase-business.webp" alt="business showcase" width="100%"/></a>
+<br/><br/>
+<strong>📊 商业 (business)</strong> &middot; <sub>4 模板</sub>
+<br/>
+<sub>SWOT 卡 · 融资单页 · LinkedIn 轮播 · 数据看板</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/academic.md"><img src="docs/assets/showcase-academic.webp" alt="academic showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎓 学术 (academic)</strong> &middot; <sub>4 模板</sub>
+<br/>
+<sub>科学图 · 板书证明 · 多语种海报 · 期刊海报</sub>
+</td>
+</tr>
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-ecommerce.webp"><img src="docs/assets/showcase-ecommerce.webp" width="100%" alt="ecommerce showcase"/></a><br/><sub><strong>🛍️ 电商 (ecommerce)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-product.webp"><img src="docs/assets/showcase-product.webp" width="100%" alt="product showcase"/></a><br/><sub><strong>📦 产品 (product)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-advertising.webp"><img src="docs/assets/showcase-advertising.webp" width="100%" alt="advertising showcase"/></a><br/><sub><strong>📢 广告 (advertising)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-streetwear.webp"><img src="docs/assets/showcase-streetwear.webp" width="100%" alt="streetwear showcase"/></a><br/><sub><strong>👟 潮牌 (streetwear)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-automotive.webp"><img src="docs/assets/showcase-automotive.webp" width="100%" alt="automotive showcase"/></a><br/><sub><strong>🚗 汽车 (automotive)</strong></sub></td>
-</tr></table>
-
-### 创意与叙事
-
-<table cellpadding="8" cellspacing="0">
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/uiux.md"><img src="docs/assets/showcase-uiux.webp" alt="uiux showcase" width="100%"/></a>
+<br/><br/>
+<strong>📱 UI/UX (uiux)</strong> &middot; <sub>4 模板</sub>
+<br/>
+<sub>iOS app mockup · 网页仪表板 · 设计系统卡 · 小红书风格封面</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/social_media.md"><img src="docs/assets/showcase-social_media.webp" alt="social media showcase" width="100%"/></a>
+<br/><br/>
+<strong>🗯️ 社交媒体 (social_media)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>发布帖 · story 序列 · 缩略图阵</sub>
+</td>
+</tr>
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-anime.webp"><img src="docs/assets/showcase-anime.webp" width="100%" alt="anime showcase"/></a><br/><sub><strong>🎌 动漫 (anime)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-comic_book.webp"><img src="docs/assets/showcase-comic_book.webp" width="100%" alt="comic_book showcase"/></a><br/><sub><strong>💥 美式漫画 (comic_book)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-gaming.webp"><img src="docs/assets/showcase-gaming.webp" width="100%" alt="gaming showcase"/></a><br/><sub><strong>🎮 游戏 (gaming)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-science_fiction_concept.webp"><img src="docs/assets/showcase-science_fiction_concept.webp" width="100%" alt="science_fiction_concept showcase"/></a><br/><sub><strong>🚀 科幻概念 (sci-fi)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-kids_illustration.webp"><img src="docs/assets/showcase-kids_illustration.webp" width="100%" alt="kids_illustration showcase"/></a><br/><sub><strong>🧸 童书插画 (kids)</strong></sub></td>
-</tr></table>
-
-### 生活方式与美学
-
-<table cellpadding="8" cellspacing="0">
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/infographic_data.md"><img src="docs/assets/showcase-infographic_data.webp" alt="infographic_data showcase" width="100%"/></a>
+<br/><br/>
+<strong>📈 数据图表 (infographic_data)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>编辑级 dashboard · 单图解释器</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/ecommerce.md"><img src="docs/assets/showcase-ecommerce.webp" alt="ecommerce showcase" width="100%"/></a>
+<br/><br/>
+<strong>🛍️ 电商 (ecommerce)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>商品 hero · 市场卡片 · 品类 banner</sub>
+</td>
+</tr>
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-fashion.webp"><img src="docs/assets/showcase-fashion.webp" width="100%" alt="fashion showcase"/></a><br/><sub><strong>👗 时尚 (fashion)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-beauty.webp"><img src="docs/assets/showcase-beauty.webp" width="100%" alt="beauty showcase"/></a><br/><sub><strong>💄 美妆 (beauty)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-photography.webp"><img src="docs/assets/showcase-photography.webp" width="100%" alt="photography showcase"/></a><br/><sub><strong>📷 摄影 (photography)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-tattoo.webp"><img src="docs/assets/showcase-tattoo.webp" width="100%" alt="tattoo showcase"/></a><br/><sub><strong>🪡 纹身 (tattoo)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-watercolor_illustration.webp"><img src="docs/assets/showcase-watercolor_illustration.webp" width="100%" alt="watercolor_illustration showcase"/></a><br/><sub><strong>🎨 水彩 (watercolor)</strong></sub></td>
-</tr></table>
-
-### 空间与系统
-
-<table cellpadding="8" cellspacing="0">
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/product.md"><img src="docs/assets/showcase-product.webp" alt="product showcase" width="100%"/></a>
+<br/><br/>
+<strong>📦 产品 (product)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>包装概念 · 特性标注 · 对比板</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/advertising.md"><img src="docs/assets/showcase-advertising.webp" alt="advertising showcase" width="100%"/></a>
+<br/><br/>
+<strong>📢 广告 (advertising)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>核心视觉 · 户外大牌 mockup · 三帧分镜</sub>
+</td>
+</tr>
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-architecture.webp"><img src="docs/assets/showcase-architecture.webp" width="100%" alt="architecture showcase"/></a><br/><sub><strong>🏛️ 建筑 (architecture)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-interior.webp"><img src="docs/assets/showcase-interior.webp" width="100%" alt="interior showcase"/></a><br/><sub><strong>🛋️ 室内 (interior)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-industrial.webp"><img src="docs/assets/showcase-industrial.webp" width="100%" alt="industrial showcase"/></a><br/><sub><strong>🏭 工业 (industrial)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-isometric_illustration.webp"><img src="docs/assets/showcase-isometric_illustration.webp" width="100%" alt="isometric_illustration showcase"/></a><br/><sub><strong>🧊 等距 (isometric)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-typography.webp"><img src="docs/assets/showcase-typography.webp" width="100%" alt="typography showcase"/></a><br/><sub><strong>🔤 字体 (typography)</strong></sub></td>
-</tr></table>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/streetwear.md"><img src="docs/assets/showcase-streetwear.webp" alt="streetwear showcase" width="100%"/></a>
+<br/><br/>
+<strong>👟 潮牌 (streetwear)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>新季 lookbook · 单只球鞋 hero</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/automotive.md"><img src="docs/assets/showcase-automotive.webp" alt="automotive showcase" width="100%"/></a>
+<br/><br/>
+<strong>🚗 汽车 (automotive)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>车型大片 · 经销商海报</sub>
+</td>
+</tr>
+</table>
 
-### 文化与时刻
+### 🎨 创意 · 叙事 · 美学
 
-<table cellpadding="8" cellspacing="0">
+<table width="100%" cellpadding="14" cellspacing="0">
 <tr>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-events.webp"><img src="docs/assets/showcase-events.webp" width="100%" alt="events showcase"/></a><br/><sub><strong>🎫 活动 (events)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-music.webp"><img src="docs/assets/showcase-music.webp" width="100%" alt="music showcase"/></a><br/><sub><strong>🎵 音乐 (music)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-food.webp"><img src="docs/assets/showcase-food.webp" width="100%" alt="food showcase"/></a><br/><sub><strong>🍽️ 餐饮 (food)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-pet.webp"><img src="docs/assets/showcase-pet.webp" width="100%" alt="pet showcase"/></a><br/><sub><strong>🐾 宠物 (pet)</strong></sub></td>
-<td width="20%" align="center" valign="top"><a href="docs/assets/showcase-travel.webp"><img src="docs/assets/showcase-travel.webp" width="100%" alt="travel showcase"/></a><br/><sub><strong>✈️ 旅行 (travel)</strong></sub></td>
-</tr></table>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/anime.md"><img src="docs/assets/showcase-anime.webp" alt="anime showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎌 动漫 (anime)</strong> &middot; <sub>4 模板</sub>
+<br/>
+<sub>角色三视图 · 八格漫画 · 城市海报 · CCD 自拍</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/comic_book.md"><img src="docs/assets/showcase-comic_book.webp" alt="comic_book showcase" width="100%"/></a>
+<br/><br/>
+<strong>💥 美式漫画 (comic_book)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>变体封面 · 内页分格</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/gaming.md"><img src="docs/assets/showcase-gaming.webp" alt="gaming showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎮 游戏 (gaming)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>HUD mockup · 道具卡 · 任务地图</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/science_fiction_concept.md"><img src="docs/assets/showcase-science_fiction_concept.webp" alt="science_fiction_concept showcase" width="100%"/></a>
+<br/><br/>
+<strong>🚀 科幻概念 (sci-fi)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>matte-painting 关键帧 · 载具 hero</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/kids_illustration.md"><img src="docs/assets/showcase-kids_illustration.webp" alt="kids_illustration showcase" width="100%"/></a>
+<br/><br/>
+<strong>🧸 童书插画 (kids)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>绘本跨页 · 学习手册页</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/fashion.md"><img src="docs/assets/showcase-fashion.webp" alt="fashion showcase" width="100%"/></a>
+<br/><br/>
+<strong>👗 时尚 (fashion)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>lookbook 单页 · 平铺造型 · 秀场海报</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/beauty.md"><img src="docs/assets/showcase-beauty.webp" alt="beauty showcase" width="100%"/></a>
+<br/><br/>
+<strong>💄 美妆 (beauty)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>护肤包装 · 编辑版式</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/photography.md"><img src="docs/assets/showcase-photography.webp" alt="photography showcase" width="100%"/></a>
+<br/><br/>
+<strong>📷 摄影 (photography)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>编辑级人像 · 电影感静帧 · 纪实场景</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/tattoo.md"><img src="docs/assets/showcase-tattoo.webp" alt="tattoo showcase" width="100%"/></a>
+<br/><br/>
+<strong>🪡 纹身 (tattoo)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>flash 大表 · 极简单图</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/watercolor_illustration.md"><img src="docs/assets/showcase-watercolor_illustration.webp" alt="watercolor_illustration showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎨 水彩 (watercolor)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>植物标本 · 角色肖像</sub>
+</td>
+</tr>
+</table>
+
+### 🏛️ 空间 · 系统 · 时刻
+
+<table width="100%" cellpadding="14" cellspacing="0">
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/architecture.md"><img src="docs/assets/showcase-architecture.webp" alt="architecture showcase" width="100%"/></a>
+<br/><br/>
+<strong>🏛️ 建筑 (architecture)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>立面概念 · 总平面图 · 汇报展板</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/interior.md"><img src="docs/assets/showcase-interior.webp" alt="interior showcase" width="100%"/></a>
+<br/><br/>
+<strong>🛋️ 室内 (interior)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>房间渲染 · 材料板 · 改造前后</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/industrial.md"><img src="docs/assets/showcase-industrial.webp" alt="industrial showcase" width="100%"/></a>
+<br/><br/>
+<strong>🏭 工业 (industrial)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>工艺流程图 · 剖面图 · 安全海报</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/isometric_illustration.md"><img src="docs/assets/showcase-isometric_illustration.webp" alt="isometric_illustration showcase" width="100%"/></a>
+<br/><br/>
+<strong>🧊 等距 (isometric)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>城市街区 · 工作场景</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/typography.md"><img src="docs/assets/showcase-typography.webp" alt="typography showcase" width="100%"/></a>
+<br/><br/>
+<strong>🔤 字体 (typography)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>字体规格图 · lettering art</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/events.md"><img src="docs/assets/showcase-events.webp" alt="events showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎫 活动 (events)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>演唱会海报 · 婚礼请柬</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/music.md"><img src="docs/assets/showcase-music.webp" alt="music showcase" width="100%"/></a>
+<br/><br/>
+<strong>🎵 音乐 (music)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>专辑封面 · 巡演海报</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/food.md"><img src="docs/assets/showcase-food.webp" alt="food showcase" width="100%"/></a>
+<br/><br/>
+<strong>🍽️ 餐饮 (food)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>菜单海报 · 包装标签 · 食谱卡</sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/pet.md"><img src="docs/assets/showcase-pet.webp" alt="pet showcase" width="100%"/></a>
+<br/><br/>
+<strong>🐾 宠物 (pet)</strong> &middot; <sub>2 模板</sub>
+<br/>
+<sub>领养海报 · 宠粮包装</sub>
+</td>
+<td width="50%" valign="top" align="center">
+<a href="docs/gallery/travel.md"><img src="docs/assets/showcase-travel.webp" alt="travel showcase" width="100%"/></a>
+<br/><br/>
+<strong>✈️ 旅行 (travel)</strong> &middot; <sub>3 模板</sub>
+<br/>
+<sub>目的地海报 · 行程卡 · 地图指南</sub>
+</td>
+</tr>
+</table>
 
 <p align="center"><sub>↑ <a href="#-精选">回到精选</a> &nbsp;·&nbsp; ↓ <a href="#atlas--30-domains-80-templates">模板图册细节</a> &nbsp;·&nbsp; <a href="#目录">↑ 返回目录</a></sub></p>
 
